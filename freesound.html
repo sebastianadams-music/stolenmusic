@@ -1,0 +1,283 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Freesound API javascript example</title>
+    <!-- this is the API script, not mine -->
+    <script type="text/javascript" src="/s/freesound.js"></script> 
+    
+    <style>/* Style the video: 100% width and height to cover the entire window */
+        /* #myVideo {
+          position: fixed;
+          
+          right: 0;
+          bottom: 0;
+          min-width: 100%;
+          min-height: 100%;
+          background-repeat: repeat;
+          overflow: hidden;
+          
+          opacity: 100%;
+          z-index: 0;
+        } */
+        
+        /* Add some content at the bottom of the video/page */
+        /* .content {
+          position: fixed;
+          top: 0;
+          background: rgba(0, 0, 0, 0);
+          color: #f1f1f1;
+          width: 100%;
+          padding: 20px;
+          z-index: 1;
+        } */
+</style>
+</head>
+<!-- The video -->
+
+<body style="font-family: Helvetica">
+
+<div class="content">
+    <h1 style="color:red">FREED<br>SOUND<br>INSTRUMENT</h1>
+    <h2>TO PLAY THIS INSTRUMENT:</h2>
+<h3>Use the buttons to add or remove sounds </h3>
+<button class="create-stack" role="switch" aria-checked="false" data-power="on">
+        <span>click to add a random sound</span>
+    </button><p></p>
+    <button id="killAudio" role="switch" aria-checked="false" data-power="on">
+        <span>stop last sound</span>
+    </button><p></p>
+    <button id="stopButton" role="switch" aria-checked="false" data-power="on">
+        <span>stop ALL sounds</span>
+    </button>
+    <br>
+    
+    <br>
+    <div id="activationDiv"></div>
+    <div id="errorDiv"></div>
+    <strong><div id="userSays"></div></strong>
+    <em><div id="descriptionOfSound"></div></em>
+<br>    <div id="printSounds"></div>
+    
+</div>
+    <script type="module" defer>
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-app.js";
+        import { getFirestore, getDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-firestore.js"
+
+        // import { getFirestore, collection, getDocs, orderBy, query, where, addDoc, getDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-firestore.js"
+
+
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyDuuKkn3m-dLDlLBp40j_Qt8jedxHFj84Y",
+          authDomain: "activate-freesound.firebaseapp.com",
+          projectId: "activate-freesound",
+          storageBucket: "activate-freesound.appspot.com",
+          messagingSenderId: "824081283497",
+          appId: "1:824081283497:web:1eeaf943fb2b6354af6cb8"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore()
+        console.log("want to happen first")
+        checkFireBase(getDoc)
+        createListener()
+        document.getElementById('stopButton').addEventListener('click', () => {
+        document.querySelectorAll('audio').forEach(el => el.pause());
+        });
+
+
+        function checkFireBase(getDoc){
+        // do whatever you like here
+        console.log("checking...")
+
+        getDoc(doc(db, "activation", "activate")).then(docSnap => {
+            if (docSnap.exists()) {
+                const activeStatus = docSnap.data()["activated"]
+                console.log("Document data:", activeStatus);
+                window.localStorage.setItem('activeStatus', activeStatus);
+            } else {
+                console.log("No such document!");
+            }
+            })
+        // kill all on false //
+        if (window.localStorage.getItem('activeStatus') == "false"){
+            var audioList = document.getElementsByTagName('audio');
+            console.log("audios: ", audioList.length)
+            for (let i = 0; i < audioList.length; i++)
+            {killAudio()}
+            document.getElementById("activationDiv").textContent = "All audio has been expunged. This webpage is now switched off. Please enjoy the concert!"
+
+        }
+        else {
+            if (document.getElementById("activationDiv").textContent = "All audio has been expunged. This webpage is now switched off. Please enjoy the concert!")
+            {document.getElementById("activationDiv").textContent =  ""} 
+
+        }
+
+
+        // const docRef = doc(db, "activation", "activate");
+        // const docSnap = getDoc(docRef).then)
+        // console.log(docSnap.data())
+
+        setTimeout(checkFireBase.bind(null, getDoc), 5000);
+}
+
+
+
+    </script>
+
+    <script type="text/javascript">
+                
+                
+                console.log("want to happen second")
+        var index = 0
+        var soundList = []
+        var descList = []
+        var attributionList = []
+
+
+        // FreeSound
+        freesound.setToken("hLLHZHTBJqgj8AYPUC8QcnkTgaSGichlISxMvsR0"); //my client key
+        
+        
+
+        
+
+        // window.onload = function(){ main()
+
+            
+        
+            
+            
+        // };
+
+        
+        
+
+        function createListener() {
+            
+                        //add an event listener (because audio can't autoplay!)   
+            const createButton = document.querySelector('.create-stack');
+            createButton.addEventListener('click', function(){
+                        
+                        
+                        
+                    
+                        //index += 1 // keeps tracks of number of sounds created (note: does not currently track sounds that finished playing)
+                        
+                        
+                        var fields = 'id,name,url,analysis,username';
+                        // Example 1
+                        // Example of geeting the info of a sound, queying for similar sounds (content-based) and showing some analysis
+                        // features. Both similar sounds and analysis features are obtained with additional requests to the api.
+                        activated = window.localStorage.getItem('activeStatus')
+                        console.log("activated", activated)
+                        if (activated == "true") {
+                        document.getElementById("errorDiv").textContent = ""
+                        freesound.getSound(getRandomInt(1, 100000),
+                                function(sound){
+                                    
+                                    
+                                    
+
+                                    var msg = "";
+                                    document.getElementById("descriptionOfSound").textContent = "" 
+                                    console.log(sound)
+                                    name = sound.name
+                                    user = sound.username
+                                    userSays = user + " says: "
+                                    desc = sound.description
+                                    attribution = name + " by " + user
+                                    console.log(attribution)                                      
+                                    snd = new Audio(sound.previews['preview-hq-mp3']);
+                                    document.body.appendChild(snd)
+                                    soundList.push(snd);
+                                    attributionList.push(attribution)
+                                    // descList.push(desc);
+                                    console.log(soundList)
+                                    document.getElementById("userSays").textContent = userSays
+                                    document.getElementById("printSounds").textContent = attributionList.join(' // ')
+                                    
+                                    document.getElementById("descriptionOfSound").textContent = desc 
+                                    snd.loop = true
+                                    snd.play();
+                                    return soundList, index
+                                    
+                                //    displayMessage(msg,'resp1');                    
+                                }, errorMsg );
+
+                            }
+                        //return index
+                       
+                        
+        
+                    })
+            
+            document.getElementById("killAudio").addEventListener("click", killAudio);
+            document.getElementById("stopButton").addEventListener("click", killAllAudio);
+            
+        }
+        
+       
+
+        
+        function killAudio() {
+            
+            index = soundList.length - 1
+                console.log("index: ", index)
+                soundList[index].pause()
+                soundList.pop()
+                attributionList.pop()
+                document.getElementById("printSounds").textContent = attributionList.join(' // ')
+                document.getElementById("userSays").textContent = ""
+                document.getElementById("descriptionOfSound").textContent = ""
+
+                return soundList, index
+        }
+
+        // function killAllListener() {
+        //     const killButton = document.querySelector('.stopButton');
+
+        // }
+
+        function killAllAudio() {
+            var audioList = document.getElementsByTagName('audio');
+            console.log("audios: ", audioList.length)
+            for (let i = 0; i < audioList.length; i++)
+            {killAudio()}
+        }
+
+
+
+
+
+        function errorMsg() {
+        document.getElementById("descriptionOfSound").textContent = "" 
+        document.getElementById("errorDiv").textContent = "The sound you're looking for has been removed from the internet. Try again, please."
+            console.log("The sound you're looking for has been removed from the internet. Try again, please.")
+        }
+
+        function getRandomInt(min, max) {
+                    return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+        
+        //    function displayError(text){
+          //      document.getElementById('error').innerHTML=text;
+          //  }
+        
+            function displayMessage(text,place){
+                document.getElementById(place).innerHTML=text;
+            }
+        
+        </script>
+ 
+</body>
+<!-- <video autoplay muted loop id="myVideo">
+    <source src="/s/collage.mp4" type="video/mp4">
+  </video> -->
+</html>
