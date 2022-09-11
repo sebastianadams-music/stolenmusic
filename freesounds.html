@@ -6,7 +6,27 @@
     <!-- this is the API script, not mine -->
     <script type="text/javascript" src="/s/freesound.js"></script> 
     
-    <style>/* Style the video: 100% width and height to cover the entire window */
+    <style>
+    
+        .button-style {
+            background-color: rgb(48, 199, 46); color: black;
+            border-color: forestgreen;
+            font-weight: bold;
+            padding: 15px 16px; 
+            font-size: 16px;
+            border-radius: 0px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+        .button-style:hover {
+  background-color: #724caf; /* Green */
+  color: white;
+}
+
+        .narrow-text {
+            max-width: 400px;
+        }
+    /* Style the video: 100% width and height to cover the entire window */
         /* #myVideo {
           position: fixed;
           
@@ -41,13 +61,13 @@
     <h1 style="color:red">FREED<br>SOUND<br>INSTRUMENT</h1>
     <h2>TO PLAY THIS INSTRUMENT:</h2>
 <h3>Use the buttons to add or remove sounds </h3>
-<button class="create-stack" role="switch" aria-checked="false" data-power="on">
+<button class="create-stack button-style" role="switch" aria-checked="false" data-power="on">
         <span>click to add a random sound</span>
     </button><p></p>
-    <button id="killAudio" role="switch" aria-checked="false" data-power="on">
+    <button class="button-style" id="killAudio" role="switch" aria-checked="false" data-power="on">
         <span>stop last sound</span>
     </button><p></p>
-    <button id="stopButton" role="switch" aria-checked="false" data-power="on">
+    <button class="button-style" id="stopButton" role="switch" aria-checked="false" data-power="on">
         <span>stop ALL sounds</span>
     </button>
     <br>
@@ -59,7 +79,7 @@
     <em><div id="descriptionOfSound"></div></em>
 <br>    <div id="printSounds"></div>
 <h3>Explainer:</h3>
-<ul>
+<ul class="narrow-text">
     <li>use your internet-connected device to play sounds</li>
     <li>you are now an improvising performer taking part in a distributed loudspeaker performance</li>
     <li>the events on the page handed to you are from a set of 32</li><li>they may be used to inform your improvisations (or you can ignore them) </li>
@@ -120,11 +140,11 @@
             console.log("audios: ", audioList.length)
             for (let i = 0; i < audioList.length; i++)
             {killAudio()}
-            document.getElementById("activationDiv").textContent = "All audio has been expunged. This webpage is now switched off. Please enjoy the concert!"
+            document.getElementById("activationDiv").textContent = "All audio has been expunged. This webpage is now switched off. Please enjoy the concert! The website will work again later, don't worry"
 
         }
         else {
-            if (document.getElementById("activationDiv").textContent = "All audio has been expunged. This webpage is now switched off. Please enjoy the concert!")
+            if (document.getElementById("activationDiv").textContent = "All audio has been expunged. This webpage is now switched off. Please enjoy the concert! The website will work again later, don't worry")
             {document.getElementById("activationDiv").textContent =  ""} 
 
         }
