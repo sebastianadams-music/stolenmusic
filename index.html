@@ -9,16 +9,22 @@
         .title-color {
             background-color: var(--title-color);
         }
+        .title-color2 {
+            background-color: var(--title-color2);
+        }
     </style>
     <script>
         
         function randomiseColor() {
 
         const randomColor = "#"+((1<<24)*Math.random()|0).toString(16); 
+        const randomColor2 = "#"+((1<<24)*Math.random()|0).toString(16); 
         
         
         document.documentElement.style.setProperty('--title-color', randomColor)
         setTimeout(randomiseColor,1000);
+        document.documentElement.style.setProperty('--title-color2', randomColor2)
+        setTimeout(randomiseColor,340);
         
     }
         </script>
@@ -26,8 +32,9 @@
 </head>
 <body>
     <h1 class="title-color">STOLEN MUSIC PRESENTS: THE CAMPAIGN FOR FREE MUSIC</h1>
-    <h3>Stolen Music is a front! <br><br>It’s a provocative way of describing the use of music in a way which is considered stealing only because of unjust laws which do not reflect the reality of how music is created, interpreted and listened to in the world, and which serve to enrich only a very few while having a chilling effect on the ability of many to make or listen to music.
+    <h3><br><br>It’s a provocative way of describing the use of music in a way which is considered stealing only because of unjust laws which do not reflect the reality of how music is created, interpreted and listened to in the world, and which serve to enrich only a very few while having a chilling effect on the ability of many to make or listen to music.
     </h3>
+    <h3 class="title-color2">Stolen Music is a front! </h3>
 
     <p>In the end, Free Music might be a better title for this project: but by stealing everything from everywhere, I hope to help people reconsider the perceived primacy of material, and re-evaluate their notions of ownership and even authorship when it comes to music (and intellectual property generally).
         The software elements of this project are unlicensed (dedicated to the public domain) using the Unlicense, and the non-software elements are dedicated to the public using CC0         	. You are free to do whatever you like with this work.
