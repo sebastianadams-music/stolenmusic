@@ -11,32 +11,66 @@
         }
         .title-color2 {
             background-color: var(--title-color2);
+            animation: size-change 1s infinite;
         }
+        @keyframes size-change {
+  0% { font-size: 16px;}
+  50% { font-size: 22px;}
+  100% { font-size: 16px;}
+        }
+        .STOLEN {
+  animation: color-change 1s infinite;
+}
+
+@keyframes color-change {
+  0% { color: red;}
+  50% { color: blue;}
+  100% { color: green;}
+}
+
     </style>
     <script>
         
-        function randomiseColor() {
+        var counter = 0
 
+        function randomiseColor1() {
+
+        
         const randomColor = "#"+((1<<24)*Math.random()|0).toString(16); 
-        const randomColor2 = "#"+((1<<24)*Math.random()|0).toString(16); 
+       // const randomColor2 = "#"+((1<<24)*Math.random()|0).toString(16); 
         
         
         document.documentElement.style.setProperty('--title-color', randomColor)
-        setTimeout(randomiseColor,1000);
-        document.documentElement.style.setProperty('--title-color2', randomColor2)
-        setTimeout(randomiseColor,340);
+        setTimeout(randomiseColor1,600);
+        // document.documentElement.style.setProperty('--title-color2', randomColor2)
+        // setTimeout(randomiseColor,340);
+
         
     }
+
+    function randomiseColor2() {
+
+        
+const randomColor2 = "#"+((1<<24)*Math.random()|0).toString(16); 
+
+
+
+document.documentElement.style.setProperty('--title-color2', randomColor2)
+setTimeout(randomiseColor2,234);
+
+
+}
         </script>
     <title>STOLEN MUSIC</title>
 </head>
 <body>
     <h1 class="title-color">STOLEN MUSIC PRESENTS: THE CAMPAIGN FOR FREE MUSIC</h1>
-    <h3><br><br>It’s a provocative way of describing the use of music in a way which is considered stealing only because of unjust laws which do not reflect the reality of how music is created, interpreted and listened to in the world, and which serve to enrich only a very few while having a chilling effect on the ability of many to make or listen to music.
+    <h3><br><br> "My" music is considered <span class="STOLEN">STOLEN</span> only because of unjust laws which do not reflect the reality of how music is created, interpreted and listened to in the world, and which serve to enrich only a very few while preventing many from making or listening to music.
     </h3>
     <h3 class="title-color2">Stolen Music is a front! </h3>
 
-    <p>In the end, Free Music might be a better title for this project: but by stealing everything from everywhere, I hope to help people reconsider the perceived primacy of material, and re-evaluate their notions of ownership and even authorship when it comes to music (and intellectual property generally).
+    <p>In the end, Free Music might have been a more sensible title for this project... 
+        <br>but by stealing everything from everywhere, I hope to help people reconsider the perceived primacy of material, and re-evaluate their notions of ownership and even authorship when it comes to music (and intellectual property generally).
         The software elements of this project are unlicensed (dedicated to the public domain) using the Unlicense, and the non-software elements are dedicated to the public using CC0         	. You are free to do whatever you like with this work.
         Separately, if you are a creator of music, I ask: what do you gain from restrictive licensing of your music (which is the default by law), and what do you and society stand to lose from it?
         </p>
@@ -67,19 +101,21 @@
                  
                 For more information, please refer to <a href="http://unlicense.org/">unlicense.org</a>.
                 </p>
-                <div id="wrap">
-                    <h3><a href="https://quoteinvestigator.com/2013/03/06/artists-steal/" target="_blank"><span id="random-quote"></span></a></h3>
-                    
-                    </div>
+                
                 <div id="copy-this-book">
-                    <a href="https://elephant.art/what-artists-need-to-know-about-copyright/">WHAT ARTISTS NEED TO KNOW ABOUT COPYRIGHT!</a>
+                    <a href="https://elephant.art/what-artists-need-to-know-about-copyright/" target="_blank">WHAT ARTISTS NEED TO KNOW ABOUT COPYRIGHT!</a>
                 </div>
                 <div id="links">
                     <a href="freesounds.html"><button>FREE SOUNDS</button></a>
                     <a href="music_i_stole.html"><button>MUSIC I STOLE</button></a>
                 </div>
+                <div id="wrap">
+                    <h3><a href="https://quoteinvestigator.com/2013/03/06/artists-steal/" target="_blank"><span id="random-quote"></span></a></h3>
+                    
+                    </div>
     
 </body>
-<script>    randomiseColor() 
+<script>    randomiseColor1()
+randomiseColor2() 
 </script>
 </html>
