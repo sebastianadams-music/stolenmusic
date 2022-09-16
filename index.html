@@ -5,19 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="s/randomQuote.js"></script>
+    <script src="s/unlicense_splashing.js"></script>
     <style>
         .title-color {
             background-color: var(--title-color);
         }
         .title-color2 {
             background-color: var(--title-color2);
-            animation: size-change 1s infinite;
         }
-        @keyframes size-change {
-  0% { font-size: 16px;}
-  50% { font-size: 22px;}
-  100% { font-size: 16px;}
+        
+        .write-unlicense {
+            content: "testCSS"
         }
+
         .STOLEN {
   animation: color-change 1s infinite;
 }
@@ -27,6 +27,26 @@
   50% { color: blue;}
   100% { color: green;}
 }
+
+        .growtext{
+            animation: grow-change .7s infinite;
+        }
+
+@keyframes grow-change {
+  0% { font-size: 16px;}
+  50% { font-size: 18px;}
+  100% { font-size: 16px;}
+        }
+
+        .shrinktext{
+            animation: shrink-change .7s infinite;
+        }
+
+@keyframes shrink-change {
+  0% { font-size: 18px;}
+  50% { font-size: 16px;}
+  100% { font-size: 18px;}
+        }
 
     </style>
     <script>
@@ -65,31 +85,28 @@ setTimeout(randomiseColor2,234);
 </head>
 <body>
     <h1 class="title-color">STOLEN MUSIC PRESENTS: THE CAMPAIGN FOR FREE MUSIC</h1>
-    <h3><br><br> "My" music is considered <span class="STOLEN">STOLEN</span> only because of unjust laws which do not reflect the reality of how music is created, interpreted and listened to in the world, and which serve to enrich only a very few while preventing many from making or listening to music.
+    <h3><br><br> This music is considered <span class="STOLEN">STOLEN</span> only because of unjust laws which do not reflect the reality of how music is created, interpreted and listened to in the world, and which serve to enrich only a very few while preventing many from making or listening to music.
     </h3>
-    <h3 class="title-color2">Stolen Music is a front! </h3>
+    <h3 class="title-color2"><span class="growtext">Stolen Music is a front for</span>  <br> <span class="shrinktext">THE CAMPAIGN FOR FREE MUSIC! </span></h3>
 
-    <p>In the end, Free Music might have been a more sensible title for this project... 
-        <br>but by stealing everything from everywhere, I hope to help people reconsider the perceived primacy of material, and re-evaluate their notions of ownership and even authorship when it comes to music (and intellectual property generally).
-        The software elements of this project are unlicensed (dedicated to the public domain) using the Unlicense, and the non-software elements are dedicated to the public using CC0         	. You are free to do whatever you like with this work.
+    <h4> The work involved in this project (Stolen Music) is hereby dedicated to the public domain under the terms of the <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.en" target="_blank">CC0 license</a>.<br> Anybody is entitled to use this work in any way they wish. </h4>
+
+
+    <p> The CAMPAIGN FOR FREE MUSIC believes that there is no justification for claiming ownership over art. We have created this website as a means to educate artists and the public about how they can dedicate their work to the public domain, and why this could be better for everyone.</p>
+    <p>Currently, the site is a work in progress.... but we hope that we are already helping you to reconsider the perceived primacy of material, and re-evaluate their notions of ownership and even authorship when it comes to music (and intellectual property generally).</p>
+
+
+        
+
+    <p>        The software elements of this project are unlicensed (dedicated to the public domain) using the Unlicense, and the non-software elements are dedicated to the public using CC0. The software elements have not been published yet but WILL be published here in due course. You can enquire about obtaining these by contacting Sebastian Adams directly.
+        
+        <!-- You are free to do whatever you like with this work.
         Separately, if you are a creator of music, I ask: what do you gain from restrictive licensing of your music (which is the default by law), and what do you and society stand to lose from it?
-        </p>
+        </p> -->
 
-        <P>This is free and unencumbered MUSIC released into the public domain.
- 
-            Anyone is free to copy, modify, publish, use, compile, sell, or
-            distribute this music, either in source code form or as a compiled
-            binary, for any purpose, commercial or non-commercial, and by any
-            means.
-             
-            In jurisdictions that recognize copyright laws, the author or authors
-            of this software dedicate any and all copyright interest in the
-            software to the public domain. We make this dedication for the benefit
-            of the public at large and to the detriment of our heirs and
-            successors. We intend this dedication to be an overt act of
-            relinquishment in perpetuity of all present and future rights to this
-            software under copyright law.
+        <P>
             </P>
+            
 
             <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
                 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -113,9 +130,11 @@ setTimeout(randomiseColor2,234);
                     <h3><a href="https://quoteinvestigator.com/2013/03/06/artists-steal/" target="_blank"><span id="random-quote"></span></a></h3>
                     
                     </div>
+                    <div id="unlicense-line"></div>
+
     
 </body>
 <script>    randomiseColor1()
-randomiseColor2() 
+randomiseColor2()
 </script>
 </html>
