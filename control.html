@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Sends a message to activate or deactivate a Firestore entry used by SA for controlling whether most of the material appears</p>
+    <button type="button" id="activate">Activate!</button>
+    <button type="button" id="deactivate">Deactivate!</button>
+
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-app.js";
+        import { getFirestore, getDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-firestore.js"
+
+        // import { getFirestore, collection, getDocs, orderBy, query, where, addDoc, getDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-firestore.js"
+
+
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAlNZyxwAjPtFjNiq_E4PjqRw9efpv7Xmw",
+  authDomain: "copyrightnightmarescomments.firebaseapp.com",
+  projectId: "copyrightnightmarescomments",
+  storageBucket: "copyrightnightmarescomments.appspot.com",
+  messagingSenderId: "434761434052",
+  appId: "1:434761434052:web:add1aba3d4c899d2a79a91",
+  measurementId: "G-6TBFET51PM"        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore()
+        const setActivation = doc(db, "activation", "activate");
+        
+        const btnActivate = document.getElementById("activate")
+        btnActivate.addEventListener('click', activate.bind(null, updateDoc, setActivation), false)
+
+        const btnDeActivate = document.getElementById("deactivate")
+        btnDeActivate.addEventListener('click', deactivate.bind(null, updateDoc, setActivation), false)
+
+
+        function deactivate(updateDoc, setActivation) {
+            document.write("trying to deactivate")
+            updateDoc(setActivation, {
+            activated: false
+        });
+        }
+
+        function activate(updateDoc, setActivation) {
+            document.write("trying to activate")
+            updateDoc(setActivation, {
+            activated: true
+        });
+        }
+
+
+
+      </script>
+      
+    
+</body>
+</html>

@@ -142,6 +142,61 @@ setTimeout(randomiseColor2,234);
 
     
 </body>
+<script type="module" defer>
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-app.js";
+    import { getFirestore, getDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-firestore.js"
+
+    // import { getFirestore, collection, getDocs, orderBy, query, where, addDoc, getDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-firestore.js"
+
+
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyAlNZyxwAjPtFjNiq_E4PjqRw9efpv7Xmw",
+  authDomain: "copyrightnightmarescomments.firebaseapp.com",
+  projectId: "copyrightnightmarescomments",
+  storageBucket: "copyrightnightmarescomments.appspot.com",
+  messagingSenderId: "434761434052",
+  appId: "1:434761434052:web:add1aba3d4c899d2a79a91",
+  measurementId: "G-6TBFET51PM"     
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore()
+    console.log("want to happen first")
+    checkFireBase(getDoc)
+    
+
+
+    function checkFireBase(getDoc){
+    // do whatever you like here
+    console.log("checking...")
+
+    getDoc(doc(db, "activation", "activate")).then(docSnap => {
+        if (docSnap.exists()) {
+            const activeStatus = docSnap.data()["activated"]
+            console.log("Document data:", activeStatus);
+            if (! activeStatus){
+             document.write("This website will work after the concert. You'll need to refresh in order to see it")
+        }
+        } else {
+            console.log("No such document!");
+        }
+        })
+    // kill all on false //
+    
+
+
+
+}
+
+
+
+</script>
+
 <script>    randomiseColor1()
 randomiseColor2()
 </script>
