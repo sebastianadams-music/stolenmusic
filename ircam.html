@@ -51,10 +51,18 @@
   }
 }
 
+
+
+.video {
+    width: 560px; height: 315px; float: none; clear: both; margin: 2px auto;
+}
+
         img{
     width:100%;
     max-width:600px;
 }
+
+
 
 .technology{
             color: gray;
@@ -91,11 +99,26 @@
     <div class="video"><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/z038Tz6JZKo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
     <p>This video was projected on all four sides of the box used in Julie's piece. During the video, the percussionist opened the (previously invisible) door of the box and left it. The sonic material used is an array of YouTube videos of ASMR pen scratching (as I couldn't use material that was *really* from Julie's piece because all her material was processed live). The video part (obviously) is a bunch of clips of doors, mainly from famous films and TV shows. An additional element in the video is a Coke can, which was originally going to be a larger part of the project overall but even with its reduced role it makes sense to use such an iconic trademark. It also foreshadows a red colour palette for later on the concert.</p>
     <p>Because the box needed to move out of the centre of the room to allow space for the remaining pieces in the concert, I prepared a second video, which was projected onto the wall. This change happened seamlessly and once the audience's gaze had shifted, the production team began the process of safely moving this large box (which was on a platform with wheels) to the side of the hall, parting the audience as they went. This clip was designed to hold space, and it uses a looped clip of a scene from the film <a href="https://www.imdb.com/title/tt0201538/" target="_blank">Les convoyeurs attendent</a>, with the contents behind a door chroma-keyed out and with all kinds of footage washily displayed behind it. When the production team had moved the box, the video fades down regardless of where in the video it is. </p>
-    <div class="video"><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/hincEDrOO7o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+
+    <div class="video">
+    <embed
+      src="https://www.youtube-nocookie.com/embed/hincEDrOO7o"
+      wmode="transparent"
+      type="video/mp4"
+      width="100%" height="100%"
+      allow="autoplay; encrypted-media; picture-in-picture"
+      allowfullscreen
+    >
+  </div>
+  
+
+    
     <h3 class="technology">Technology used in this section:</h3>
     
     <p class="technology">MUBU library for Max (for automated audio segmentation w/ onset-detection; and for real-time concatenative synthesis), Reaper DAW with various reverb settings: the audio part was made from loading in files, auto-segmenting them and then improvising with them laid out on a graph according to audio descriptors. The resulting tracks were then layered in Reaper and processed through different reverbs, aiming to achieve different spaces every time a door opened. The video is entirely fixed media and made in DaVinci Resolve, using the Fusion part of the software for chroma-keying some of the doors.</p>>
     </div>
+
+    <div class="html5-video-container" data-layer="0"><video tabindex="-1" class="video-stream html5-main-video" webkit-playsinline="" playsinline="" controlslist="nodownload" src="blob:https://www.youtube.com/a6144cc0-c606-4220-bcaf-2874977c2062" style="width: 281px; height: 158px; left: 0px; top: 0px;"></video></div>
 
     <div class="video"></div>
     <div class="video"></div>
