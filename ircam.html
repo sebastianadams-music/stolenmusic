@@ -88,6 +88,33 @@
             line-height: 1.4;
         }
 
+        .imgcontainer {
+            max-width: 60%;
+    -webkit-column-count: 2; /* Chrome, Safari, Opera */
+    -moz-column-count: 2; /* Firefox */
+    column-count: 2;
+    -webkit-column-gap: 0px; /* Chrome, Safari, Opera */
+    -moz-column-gap: 0px; /* Firefox */
+    column-gap: 0px;
+    padding: 0px;
+}
+
+.imgcontainer div {
+  width: 100%;
+  /* display: inline-block;   */
+  background: lavender;
+  border: 0px solid black;
+  box-sizing: border-box;
+  text-align: center;
+  margin-bottom: 0px;
+}
+
+.imgcontainer img {
+  width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
     </style>
 </head>
 <body>
@@ -106,6 +133,11 @@
     <img src="i/kazooenvelope.jpeg" alt="Kazoo in envelope">
     <p>
          They were also given a small card inserted into the programme notes which contained a QR code linking to this webpage:<br> <a href="freesounds.html"  target="_blank">Freed Sounds Instrument</a> <br>and including one or two small event pieces from a set of 32 <a href="s/EVENTS_FOR_FREED_SOUND_A6.pdf"  target="_blank">(linked here)</a>.</p><p>The audience were given the option of using this webpage while they waited for the concert to begin, and eventually it was shut off remotely right before the concert started properly.</p> 
+
+         <div class="imgcontainer">
+            <div><a href="s/EVENTS_FOR_FREED_SOUND_A6.pdf" target="_blank"><img src="i/freesoundevents/01.png" alt="freesoundimage1" id="fs1"></a> </div>
+            <div><a href="s/EVENTS_FOR_FREED_SOUND_A6.pdf" target="_blank"><img src="i/freesoundevents/02.png" alt="freesoundimage2" id="fs2"></a> </div>
+         </div>
         
     <p>    If you wish to reproduce the effect of this part of the concert, I would play this soundfile: <a href="https://freesound.org/people/BugInTheSYS/sounds/108605/"  target="_blank">event sounds</a> and then go on the <a href="freesounds.html" target="_blank">Freed Sounds Instrument</a> page in another tab and begin improvising with it.</p>
     <h3 class="technology">Technology used in this section:</h3>
@@ -202,4 +234,27 @@
 
     
 </body>
+<script>
+window.onload = choosePic;
+
+    var myPix = new Array();
+    console.log(myPix)
+    for (let i = 1; i < 21; i++)
+    {
+        i = ("0" + i).slice(-2);
+        ploop = `i/freesoundevents/${i}.png`
+        console.log(ploop)
+        myPix.push(ploop)
+        console.log(myPix)
+    }
+    console.log(myPix)
+    
+    function choosePic() {
+         var randomNum = Math.floor(Math.random() * myPix.length);
+         document.getElementById("fs2").src = myPix[randomNum];
+         var randomNum = Math.floor(Math.random() * myPix.length);
+         document.getElementById("fs1").src = myPix[randomNum];
+         setTimeout(choosePic, 5000)
+    }
+</script>
 </html>
