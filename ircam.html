@@ -89,7 +89,7 @@
         }
 
         .imgcontainer {
-            max-width: 60%;
+            max-width: 90%;
     -webkit-column-count: 2; /* Chrome, Safari, Opera */
     -moz-column-count: 2; /* Firefox */
     column-count: 2;
@@ -114,6 +114,219 @@
   height: auto;
   vertical-align: middle;
 }
+
+@keyframes move {
+    100% {
+        transform: translate3d(0, 0, 1px) rotate(360deg);
+    }
+}
+
+.red-background {
+    position: relative;
+    width: 80vw;
+    height: auto;
+    top: 0;
+    left: 0;
+    background: #d52a2a;
+    opacity: .8;
+    overflow: visible;
+    box-shadow: 1em 1em 1em 1em #d52a2a;
+}
+
+.red-background span {
+    width: 20vmin;
+    height: 20vmin;
+    border-radius: 20vmin;
+    backface-visibility: hidden;
+    position: absolute;
+    animation: move;
+    animation-duration: 45;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+
+.red-background span:nth-child(0) {
+    color: #583C87;
+    top: 77%;
+    left: 91%;
+    animation-duration: 9s;
+    animation-delay: -41s;
+    transform-origin: -4vw -17vh;
+    box-shadow: -40vmin 0 5.081032674006435vmin currentColor;
+}
+.red-background span:nth-child(1) {
+    color: #E45A84;
+    top: 59%;
+    left: 46%;
+    animation-duration: 46s;
+    animation-delay: -37s;
+    transform-origin: 23vw 11vh;
+    box-shadow: -40vmin 0 5.703078024090749vmin currentColor;
+}
+.red-background span:nth-child(2) {
+    color: #E45A84;
+    top: 21%;
+    left: 99%;
+    animation-duration: 18s;
+    animation-delay: -14s;
+    transform-origin: 13vw 9vh;
+    box-shadow: 40vmin 0 5.762599785248847vmin currentColor;
+}
+.red-background span:nth-child(3) {
+    color: #FFACAC;
+    top: 94%;
+    left: 82%;
+    animation-duration: 8s;
+    animation-delay: -5s;
+    transform-origin: -8vw 23vh;
+    box-shadow: -40vmin 0 5.123386949195027vmin currentColor;
+}
+.red-background span:nth-child(4) {
+    color: #FFACAC;
+    top: 87%;
+    left: 73%;
+    animation-duration: 32s;
+    animation-delay: -16s;
+    transform-origin: 13vw -9vh;
+    box-shadow: -40vmin 0 5.397876327850879vmin currentColor;
+}
+.red-background span:nth-child(5) {
+    color: #FFACAC;
+    top: 63%;
+    left: 49%;
+    animation-duration: 10s;
+    animation-delay: -11s;
+    transform-origin: 12vw -8vh;
+    box-shadow: 40vmin 0 5.113450284565463vmin currentColor;
+}
+.red-background span:nth-child(6) {
+    color: #E45A84;
+    top: 54%;
+    left: 17%;
+    animation-duration: 44s;
+    animation-delay: -32s;
+    transform-origin: 19vw 3vh;
+    box-shadow: -40vmin 0 5.168262302199782vmin currentColor;
+}
+.red-background span:nth-child(7) {
+    color: #583C87;
+    top: 30%;
+    left: 13%;
+    animation-duration: 42s;
+    animation-delay: -4s;
+    transform-origin: 24vw 15vh;
+    box-shadow: -40vmin 0 5.968968605553788vmin currentColor;
+}
+.red-background span:nth-child(8) {
+    color: #FFACAC;
+    top: 50%;
+    left: 77%;
+    animation-duration: 42s;
+    animation-delay: -22s;
+    transform-origin: -10vw -7vh;
+    box-shadow: 40vmin 0 5.930529355721067vmin currentColor;
+}
+.red-background span:nth-child(9) {
+    color: #FFACAC;
+    top: 37%;
+    left: 76%;
+    animation-duration: 32s;
+    animation-delay: -15s;
+    transform-origin: -18vw 5vh;
+    box-shadow: 40vmin 0 5.416849240318777vmin currentColor;
+}
+.red-background span:nth-child(10) {
+    color: #FFACAC;
+    top: 96%;
+    left: 85%;
+    animation-duration: 9s;
+    animation-delay: -22s;
+    transform-origin: 7vw -8vh;
+    box-shadow: -40vmin 0 5.674234789993401vmin currentColor;
+}
+.red-background span:nth-child(11) {
+    color: #FFACAC;
+    top: 48%;
+    left: 60%;
+    animation-duration: 16s;
+    animation-delay: -13s;
+    transform-origin: 8vw 2vh;
+    box-shadow: -40vmin 0 5.469329638102524vmin currentColor;
+}
+.red-background span:nth-child(12) {
+    color: #583C87;
+    top: 80%;
+    left: 47%;
+    animation-duration: 16s;
+    animation-delay: -37s;
+    transform-origin: 21vw 5vh;
+    box-shadow: -40vmin 0 5.764726607280393vmin currentColor;
+}
+.red-background span:nth-child(13) {
+    color: #FFACAC;
+    top: 6%;
+    left: 40%;
+    animation-duration: 34s;
+    animation-delay: -45s;
+    transform-origin: 3vw 4vh;
+    box-shadow: -40vmin 0 5.240876214018697vmin currentColor;
+}
+.red-background span:nth-child(14) {
+    color: #583C87;
+    top: 72%;
+    left: 11%;
+    animation-duration: 25s;
+    animation-delay: -30s;
+    transform-origin: -14vw 7vh;
+    box-shadow: -40vmin 0 5.734347113718522vmin currentColor;
+}
+.red-background span:nth-child(15) {
+    color: #583C87;
+    top: 20%;
+    left: 2%;
+    animation-duration: 51s;
+    animation-delay: -15s;
+    transform-origin: -3vw 17vh;
+    box-shadow: -40vmin 0 5.611023929769734vmin currentColor;
+}
+.red-background span:nth-child(16) {
+    color: #583C87;
+    top: 21%;
+    left: 70%;
+    animation-duration: 27s;
+    animation-delay: -21s;
+    transform-origin: 16vw -22vh;
+    box-shadow: 40vmin 0 5.648016273821988vmin currentColor;
+}
+.background span:nth-child(17) {
+    color: #FFACAC;
+    top: 13%;
+    left: 76%;
+    animation-duration: 33s;
+    animation-delay: -29s;
+    transform-origin: 10vw 23vh;
+    box-shadow: 40vmin 0 5.137393163405395vmin currentColor;
+}
+.red-background span:nth-child(18) {
+    color: #E45A84;
+    top: 80%;
+    left: 48%;
+    animation-duration: 42s;
+    animation-delay: -9s;
+    transform-origin: -21vw -2vh;
+    box-shadow: 40vmin 0 5.0892388178001156vmin currentColor;
+}
+.red-background span:nth-child(19) {
+    color: #E45A84;
+    top: 3%;
+    left: 63%;
+    animation-duration: 26s;
+    animation-delay: -37s;
+    transform-origin: -24vw 20vh;
+    box-shadow: -40vmin 0 5.979767097489772vmin currentColor;
+}
+
 
     </style>
 </head>
@@ -197,7 +410,7 @@
     <p>At the end of this piece, the silent opening of the next transition appeared immediately on the closest projection screen to this piece's position in the room.</p>
 
     <h3>TRANSITION: Shadow Puppets</h3>
-    <p>Looking for a visual link that could lighten the atmosphere without parodying or attacking Aida and Stefanie's work, I hit on the idea of using shadow puppets. I found a set of whimsical videos online and realised I could build a simple "love story" out of them, and also take advantage of their colouring to play some more tricks with transparency (hiding different images in the light and shadow portions of a rabbit, for example).</p>
+    <p>Looking for a visual link that could lighten the atmosphere without parodying or attacking Aida and Stefanie's work, I hit on the idea of using shadow puppets. I found a set of whimsical videos online and realised I could build a weird interspecies love story out of them, and also take advantage of their colouring to play some more tricks with transparency (e.g. hiding different images in the light and shadow portions of a rabbit).</p>
     <p>A big preoccupation for me while working on these sections was that the tone of the pieces around my transitions was mostly dark, serious and intense. I wanted to try and find a way to freshen the audience up so that they were ready for another intense piece, without seeming to make fun of any of the pieces. It's a fun challenge to try and make short, playful work that still has a kind of weight or beauty of its own (whether I succeeded or not is up to others to say!) </p>
     <p>So the video here is predominantly shadow puppets, with some more "random" material creeping in which mostly foreshadows later sections. The audio is entirely derived from Aida's piece: she sent me the full audio stems (each of her sounds separately) of her piece and I was able to batch process them and use them in a kind of rudimentary musical instrument to create some improvisations. I created the video first and tried to create long tumbling  whispers tied to the gestures in the video.</p>
     <p>The piece was projected on the wall, and at the end of the transition, a separate projection of red fog came up on another screen and revealed the position of the performer for the next piece, which starts immediately. The red fog is designed to loop and then fade down when ready.</p>
@@ -220,11 +433,33 @@
     <h3 class="technology">Technology used in this section:</h3>
     
     <p class="technology">Similar to the Doors transition, MUBU library for Max (for automated audio segmentation w/ onset-detection; and for real-time concatenative synthesis), Reaper DAW with various reverb settings: the audio part was made from loading in files, auto-segmenting them and then improvising with them laid out on a graph according to audio descriptors. The resulting tracks were then layered in Reaper and processed through different reverbs, aiming to achieve different spaces every time a door opened. The video is entirely fixed media and made in DaVinci Resolve, using the Fusion part of the software for the fancy chroma-key effects.</p>
-    
-    <h3>THIRD PIECE: Ghost shouting, Ghost screaming, by Qingqing Teng</h3>
+    <div class="red-background">
+      <h3>THIRD PIECE: Ghost shouting, Ghost screaming, by Qingqing Teng</h3>
     <p>This piece is for singer with a really crazy constricting costume. Qingqing has an amazing way of making super intense, loud, aggressive and bracing sounds and this piece is full of them! ADD MOR ETEXT</p>
 
     <p>The final sound of Qingqing's piece is this amazing jackhammerish pulse, and I used that as the start of my next transition. </p>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+   </div>
+    
 
 </div> <!-- end of container-->
    
@@ -242,7 +477,7 @@ window.onload = choosePic;
     for (let i = 1; i < 21; i++)
     {
         i = ("0" + i).slice(-2);
-        ploop = `i/freesoundevents/${i}.png`
+        var ploop = `i/freesoundevents/${i}.png`
         console.log(ploop)
         myPix.push(ploop)
         console.log(myPix)
