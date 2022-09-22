@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stolen Music @ IRCAM</title>
     <style>
+
+        :root {
+        --red: #d52a2a;
+        --red2: #E45A84;
+        --pink: #FFACAC;
+        }
+
         body {
   font-size: 1em;
   line-height: 1.5;
@@ -50,6 +57,11 @@
     margin: 0 18%;
   }
 }
+
+.flexpar {
+  display: flex;
+}
+
 
 .video {
     object-fit: cover;
@@ -127,22 +139,23 @@
     height: auto;
     top: 0;
     left: 0;
-    background: #d52a2a;
-    opacity: .8;
+    /* background: var(--red); */
+    opacity: 1;
     overflow: visible;
-    box-shadow: 1em 1em 1em 1em #d52a2a;
+    /* box-shadow: 1em 1em 1em 1em var(--red); */
 }
 
 .red-background span {
-    width: 20vmin;
-    height: 20vmin;
-    border-radius: 20vmin;
+    width: 14vmin;
+    height: 14vmin;
+    border-radius: 18vmin;
     backface-visibility: hidden;
     position: absolute;
     animation: move;
     animation-duration: 45;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
+    opacity: 0.4;
 }
 
 
@@ -152,20 +165,20 @@
     left: 91%;
     animation-duration: 9s;
     animation-delay: -41s;
-    transform-origin: -4vw -17vh;
+    transform-origin: -4vw -12vh;
     box-shadow: -40vmin 0 5.081032674006435vmin currentColor;
 }
 .red-background span:nth-child(1) {
-    color: #E45A84;
+    color: var(--red2);
     top: 59%;
     left: 46%;
     animation-duration: 46s;
     animation-delay: -37s;
-    transform-origin: 23vw 11vh;
+    transform-origin: 18vw 11vh;
     box-shadow: -40vmin 0 5.703078024090749vmin currentColor;
 }
 .red-background span:nth-child(2) {
-    color: #E45A84;
+    color: var(--red2);
     top: 21%;
     left: 99%;
     animation-duration: 18s;
@@ -179,20 +192,20 @@
     left: 82%;
     animation-duration: 8s;
     animation-delay: -5s;
-    transform-origin: -8vw 23vh;
+    transform-origin: -8vw 17vh;
     box-shadow: -40vmin 0 5.123386949195027vmin currentColor;
 }
 .red-background span:nth-child(4) {
-    color: #FFACAC;
+    color: var(--pink);
     top: 87%;
     left: 73%;
     animation-duration: 32s;
     animation-delay: -16s;
-    transform-origin: 13vw -9vh;
+    transform-origin: 9vw -9vh;
     box-shadow: -40vmin 0 5.397876327850879vmin currentColor;
 }
 .red-background span:nth-child(5) {
-    color: #FFACAC;
+    color: var(--pink);
     top: 63%;
     left: 49%;
     animation-duration: 10s;
@@ -206,7 +219,7 @@
     left: 17%;
     animation-duration: 44s;
     animation-delay: -32s;
-    transform-origin: 19vw 3vh;
+    transform-origin: 15vw 3vh;
     box-shadow: -40vmin 0 5.168262302199782vmin currentColor;
 }
 .red-background span:nth-child(7) {
@@ -215,7 +228,7 @@
     left: 13%;
     animation-duration: 42s;
     animation-delay: -4s;
-    transform-origin: 24vw 15vh;
+    transform-origin: 16vw 11vh;
     box-shadow: -40vmin 0 5.968968605553788vmin currentColor;
 }
 .red-background span:nth-child(8) {
@@ -224,16 +237,16 @@
     left: 77%;
     animation-duration: 42s;
     animation-delay: -22s;
-    transform-origin: -10vw -7vh;
+    transform-origin: -4vw -4vh;
     box-shadow: 40vmin 0 5.930529355721067vmin currentColor;
 }
 .red-background span:nth-child(9) {
-    color: #FFACAC;
+    color: var(--red2);
     top: 37%;
     left: 76%;
     animation-duration: 32s;
     animation-delay: -15s;
-    transform-origin: -18vw 5vh;
+    transform-origin: -10vw 5vh;
     box-shadow: 40vmin 0 5.416849240318777vmin currentColor;
 }
 .red-background span:nth-child(10) {
@@ -242,11 +255,11 @@
     left: 85%;
     animation-duration: 9s;
     animation-delay: -22s;
-    transform-origin: 7vw -8vh;
+    transform-origin: 3vw -8vh;
     box-shadow: -40vmin 0 5.674234789993401vmin currentColor;
 }
 .red-background span:nth-child(11) {
-    color: #FFACAC;
+    color: var(--red);
     top: 48%;
     left: 60%;
     animation-duration: 16s;
@@ -260,7 +273,7 @@
     left: 47%;
     animation-duration: 16s;
     animation-delay: -37s;
-    transform-origin: 21vw 5vh;
+    transform-origin: 11vw 5vh;
     box-shadow: -40vmin 0 5.764726607280393vmin currentColor;
 }
 .red-background span:nth-child(13) {
@@ -278,7 +291,7 @@
     left: 11%;
     animation-duration: 25s;
     animation-delay: -30s;
-    transform-origin: -14vw 7vh;
+    transform-origin: -7vw 7vh;
     box-shadow: -40vmin 0 5.734347113718522vmin currentColor;
 }
 .red-background span:nth-child(15) {
@@ -287,7 +300,7 @@
     left: 2%;
     animation-duration: 51s;
     animation-delay: -15s;
-    transform-origin: -3vw 17vh;
+    transform-origin: -3vw 11vh;
     box-shadow: -40vmin 0 5.611023929769734vmin currentColor;
 }
 .red-background span:nth-child(16) {
@@ -296,16 +309,16 @@
     left: 70%;
     animation-duration: 27s;
     animation-delay: -21s;
-    transform-origin: 16vw -22vh;
+    transform-origin: 12vw -10vh;
     box-shadow: 40vmin 0 5.648016273821988vmin currentColor;
 }
 .background span:nth-child(17) {
-    color: #FFACAC;
+    color: var(--red);
     top: 13%;
     left: 76%;
     animation-duration: 33s;
     animation-delay: -29s;
-    transform-origin: 10vw 23vh;
+    transform-origin: 7vw 13vh;
     box-shadow: 40vmin 0 5.137393163405395vmin currentColor;
 }
 .red-background span:nth-child(18) {
@@ -318,13 +331,19 @@
     box-shadow: 40vmin 0 5.0892388178001156vmin currentColor;
 }
 .red-background span:nth-child(19) {
-    color: #E45A84;
+    color: var(--red2);
     top: 3%;
     left: 63%;
     animation-duration: 26s;
     animation-delay: -37s;
-    transform-origin: -24vw 20vh;
+    transform-origin: -10vw 5vh;
     box-shadow: -40vmin 0 5.979767097489772vmin currentColor;
+}
+
+#jobsimage
+{
+    width: 15%;
+    height: auto;
 }
 
 
@@ -435,7 +454,9 @@
     <p class="technology">Similar to the Doors transition, MUBU library for Max (for automated audio segmentation w/ onset-detection; and for real-time concatenative synthesis), Reaper DAW with various reverb settings: the audio part was made from loading in files, auto-segmenting them and then improvising with them laid out on a graph according to audio descriptors. The resulting tracks were then layered in Reaper and processed through different reverbs, aiming to achieve different spaces every time a door opened. The video is entirely fixed media and made in DaVinci Resolve, using the Fusion part of the software for the fancy chroma-key effects.</p>
     <div class="red-background">
       <h3>THIRD PIECE: Ghost shouting, Ghost screaming, by Qingqing Teng</h3>
-    <p>This piece is for singer with a really crazy constricting costume. Qingqing has an amazing way of making super intense, loud, aggressive and bracing sounds and this piece is full of them! ADD MOR ETEXT</p>
+    <p>This piece is for singer with a really crazy constrictive costume, sort of reminiscent of a snake. Qingqing has an amazing way of making super intense, loud, aggressive and bracing sounds - she says herself that she tries to create music with an energy that seems to flow naturally from within, and in this case it's definitely true, with the energy being ferocious and uncapped.</p>
+    <p>There's a video part which uses red bands of colour as an alternative to stage lighting, but which also turns into a large number of different abstract geometric motifs, as well as more connoted material that reflects the material explored in the piece.</p>
+    <p>The title is a literal translation of "Gui han, Gui jiao", which is an expression from Qingqing's hometown, which means something like a cry of indifference to a strange phenomenon (although I'm not sure I've done a good job of paraphrasing Qingqing's French text here). The singer represents Qingqing, a person swimming along in the ocean, unable to escape: it's one of those pieces that tumbles around in a complicated inner life.</p>
 
     <p>The final sound of Qingqing's piece is this amazing jackhammerish pulse, and I used that as the start of my next transition. </p>
       <span></span>
@@ -459,7 +480,40 @@
       <span></span>
       <span></span>
    </div>
+
+   <h3>TRANSITION: 3D-WORLD</h3>
+   <p>This next section is where I took over the concert for a while and stopped making small transitions between other people's work. I knew that it made sense for Filippos' piece to go last, which meant there were really only three spots for me in the programme. While it might have been more radical or cohesive for me to deal ONLY in the interstitial moments of the concert, there weren't really enough of them to allow me to make a full statement. So I began to think about other material I could steal, and my mind went back to YouTube (I had some previous unfinished work which made use of masses of YouTube clips). As prep for the project, I downloaded my entire YouTube history and extracted a bunch of 5-second clips from all the videos, which served as part of my new material. Needless to say, none of this stuff has been taken with permission.</p>
+   <p>The effect is supposed to be an overwhelming media-saturation, with content flowing by too quickly to grasp even a significant amount of the meaning, and our brains flit between picking up on patterns of colour, movement or sound, and grabbing on to salient moments in the mess. Of course there's an obvious parallel with the way we all live our digital lives (is this really THAT much more intense than Instagram??), but by placing thousands of different copyrighted videos in this context the relevance of the specific content becomes virtually nil (a point previously made in related work <a href="https://ablinger.mur.at/ww22.html">Peter Ablinger</a>, among many others; although the most direct point of comparison I can think is the TV series <a href="https://youtu.be/mgze5Pa0_iM?t=56">Chuck</a>.</p><p>Technically, the video for this section was extremely demanding and took most of the summer to work out - described below for nerds... It's the work I am proudest of from that perspective.</p>
+   <p>The audio here is derived exclusively from the video clips used, which means there is a great degree of chance in the initial sound, and a very slow (quite sculptural) mixing process to try and coax the interesting sound out of the texture.</p>
+   <div class="video-container">
+    <div class="video-frame">
+        <div class="video">                           
+        <!-- replace embed src with video embed URL -->
+        <embed
+        src="   https://www.youtube-nocookie.com/embed/P6My5ug-EOg"
+        wmode="transparent"
+        type="video/mp4"
+        width="100%" height="100%"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen
+        ></div>
+    </div>
+    </div>
+    <h3>TRANSITION: TIK-TOK KAZOO LESSONS</h3>
+    <p> (See the previous video c. 1:40 for this section.)</p>
     
+    <p>For reasons that will become clear later, the real point of my piece was to get the whole audience playing kazoos along with me, so naturally I needed to teach everybody how to play this.</p><p>Subverting the formality of a new music context is always fun, but there's an interesting serious point in using videos generated with TikTok in the context of IRCAM. The building is a kind of mecca for people interested in making music with technology. In the early days, one of the important things about IRCAM was that it had a supercomputer: the relevance of that to most computer musicians has eroded, and centres all over the world are technologically equal or superior by now. And in fact, the laptops most normal people work on have been capable enough to create innovative computer music for a decade or two. But still it has remained the domain of the expert who can afford to spend time (and often money) learning to use arcane software. Apps like TikTok, which offer sophisticated audio effects and video filters like movement tracking driven by deep-learning, for free and with an interface designed to be intuitive and immediate enough for children to use in a spare moment.</p><p>It's still probably unwieldy to make complex multimedia art exclusively in apps like TikTok (although I want to try this...), but the reality is that we are getting close to the point where this will be practical.</p>
+    <p>Anyway, that last clip is a one-minute crash course in kazoo playing told through TikTok videos (which are also available individually on my TikTok account <a href="https://www.tiktok.com/@kazooteacher69?lang=en" target="_blank">@kazooteacher69</a></p>
+
+    <h3>PRESENTATION: HOW TO PLAY IRISH FOLK MUSIC</h3>
+    <p class="flexpar">
+        <img src="i/stevejobs.jpeg" id="jobsimage">
+        <span class="text">Immediately after the TikTok videos ended, a light came up in front of the projection position, and I walked out channeling the spirit of Steve Jobs (although it might be more accurate to say I was Elizabeth Holmes 2.0). <br> My mission was to sell the audience the idea that, firstly, the kazoo was an Irish folk instrument, secondly, that the music we were about to play was an ancient Irish folk tune, and thirdly that we were going to play it using a revolutionary, AI-driven karaoke machine I had created during my studies at IRCAM. <br><br>Although it's a little unfair on IRCAM to associate them with Silicon Valley snake oil, given that they make serious research and don't draw unnecessary attention the deep learning components of much of the software they are working on, it's an interesting thing right now that AI has become such a buzzword.<br><br> During the course of making this I made use of an online "AI Logo Generator", which I heavily suspect was just combining different elements from a library at random (i.e. NOT AI). Because software sold or described as "artifical intelligence" is already doing incredible, scary things all the time, and because it is hard to understand how any of it works, the general public is unable to (a) tell where the limits of this kind of software are or will be and (b) unable to tell when they are being tricked into buying something useless. I can't find the reference, but I heard an interesting remark recently which was that to find out whether you are being sold an AI scam, you can replace the word "AI" with the word "magic"...and back away if the description still makes sense. For sure, my IRCAM presentation did not pass that test!</span>
+      </p>
+      <!--ADD IN A SLIDESHOW kind of thing here with the speech on slides-->
+      <p>Of course, the reality was that my KARAOK.AI software (which you will see below) was just a fixed-media video put together in a video editing programme. But it would have been impossible to prove that in the concert hall, had anybody called me out!</p>
+
+
 
 </div> <!-- end of container-->
    
