@@ -349,6 +349,21 @@
     height: auto;
 }
 
+.button-style {
+            background-color: rgb(48, 199, 46); color: black;
+            border-color: forestgreen;
+            font-weight: bold;
+            padding: 15px 32px; 
+            font-size: 36px;
+            border-radius: 0px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+        .button-style:hover {
+  background-color: #724caf; /* Green */
+  color: white;
+}
+
 
     </style>
 <link rel="stylesheet" href="./webgl.css" type="text/css" />
@@ -380,20 +395,211 @@
     <h3>PRE-CONCERT: FREED SOUNDS INSTRUMENT</h3>
     <p>As the audience entered the concert space, they were given an envelope with mysterious contents...</p>
     <img src="i/kazooenvelope.jpeg" alt="Kazoo in envelope">
+
     <p>
-         They were also given a small card inserted into the programme notes which contained a QR code linking to this webpage:<br> <a href="freesounds.html"  target="_blank">Freed Sounds Instrument</a> <br>and including one or two small event pieces from a set of 32 <a href="s/EVENTS_FOR_FREED_SOUND_A6.pdf"  target="_blank">(linked here)</a>.</p><p>The audience were given the option of using this webpage while they waited for the concert to begin, and eventually it was shut off remotely right before the concert started properly.</p> 
+        They were also given a small card inserted into the programme notes which contained a QR code linking to <a href="freesounds.html"  target="_blank">a webpage</a> containing an instrument for playing random sounds from freesound.org, alongside one or two event pieces from a <a href="s/EVENTS_FOR_FREED_SOUND_A6.pdf"  target="_blank">set of 32</a>.</p><p>The audience were given the option of using this webpage while they waited, and it was silenced remotely right before the concert began.</p>
+
+    <details id="fs-details" style="font-family: Helvetica, Arial, sans-serif;"><summary style="color:red">[PLAY THE INSTRUMENT]</summary>    <script type="text/javascript" src="/s/freesound.js"></script> 
+        <div class="content">
+        <h1 style="color:red">FREED<br>SOUND<br>INSTRUMENT</h1>
+        <h2>TO PLAY THIS INSTRUMENT:</h2>
+    <h3>Use the buttons to add or remove sounds </h3>
+    <button class="create-stack button-style" role="switch" aria-checked="false" data-power="on">
+            <span>click to add a random sound</span>
+        </button><p></p>
+        <button class="button-style" id="killAudio" role="switch" aria-checked="false" data-power="on">
+            <span>stop last sound</span>
+        </button><p></p>
+        <button class="button-style" id="stopButton" role="switch" aria-checked="false" data-power="on">
+            <span>stop ALL sounds</span>
+        </button>
+        <br>
+        
+        <br>
+        <div id="activationDiv"></div>
+        <div id="errorDiv"></div>
+        <strong><div id="userSays"></div></strong>
+        <em><div id="descriptionOfSound"></div></em>
+    <br>
+    <div style="font-weight: bold">Currently playing:</div>
+        <div id="printSounds"></div>
+    <details><summary style="color:rgb(73, 80, 87)">[What to do / How it works]</summary>
+        <p>    If you wish to reproduce the effect of this part of the concert, I would play this soundfile: <a href="https://freesound.org/people/BugInTheSYS/sounds/108605/"  target="_blank">event sounds</a> in the background.</p>
+        <ul style="color:rgb(73, 80, 87)" class="narrow-text">
+            <li>use your internet-connected device to play sounds</li>
+            <li>you are now an improvising performer taking part in a distributed loudspeaker performance</li>
+            <li>the events on the page handed to you are from a set of 32.</li>
+            <li>they may be used to inform your improvisations (or you can ignore them) </li>
+            <li>this website will be deactivated before the concert begins</li>
+            <li>all the sounds are streamed live from <a href="https://www.freesound.org/" target="_blank">freesound.org</a>, where they were uploaded by people from all over the world</li>
+            <li>the sounds are chosen at random and have not been curated (the script picks a random sound ID between 1 and 100000 each time)</li>
+            <li>Special thanks to the team behind the Freesound API for allowing and facilitating this kind of use.</li>
+            <li>You can find the full set of Events for Freed Sound <a href="s/EVENTS_FOR_FREED_SOUND_A6.pdf" target="_blank">here</a></li>
+        
+        </ul> </details>   
+    
+    </div>
+    <br>
+    
+        <script type="text/javascript">
+                    
+                    
+                    console.log("want to happen second")
+            var index = 0
+            var soundList = []
+            var descList = []
+            var attributionList = []
+    
+    
+            // FreeSound
+            freesound.setToken("hLLHZHTBJqgj8AYPUC8QcnkTgaSGichlISxMvsR0"); //my client key
+            
+            
+    
+            
+    
+            // window.onload = function(){ main()
+    
+                
+            
+                
+                
+            // };
+    
+            
+            
+    
+            function createListener() {
+                
+                            //add an event listener (because audio can't autoplay!)   
+                const createButton = document.querySelector('.create-stack');
+                createButton.addEventListener('click', function(){
+                            
+                            
+                            
+                        
+                            //index += 1 // keeps tracks of number of sounds created (note: does not currently track sounds that finished playing)
+                            
+                            
+                            var fields = 'id,name,url,analysis,username';
+                            // Example 1
+                            // Example of geeting the info of a sound, queying for similar sounds (content-based) and showing some analysis
+                            // features. Both similar sounds and analysis features are obtained with additional requests to the api.
+                            activated = window.localStorage.getItem('activeStatus')
+                            console.log("activated", activated)
+                            if (activated == "true") {
+                            document.getElementById("errorDiv").textContent = ""
+                            freesound.getSound(getRandomInt(1, 100000),
+                                    function(sound){
+                                        
+                                        
+                                        
+    
+                                        var msg = "";
+                                        document.getElementById("descriptionOfSound").textContent = "" 
+                                        console.log(sound)
+                                        name = sound.name
+                                        user = sound.username
+                                        userSays = user + " says: "
+                                        desc = sound.description
+                                        attribution = name + " by " + user
+                                        console.log(attribution)                                      
+                                        snd = new Audio(sound.previews['preview-hq-mp3']);
+                                        document.body.appendChild(snd)
+                                        soundList.push(snd);
+                                        attributionList.push(attribution)
+                                        // descList.push(desc);
+                                        console.log(soundList)
+                                        document.getElementById("userSays").textContent = userSays
+                                        document.getElementById("printSounds").textContent = attributionList.join(' // ')
+                                        
+                                        document.getElementById("descriptionOfSound").textContent = desc 
+                                        snd.loop = true
+                                        snd.play();
+                                        return soundList, index
+                                        
+                                    //    displayMessage(msg,'resp1');                    
+                                    }, errorMsg );
+    
+                                }
+                            //return index
+                           
+                            
+            
+                        })
+                
+                document.getElementById("killAudio").addEventListener("click", killAudio);
+                document.getElementById("stopButton").addEventListener("click", killAllAudio);
+                
+            }
+            
+           
+    
+            
+            function killAudio() {
+                
+                index = soundList.length - 1
+                    console.log("index: ", index)
+                    soundList[index].pause()
+                    soundList.pop()
+                    attributionList.pop()
+                    document.getElementById("printSounds").textContent = attributionList.join(' // ')
+                    document.getElementById("userSays").textContent = ""
+                    document.getElementById("descriptionOfSound").textContent = ""
+    
+                    return soundList, index
+            }
+    
+            // function killAllListener() {
+            //     const killButton = document.querySelector('.stopButton');
+    
+            // }
+    
+            function killAllAudio() {
+                var audioList = document.getElementsByTagName('audio');
+                console.log("audios: ", audioList.length)
+                for (let i = 0; i < audioList.length; i++)
+                {killAudio()}
+            }
+    
+    
+    
+    
+    
+            function errorMsg() {
+            document.getElementById("descriptionOfSound").textContent = "" 
+            document.getElementById("errorDiv").textContent = "The sound you're looking for has been removed from the internet. Try again, please."
+                console.log("The sound you're looking for has been removed from the internet. Try again, please.")
+            }
+    
+            function getRandomInt(min, max) {
+                        return Math.floor(Math.random() * (max - min + 1)) + min;
+                }
+            
+            //    function displayError(text){
+              //      document.getElementById('error').innerHTML=text;
+              //  }
+            
+                function displayMessage(text,place){
+                    document.getElementById(place).innerHTML=text;
+                }
+            
+            </script></details>
+
+    <!-- <p>
+         They were also given a small card inserted into the programme notes which contained a QR code linking to this webpage:<br> <a href="freesounds.html"  target="_blank">Freed Sounds Instrument</a> <br>and including one or two small event pieces from a set of 32 <a href="s/EVENTS_FOR_FREED_SOUND_A6.pdf"  target="_blank">(linked here)</a>.</p><p>The audience were given the option of using this webpage while they waited for the concert to begin, and eventually it was shut off remotely right before the concert started properly.</p>  -->
 
          <div class="imgcontainer">
             <div><a href="s/EVENTS_FOR_FREED_SOUND_A6.pdf" target="_blank"><img src="i/freesoundevents/01.png" alt="freesoundimage1" id="fs1"></a> </div>
             <div><a href="s/EVENTS_FOR_FREED_SOUND_A6.pdf" target="_blank"><img src="i/freesoundevents/02.png" alt="freesoundimage2" id="fs2"></a> </div>
          </div>
         
-    <p>    If you wish to reproduce the effect of this part of the concert, I would play this soundfile: <a href="https://freesound.org/people/BugInTheSYS/sounds/108605/"  target="_blank">event sounds</a> and then go on the <a href="freesounds.html" target="_blank">Freed Sounds Instrument</a> page in another tab and begin improvising with it.</p>
+   
     <h3 class="technology">Technology used in this section:</h3>
     <p class="technology">JavaScript, <a href="https://freesound.org/docs/api/">FreeSound API</a>, printed materials</p>
 
     <h3>FIRST PIECE: BOX, by Julie Zhu</h3>
-    <p> This piece involved a percussionist (Olivia Martin) hidden inside a large wooden box, painted black and placed in the centre of the room. The percussionist made sounds using some percussion instruments (esp. bass drum, thundersheet) that were with her inside this claustrophic space, as well as drawing on the inside surfaces of the box. The contents of the box, as well as its surfaces, were amplified and spatialised across 12 loudspeakers (and two transducers attached to the thundersheet) in the room. The effect was to place the audience partly imagining being inside the box, and partly distorting the reality of the space inside and outside the box.</p><p>        Julie and the team decided to have the percussionist begin making sounds before the concert, while the Freed Sounds Improvisations were still going on, meaning that we had already weakened the clear boundaries around each piece by the time the concert began.</p>
+    <details><summary>[A percussionist hidden in a box...]</summary><p> This piece involved a percussionist (Olivia Martin) hidden inside a large wooden box, painted black and placed in the centre of the room. The percussionist made sounds using some percussion instruments (esp. bass drum, thundersheet) that were with her inside this claustrophic space, as well as drawing on the inside surfaces of the box. The contents of the box, as well as its surfaces, were amplified and spatialised across 12 loudspeakers (and two transducers attached to the thundersheet) in the room. The effect was to place the audience partly imagining being inside the box, and partly distorting the reality of the space inside and outside the box.</p><p>        Julie and the team decided to have the percussionist begin making sounds before the concert, while the Freed Sounds Improvisations were still going on, meaning that we had already weakened the clear boundaries around each piece by the time the concert began.</p></details>
     <h3>TRANSITION: Doors Into Worlds</h3>
     <h4>part one:</h4>
     <div class="video-container">    <canvas id="glcanvas"></canvas>
@@ -578,4 +784,30 @@ function fitToContainer(canvas){
 }
 
 </script>
+<script>
+var details = document.getElementById("fs-details") // creates the Firebase script when called; unfortunately I can't delete it so maybe I need to figure something out there...
+    details.addEventListener("toggle", function() {
+
+    var testData = document.getElementById("firebasecode");
+        
+    if (testData) {
+        console.log("already exists")
+    }
+    else  
+        {
+            console.log("trigged")
+    var s = document.createElement('script');
+    s.type = 'module';
+    s.src = "s/freesound-firebase.js";
+    s.id = "firebasecode"
+    try {
+      document.body.appendChild(s);
+    } catch (e) {
+      s.text = code;
+      document.body.appendChild(s);
+    }}
+  }
+)
+</script>
+
 </html>
