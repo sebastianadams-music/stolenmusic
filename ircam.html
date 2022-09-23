@@ -387,7 +387,8 @@
     <p> This piece involved a percussionist (Olivia Martin) hidden inside a large wooden box, painted black and placed in the centre of the room. The percussionist made sounds using some percussion instruments (esp. bass drum, thundersheet) that were with her inside this claustrophic space, as well as drawing on the inside surfaces of the box. The contents of the box, as well as its surfaces, were amplified and spatialised across 12 loudspeakers (and two transducers attached to the thundersheet) in the room. The effect was to place the audience partly imagining being inside the box, and partly distorting the reality of the space inside and outside the box.</p><p>        Julie and the team decided to have the percussionist begin making sounds before the concert, while the Freed Sounds Improvisations were still going on, meaning that we had already weakened the clear boundaries around each piece by the time the concert began.</p>
     <h3>TRANSITION: Doors Into Worlds</h3>
     <h4>part one:</h4>
-    <canvas id="glcanvas" width="480" height="480"></canvas>
+    <div class="video-container">    <canvas id="glcanvas"></canvas>
+</div>
 
       <div class="video-container">
         <div class="video-frame">
@@ -553,5 +554,19 @@ window.onload = choosePic;
          document.getElementById("fs1").src = myPix[randomNum];
          setTimeout(choosePic, 5000)
     }
+</script>
+<script> // canvas sizer
+    var canvas = document.getElementById('glcanvas');
+fitToContainer(canvas);
+
+function fitToContainer(canvas){
+  // Make it visually fill the positioned parent
+  canvas.style.width ='100%';
+  canvas.style.height='400px';
+  // ...then set the internal size to match
+  canvas.width  = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+
 </script>
 </html>
