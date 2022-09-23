@@ -151,6 +151,7 @@ function setupVideo(url) {
   );
 
   video.src = url;
+  video.currentTime = 5;
   video.play();
 
   function checkReady() {
