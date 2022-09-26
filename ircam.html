@@ -619,31 +619,162 @@
          
           <div class="mySlides">
             
-            <q>But man is not made for defeat. A man can be destroyed but not defeated.</q>
+            <q>OK, now that you know how our intuitive new system works, we can get to grips with some Irish folk music. </q>
           </div>
         <div class="mySlides">
             
-          <q>But man is not made for defeat. A man can be destroyed but not defeated.</q>
-          <p class="author">- Ernest Hemingway</p>
+          <q>This is one of my country's most treasured and ancient folk songs, <img src="i/karaokai_still.png" class="equation" style="width: 85%"><br> "Níor aimsigh mé a bhfuil á lorg agam go fóill".</q>
+          
+
         </div>
         
         <div class="mySlides">
-          <q>I have not failed. I've just found 10,000 ways that won't work.</q>
-          <p class="author">- Thomas A. Edison</p>
+          <q>One more thing... Please enjoy the Karaok.AI.</q>
+          <input type="button" value="( ͡° ͜ʖ ͡°) PLAY KARAOK.AI" onclick="playYT1()">
+          
         </div>
+        
         
         <a class="prev" onclick="plusSlides(-1)">❮</a>
         <a class="next" onclick="plusSlides(1)">❯</a>
         
         </div>
-        
+
         <!-- <div class="dot-container">
           <span class="dot" onclick="currentSlide(1)"></span> 
           <span class="dot" onclick="currentSlide(2)"></span> 
           <span class="dot" onclick="currentSlide(3)"></span> 
         </div> -->
       <!--ADD IN A SLIDESHOW kind of thing here with the speech on slides-->
-      <p>Of course, the reality was that my KARAOK.AI software (which you will see below) was just a fixed-media video put together in a video editing programme. But it would have been impossible to prove that in the concert hall, had anybody called me out!</p>
+      
+
+      <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+    <div id="player1"></div>
+    <p>Of course, the reality was that my KARAOK.AI software (which you will see below) was just a fixed-media video put together in a video editing programme. But it would have been impossible to prove that in the concert hall, had anybody called me out!</p>
+    <div id="player2" style="display:none"></div>
+
+    <script id="script_1">
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementById('script_1');
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var playerOne;
+      function onYouTubeIframeAPIReady() {
+        playerOne = new YT.Player('player1', {
+          height: '390',
+          width: '640',
+          videoId: 'Ldlz1mL7UKQ',
+          playerVars: {
+            'playsinline': 1
+          },
+          events: {
+            //'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+
+        playerTwo = new YT.Player('player2', {
+      height: '390',
+      width: '640',
+      videoId: 'b-iuIRgefxc',
+      playerVars: {
+        'playsinline': 1
+      },
+      events: {
+        //'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+      }
+    });
+      }
+
+
+      function playYT1(event) {
+        playerOne.playVideo()
+
+      }
+
+      function playYT2() {
+        playerTwo.playVideo()
+
+     }
+    
+    //   // 4. The API will call this function when the video player is ready.
+    //   function onPlayerReady(event) {
+    //     event.target.playVideo();
+    //   }
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      var done = false;
+      function onPlayerStateChange(event) {
+        console.log("state has changed")
+        if (event.data == YT.PlayerState.PLAYING) {
+          setTimeout(timeVideo1, 1000);
+        }
+        else if (event.data == YT.PlayerState.PAUSED && !done)
+        {
+            console.log("stopped")
+            setTimeout(revealVideo2, 1000)
+
+        }
+        else {
+            console.log("didn'twork")
+        }
+        
+
+    }
+      function timeVideo1() {
+        time = playerOne.getCurrentTime();
+        console.log(time)
+        if (time > 114) {
+            revealVideo2()
+
+
+
+
+        }
+        else {
+
+        setTimeout(timeVideo1, 1000);
+
+        }
+      }
+
+      function revealVideo2() {
+        document.getElementById("player2").style.display = "block"
+            document.exitFullscreen()
+            document.getElementById('player2').scrollIntoView();
+            setTimeout(playYT2, 500);
+            setTimeout(stopVideo1, 900);
+            done = true;
+      }
+
+      function stopVideo1() {
+        
+        playerOne.stopVideo();
+      }
+
+//       var done = false;
+//   function onPlayerStateChange(event) {
+//     if (event.data == YT.PlayerState.PLAYING && !done) {
+//       setTimeout(stopVideo2, 6000);
+//       done = true;
+//     }
+//   }
+  function stopVideo2() {
+    playerTwo.stopVideo();
+  }
+    </script>
+
+
+
+
 
 
 
