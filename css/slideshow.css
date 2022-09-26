@@ -15,9 +15,11 @@
   .prev, .next {
     cursor: pointer;
     position: absolute;
-    top: 50%;
+    top: 0%;
+
     width: auto;
-    margin-top: -30px;
+    height: 95%;
+    margin-top: 0px;
     padding: 16px;
     color: #888;
     font-weight: bold;
@@ -69,3 +71,19 @@
 
   /* Add a blue color to the author */
   /* .author {color: cornflowerblue;}  */
+
+  .kazoo-keyboard {
+    display: grid;
+    grid-template-columns: repeat(13, 1fr);
+    grid-template-rows: repeat(1, 5vw);
+    grid-gap: 15px;
+    user-select: none;
+
+
+  }
+
+  .kazoo-play {
+    cursor: pointer;
+    user-select: none;
+
+  }

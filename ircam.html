@@ -425,7 +425,7 @@
         <div class="mySlides">
         
             <p><q>So, with your gracious help, we're going to play a well-known Irish folk song together using some groundbreaking technology I've developed here during my Cursus – and of course, using our kazoos. <span style="display:none">Pause,  pick up kazoo, hold it aloft and point at slide... </span> </q></p>
-            <img src="i/equation_1.png" style="width: 85%">
+            <img src="i/equation_1.png" class="equation" style="width: 85%">
         </div>
 
         <div class="mySlides">
@@ -439,6 +439,175 @@
             
           </div>
 
+          <div class="mySlides">
+            
+            <q>So, first, please let me demonstrate – and then we’ll all hum along together afterwards.</q>
+          </div>
+
+          <div class="mySlides">
+            
+            <q>Click the button below for an interactive kazoo learning experience.</q><br>
+
+                    <input type="button" value="( ͡° ͜ʖ ͡°)" onclick="clicc()">
+
+                    <div id="kazoodemo1" style="width:100%"></div>
+
+                    <script>
+                    function clicc(){
+                    document.getElementById("kazoodemo1").innerHTML = "<div><video id='kazoodemovideo' source src='i/KazooDemo1.mp4' type='video/mp4' width='80%'></video></div>";
+                    window.speechSynthesis.cancel()
+                    var video = document.getElementById("kazoodemovideo")
+                    video.play()
+                    setTimeout(callBackVideo(video), 1000)
+
+
+                    
+
+                    }
+
+                    function callBackVideo(video){
+                        if (video.paused) {
+                        console.log("video is stopped");
+                        document.getElementById("kazoodemo1").innerHTML = `<div><p>QUESTION: Were you satisfied with your performance?</p></div><input type="button" value="YES!" onclick="ifUnsatisfied()"><input type="button" value="NO!" onclick="clicc()">`
+                    } else {
+                        // console.log("video is playing");
+                        setTimeout(callBackVideo, 1000, video)
+                    }
+                    }
+
+                    function ifUnsatisfied(){
+                        document.getElementById("kazoodemo1").innerHTML = ""
+                        plusSlides(1)
+                    }
+
+                    </script>
+                    </div>
+
+
+
+            
+                      <div class="mySlides">
+                        
+                        <q>Now we'll make it a little bit more complicated and play a famous tune together.</q><br>
+                        <p>Click the button again when you're ready.</p>
+            
+                                <input type="button" value="( ͡° ͜ʖ ͡°)" onclick="clicc2()">
+            
+                                <div id="kazoodemo2" style="width:100%"></div>
+            
+                                <script>
+                                function clicc2(){
+                                document.getElementById("kazoodemo2").innerHTML = "<div><video id='kazoodemovideo2' source src='i/KazooDemo2.mp4' type='video/mp4' width='80%'></video></div>";
+                                window.speechSynthesis.cancel()
+                                var video = document.getElementById("kazoodemovideo2")
+                                video.play()
+                                setTimeout(callBackVideo2(video), 1000, video)
+            
+            
+                                
+            
+                                }
+            
+                                function callBackVideo2(video){
+                                    if (video.paused) {
+                                    console.log("video is stopped");
+                                    document.getElementById("kazoodemo2").innerHTML = `<div><p>QUESTION: Were you satisfied with your performance?</p></div><input type="button" value="YES!" onclick="ifUnsatisfied2()"><input type="button" value="NO!" onclick="clicc2()">`
+                                } else {
+                                    // console.log("video is playing");
+                                    setTimeout(callBackVideo2, 1000, video)
+                                }
+                                }
+            
+                                function ifUnsatisfied2(){
+                                    document.getElementById("kazoodemo2").innerHTML = ""
+                                    plusSlides(1)
+                                }
+            
+                                </script>
+                                </div>
+
+            <div class="mySlides">
+
+                <q>
+                    God, that's gorgeous! Sounds like we have some musicians in the house!
+                    </q>
+                </div>
+                
+
+          <div class="mySlides">
+            
+            <q>OK now, together with the world class research teams at IRCAM, I have developed a game-changing system for real-time sing-along folk sessions, and this is the first ever public demonstration.</q>
+          </div>
+          
+          <div class="mySlides">
+            
+            <q>Our neural-net-driven system is called KARAOK.AI <br>
+
+                it’s the only one of its kind in the world, <br>
+                
+                and together, we are about to MAKE HISTORY! <br><span style="display:none">immediately move to next slide and play video without taking a beat.</span>
+                </q>
+                <img src="i/equation_2.png" class="equation" style="width: 85%">
+
+                
+          </div>
+
+          <div class="mySlides">
+            
+            <q>This is KARAOK.AI. <span style="display:none">Pause.</span><div><video id='karaokai-animation' source src='i/animatednotationdemo.mp4' type='video/mp4' width='80%' autoplay="true" loop="true"></video></div> Watch how the red kazoo bounces intuitively across the screen to keep your singing in time with the music.<br> Click to the next slide and we'll play along with it.</q>
+            
+
+          </div>
+
+          <div class="mySlides">
+            
+            <q>Play along using your kazoo or the handy kazoo keyboard below. <span style="display:none">Pause.</span></q><div><video id='karaokai-animation' source src='i/animatednotationdemo.mp4' type='video/mp4' width='80%' autoplay="true" loop="true"></video></div>
+            <div class="kazoo-keyboard">
+                <img class="kazoo-play" style="" src="i/redkazoo.png" onclick="playKazoo(0)">
+                <img class="kazoo-play" src="i/redkazoo.png" onclick="playKazoo(1)">
+                <img class="kazoo-play" src="i/redkazoo.png"  onclick="playKazoo(2)">
+                <img class="kazoo-play" src="i/redkazoo.png"  onclick="playKazoo(3)">
+                <img class="kazoo-play" src="i/redkazoo.png"  onclick="playKazoo(4)">
+                <img class="kazoo-play" src="i/redkazoo.png"  onclick="playKazoo(5)">
+                <img class="kazoo-play" src="i/redkazoo.png"  onclick="playKazoo(6)">
+                <img class="kazoo-play" src="i/redkazoo.png"  onclick="playKazoo(7)">
+                <img class="kazoo-play" src="i/redkazoo.png"  onclick="playKazoo(8)">
+                <img class="kazoo-play" src="i/redkazoo.png"  onclick="playKazoo(9)">
+                <img class="kazoo-play" src="i/redkazoo.png"  onclick="playKazoo(10)">
+                <img class="kazoo-play" src="i/redkazoo.png"  onclick="playKazoo(11)">
+                <img class="kazoo-play" src="i/redkazoo.png"  onclick="playKazoo(12)">
+            <script type="text/javascript">
+                function playKazoo(pitch)
+                {
+                    const file = chooseKazoo()
+                    const audio = new Audio(file);
+                    const speed = 1 * Math.pow(2, pitch/12)
+                    console.log(speed)
+                    audio.preservesPitch = false
+                    audio.playbackRate = speed
+                    audio.play();
+
+
+
+                }
+
+                function chooseKazoo() {
+                        var i = getRandomInt(1, 4)
+
+                        var audio = `a/kazoo_${i}.mp3`
+                        return audio
+
+                    }
+                
+            </script>
+            </div>
+          </div>
+          
+         
+          <div class="mySlides">
+            
+            <q>But man is not made for defeat. A man can be destroyed but not defeated.</q>
+          </div>
         <div class="mySlides">
             
           <q>But man is not made for defeat. A man can be destroyed but not defeated.</q>
