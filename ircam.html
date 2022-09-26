@@ -580,7 +580,9 @@
                 function playKazoo(pitch)
                 {
                     const file = chooseKazoo()
+                    console.log(file)
                     const audio = new Audio(file);
+                    console.log(audio)
                     audio.type = "audio/mpeg"
                     const speed = 1 * Math.pow(2, pitch/12)
                     console.log(speed)
