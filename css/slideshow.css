@@ -74,9 +74,9 @@
 
   .kazoo-keyboard {
     display: grid;
-    grid-template-columns: repeat(13, 1fr);
-    grid-template-rows: repeat(1, 5vw);
-    grid-gap: 15px;
+    grid-template-columns: repeat(13, 5fr);
+    grid-template-rows: repeat(1, 2vw);
+    grid-gap: 0px;
     user-select: none;
 
 
@@ -85,5 +85,7 @@
   .kazoo-play {
     cursor: pointer;
     user-select: none;
+    
+    
 
   }

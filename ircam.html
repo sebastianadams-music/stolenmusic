@@ -581,6 +581,7 @@
                 {
                     const file = chooseKazoo()
                     const audio = new Audio(file);
+                    audio.type = "audio/mpeg"
                     const speed = 1 * Math.pow(2, pitch/12)
                     console.log(speed)
                     audio.preservesPitch = false
@@ -597,8 +598,18 @@
                         var audio = `a/kazoo_${i}.mp3`
                         return audio
 
+                        
                     }
                 
+                function chooseKazooDropBox() {
+                var kazooLinks = ["https://www.dropbox.com/s/s78ypzk1idj3jex/kazoo_1.mp3?dl=1", "https://www.dropbox.com/s/spcn4sgk9fkiu9o/kazoo_2.mp3?dl=1", "https://www.dropbox.com/s/m6gsdbwou1po7f2/kazoo_3.mp3?dl=1", "https://www.dropbox.com/s/g6hcf5yj2xey3ls/kazoo_4.mp3?dl=1"]
+                    var i = getRandomInt(0, 3)
+
+                    var audio = kazooLinks[i]
+                    return audio
+
+                }
+
             </script>
             </div>
           </div>
