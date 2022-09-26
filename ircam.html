@@ -5,368 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stolen Music @ IRCAM</title>
-    <style>
-
-        :root {
-        --red: #d52a2a;
-        --red2: #E45A84;
-        --pink: #FFACAC;
-        }
-
-        body {
-  font-size: 1em;
-  line-height: 1.5;
-}
-@media (min-width: 64em) {
-  body {
-    font-size: 1.2em;
-    line-height: 1.8;
-  }
-}
-@media (min-width: 85.375em) {
-  body {
-    font-size: 1.3em;
-  }
-}
-@media (min-width: 120em) {
-  body {
-    font-size: 1.4em;
-  }
-}
-@media (min-width: 160em) {
-  body {
-    font-size: 1.6em;
-  }
-}
-
-.container {
-  margin: 0 4%;
-}
-@media (min-width: 64em) {
-  .container {
-    margin: 0 8%;
-  }
-}
-@media (min-width: 85.375em) {
-  .container {
-    margin: 0 12%;
-  }
-}
-@media (min-width: 120em) {
-  .container {
-    margin: 0 18%;
-  }
-}
-
-.flexpar {
-  display: flex;
-}
-
-
-.video {
-    object-fit: cover;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-}
-
-.video-frame {
-    position: relative;
-    padding-bottom: 56.25%;
-    display: block;
-    overflow: hidden;
-}
-
-.video-container {
-    max-width: 600px;
-}
-/* 
-.video {
-    width: 560px; height: 315px; float: none; clear: both; margin: 2px auto;
-} */
-    details summary { 
-    cursor: pointer;
-    }
-
-        img{
-    width:100%;
-    max-width:600px;
-}
-
-
-
-.technology{
-            color: gray;
-            font-size: .8em;
-            line-height: 1.4;
-        }
-
-        .imgcontainer {
-            max-width: 90%;
-    -webkit-column-count: 2; /* Chrome, Safari, Opera */
-    -moz-column-count: 2; /* Firefox */
-    column-count: 2;
-    -webkit-column-gap: 0px; /* Chrome, Safari, Opera */
-    -moz-column-gap: 0px; /* Firefox */
-    column-gap: 0px;
-    padding: 0px;
-}
-
-.imgcontainer div {
-  width: 100%;
-  /* display: inline-block;   */
-  background: lavender;
-  border: 0px solid black;
-  box-sizing: border-box;
-  text-align: center;
-  margin-bottom: 0px;
-}
-
-.imgcontainer img {
-  width: 100%;
-  height: auto;
-  vertical-align: middle;
-}
-
-@keyframes move {
-    100% {
-        transform: translate3d(0, 0, 1px) rotate(360deg);
-    }
-}
-
-.red-background {
-    position: relative;
-    width: 80vw;
-    height: auto;
-    top: 0;
-    left: 0;
-    /* background: var(--red); */
-    opacity: 1;
-    overflow: visible;
-    /* box-shadow: 1em 1em 1em 1em var(--red); */
-}
-
-.red-background span {
-    width: 14vmin;
-    height: 14vmin;
-    border-radius: 18vmin;
-    backface-visibility: hidden;
-    position: absolute;
-    animation: move;
-    animation-duration: 45;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    opacity: 0.4;
-}
-
-
-.red-background span:nth-child(0) {
-    color: #583C87;
-    top: 77%;
-    left: 91%;
-    animation-duration: 9s;
-    animation-delay: -41s;
-    transform-origin: -4vw -12vh;
-    box-shadow: -40vmin 0 5.081032674006435vmin currentColor;
-}
-.red-background span:nth-child(1) {
-    color: var(--red2);
-    top: 59%;
-    left: 46%;
-    animation-duration: 46s;
-    animation-delay: -37s;
-    transform-origin: 18vw 11vh;
-    box-shadow: -40vmin 0 5.703078024090749vmin currentColor;
-}
-.red-background span:nth-child(2) {
-    color: var(--red2);
-    top: 21%;
-    left: 99%;
-    animation-duration: 18s;
-    animation-delay: -14s;
-    transform-origin: 13vw 9vh;
-    box-shadow: 40vmin 0 5.762599785248847vmin currentColor;
-}
-.red-background span:nth-child(3) {
-    color: #FFACAC;
-    top: 94%;
-    left: 82%;
-    animation-duration: 8s;
-    animation-delay: -5s;
-    transform-origin: -8vw 17vh;
-    box-shadow: -40vmin 0 5.123386949195027vmin currentColor;
-}
-.red-background span:nth-child(4) {
-    color: var(--pink);
-    top: 87%;
-    left: 73%;
-    animation-duration: 32s;
-    animation-delay: -16s;
-    transform-origin: 9vw -9vh;
-    box-shadow: -40vmin 0 5.397876327850879vmin currentColor;
-}
-.red-background span:nth-child(5) {
-    color: var(--pink);
-    top: 63%;
-    left: 49%;
-    animation-duration: 10s;
-    animation-delay: -11s;
-    transform-origin: 12vw -8vh;
-    box-shadow: 40vmin 0 5.113450284565463vmin currentColor;
-}
-.red-background span:nth-child(6) {
-    color: #E45A84;
-    top: 54%;
-    left: 17%;
-    animation-duration: 44s;
-    animation-delay: -32s;
-    transform-origin: 15vw 3vh;
-    box-shadow: -40vmin 0 5.168262302199782vmin currentColor;
-}
-.red-background span:nth-child(7) {
-    color: #583C87;
-    top: 30%;
-    left: 13%;
-    animation-duration: 42s;
-    animation-delay: -4s;
-    transform-origin: 16vw 11vh;
-    box-shadow: -40vmin 0 5.968968605553788vmin currentColor;
-}
-.red-background span:nth-child(8) {
-    color: #FFACAC;
-    top: 50%;
-    left: 77%;
-    animation-duration: 42s;
-    animation-delay: -22s;
-    transform-origin: -4vw -4vh;
-    box-shadow: 40vmin 0 5.930529355721067vmin currentColor;
-}
-.red-background span:nth-child(9) {
-    color: var(--red2);
-    top: 37%;
-    left: 76%;
-    animation-duration: 32s;
-    animation-delay: -15s;
-    transform-origin: -10vw 5vh;
-    box-shadow: 40vmin 0 5.416849240318777vmin currentColor;
-}
-.red-background span:nth-child(10) {
-    color: #FFACAC;
-    top: 96%;
-    left: 85%;
-    animation-duration: 9s;
-    animation-delay: -22s;
-    transform-origin: 3vw -8vh;
-    box-shadow: -40vmin 0 5.674234789993401vmin currentColor;
-}
-.red-background span:nth-child(11) {
-    color: var(--red);
-    top: 48%;
-    left: 60%;
-    animation-duration: 16s;
-    animation-delay: -13s;
-    transform-origin: 8vw 2vh;
-    box-shadow: -40vmin 0 5.469329638102524vmin currentColor;
-}
-.red-background span:nth-child(12) {
-    color: #583C87;
-    top: 80%;
-    left: 47%;
-    animation-duration: 16s;
-    animation-delay: -37s;
-    transform-origin: 11vw 5vh;
-    box-shadow: -40vmin 0 5.764726607280393vmin currentColor;
-}
-.red-background span:nth-child(13) {
-    color: #FFACAC;
-    top: 6%;
-    left: 40%;
-    animation-duration: 34s;
-    animation-delay: -45s;
-    transform-origin: 3vw 4vh;
-    box-shadow: -40vmin 0 5.240876214018697vmin currentColor;
-}
-.red-background span:nth-child(14) {
-    color: #583C87;
-    top: 72%;
-    left: 11%;
-    animation-duration: 25s;
-    animation-delay: -30s;
-    transform-origin: -7vw 7vh;
-    box-shadow: -40vmin 0 5.734347113718522vmin currentColor;
-}
-.red-background span:nth-child(15) {
-    color: #583C87;
-    top: 20%;
-    left: 2%;
-    animation-duration: 51s;
-    animation-delay: -15s;
-    transform-origin: -3vw 11vh;
-    box-shadow: -40vmin 0 5.611023929769734vmin currentColor;
-}
-.red-background span:nth-child(16) {
-    color: #583C87;
-    top: 21%;
-    left: 70%;
-    animation-duration: 27s;
-    animation-delay: -21s;
-    transform-origin: 12vw -10vh;
-    box-shadow: 40vmin 0 5.648016273821988vmin currentColor;
-}
-.background span:nth-child(17) {
-    color: var(--red);
-    top: 13%;
-    left: 76%;
-    animation-duration: 33s;
-    animation-delay: -29s;
-    transform-origin: 7vw 13vh;
-    box-shadow: 40vmin 0 5.137393163405395vmin currentColor;
-}
-.red-background span:nth-child(18) {
-    color: #E45A84;
-    top: 80%;
-    left: 48%;
-    animation-duration: 42s;
-    animation-delay: -9s;
-    transform-origin: -21vw -2vh;
-    box-shadow: 40vmin 0 5.0892388178001156vmin currentColor;
-}
-.red-background span:nth-child(19) {
-    color: var(--red2);
-    top: 3%;
-    left: 63%;
-    animation-duration: 26s;
-    animation-delay: -37s;
-    transform-origin: -10vw 5vh;
-    box-shadow: -40vmin 0 5.979767097489772vmin currentColor;
-}
-
-#jobsimage
-{
-    width: 15%;
-    height: auto;
-}
-
-.button-style {
-            background-color: rgb(48, 199, 46); color: black;
-            border-color: forestgreen;
-            font-weight: bold;
-            padding: 15px 32px; 
-            font-size: 36px;
-            border-radius: 0px;
-            transition-duration: 0.4s;
-            cursor: pointer;
-        }
-        .button-style:hover {
-  background-color: #724caf; /* Green */
-  color: white;
-}
-
-
-    </style>
-<link rel="stylesheet" href="./webgl.css" type="text/css" />
+    <link rel="stylesheet" href="css/ircamstyles.css">
+    <link rel="stylesheet" href="css/slideshow.css">
+    <link rel="stylesheet" href="./webgl.css" type="text/css" />
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"
   integrity="sha512-zhHQR0/H5SEBL3Wn6yYSaTTZej12z0hVZKOv3TwCUXT1z5qeqGcXJLLrbERYRScEDDpYIJhPC1fk31gqR783iQ=="
@@ -377,7 +18,7 @@
 </head>
 <body>
     <div class="container"><h1>STOLEN MUSIC at IRCAM</h1>
-    <h2>The first presentation of Stolen Music, at <a href="https://3537.org/" target="_blank">3537</a>, Paris</h2>
+    <!-- <h2>The first presentation of Stolen Music, at <a href="https://3537.org/" target="_blank">3537</a>, Paris</h2> -->
     <p>Stolen Music was originally conceived for my final project as part of the  <a href="https://www.ircam.fr/transmission/formations-superieures/cursus#la-promotion-202122" target="_blank">IRCAM Cursus</a>, and presented in <a href="https://3537.org/" target="_blank">3537</a> in Paris on 16th September 2022, but my interest in stealing material (often in morally dubious ways) goes back to at least 2012, with my pieces Tweet Piece #2 and CrowdScoreSing.</p><p>There is virtually no original material in Stolen Music.</p>
     <details>
         <summary>[aims]</summary>
@@ -732,8 +373,93 @@
     <h3>PRESENTATION: HOW TO PLAY IRISH FOLK MUSIC</h3>
     <p class="flexpar">
         <img src="i/stevejobs.jpeg" id="jobsimage">
-        <span class="text">Immediately after the TikTok videos ended, a light came up in front of the projection position, and I walked out channeling the spirit of Steve Jobs (although it might be more accurate to say I was Elizabeth Holmes 2.0). <br> My mission was to sell the audience the idea that, firstly, the kazoo was an Irish folk instrument, secondly, that the music we were about to play was an ancient Irish folk tune, and thirdly that we were going to play it using a revolutionary, AI-driven karaoke machine I had created during my studies at IRCAM. <br><br>Although it's a little unfair on IRCAM to associate them with Silicon Valley snake oil, given that they make serious research and don't draw unnecessary attention the deep learning components of much of the software they are working on, it's an interesting thing right now that AI has become such a buzzword.<br><br> During the course of making this I made use of an online "AI Logo Generator", which I heavily suspect was just combining different elements from a library at random (i.e. NOT AI). Because software sold or described as "artifical intelligence" is already doing incredible, scary things all the time, and because it is hard to understand how any of it works, the general public is unable to (a) tell where the limits of this kind of software are or will be and (b) unable to tell when they are being tricked into buying something useless. I can't find the reference, but I heard an interesting remark recently which was that to find out whether you are being sold an AI scam, you can replace the word "AI" with the word "magic"...and back away if the description still makes sense. For sure, my IRCAM presentation did not pass that test!</span>
-      </p>
+        <span class="text" style="z-index:1" >Immediately after the TikTok videos ended, a light came up in front of the projection position, and I walked out channeling the spirit of Steve Jobs (although it might be more accurate to say I was Elizabeth Holmes 2.0). <br> My mission was to sell the audience the idea that, firstly, the kazoo was an Irish folk instrument, secondly, that the music we were about to play was an ancient Irish folk tune, and thirdly that we were going to play it using a revolutionary, AI-driven karaoke machine I had created during my studies at IRCAM. <br><br>Although it's a little unfair on IRCAM to associate them with Silicon Valley snake oil, given that they make serious research and don't draw unnecessary attention the deep learning components of much of the software they are working on, it's an interesting thing right now that AI has become such a buzzword.</span><details><summary>[RANT ON AI LOGOS]</summary><div id="karaokai-logo" style="background-image: url('i/karaokai_logos/karaokai_10.png'); background-repeat: no-repeat; background-blend-mode:darken;
+            background-position: center; 
+            position: relative;"><span style="text-shadow: 2px 2px  rgb(255, 255, 255)">During the course of making this I made use of an online "AI Logo Generator", which I heavily suspect was just combining different elements from a library at random (i.e. NOT AI). Because software sold or described as "artifical intelligence" is already doing incredible, scary things all the time, and because it is hard to understand how any of it works, the general public is unable to (a) tell where the limits of this kind of software are or will be and (b) unable to tell when they are being tricked into buying something useless. I can't find the reference, but I heard an interesting remark recently which was that to find out whether you are being sold an AI scam, you can replace the word "AI" with the word "magic"...and back away if the description still makes sense. For sure, my IRCAM presentation did not pass that test!</span>></div></details>
+      </p></div>
+      <div class="slideshow-container">
+        <div class="mySlides">
+            <h3>MY AMAZING SLIDESHOW</h3>
+            <p>A mockup of my IRCAM presentation.</p>
+          </div>
+
+        <div class="mySlides">
+          <q>Good evening. 
+            Thanks so much for coming out tonight to the one and only, revolutionary Cursus concert 2022. 
+            <span style="display:none">Pause.</span>
+            I think I speak for everybody when I say, 
+            it’s truly great to be here.
+            </q>
+        </div>
+
+        <div class="mySlides">
+            <q>I hope you’ve all enjoyed and understood our little infomercial. 
+                By now, you all know how to play the kazoo – but I'm really here to teach everybody how to play a little Irish folk music.
+              </q>
+              <img src="i/redkazoo.png" style="width: 25%">
+          </div>
+
+          <div class="mySlides">
+            <q>Not a lot of people know that an early version of the Kazoo was first brought to the USA by Irish immigrants during the Great Hunger, <span style="display:none">Pause,  hit play on video... </span>  and in fact, the instrument originated by combining and miniaturising the Irish bodhran and the traditional Irish humming-flute 
+              </q>
+              <div class="video-container">
+                <div class="video-frame">
+                    <div class="video">                           
+                    <!-- replace embed src with video embed URL -->
+                    <embed
+                    src="https://www.youtube-nocookie.com/embed/Gu98ZOdneDA"
+                    wmode="transparent"
+                    type="video/mp4"
+                    width="100%" height="100%"
+                    allow="autoplay; encrypted-media; picture-in-picture"
+                    allowfullscreen
+                    ></div>
+                </div>
+                </div>
+          </div>
+        <div class="mySlides">
+        
+        <q>So, as an Irish musician in Paris, it makes a lot of sense to showcase my own culture at this once-in-a-lifetime IRCAM event</q>
+        </div>
+
+        <div class="mySlides">
+        
+            <p><q>So, with your gracious help, we're going to play a well-known Irish folk song together using some groundbreaking technology I've developed here during my Cursus – and of course, using our kazoos. <span style="display:none">Pause,  pick up kazoo, hold it aloft and point at slide... </span> </q></p>
+            <img src="i/equation_1.png" style="width: 85%">
+        </div>
+
+        <div class="mySlides">
+            
+            <q>But first, I want to make totally sure you've all understood how to play the kazoo, and, more importantly, teach you how this AI-driven performance is going to work.<br><br>
+
+                Are you all ready?
+                </q>
+
+            <h2>IF YOU HAVE A KAZOO IN YOUR HOUSE, YOU SHOULD RETRIEVE IT NOW!</h2>
+            
+          </div>
+
+        <div class="mySlides">
+            
+          <q>But man is not made for defeat. A man can be destroyed but not defeated.</q>
+          <p class="author">- Ernest Hemingway</p>
+        </div>
+        
+        <div class="mySlides">
+          <q>I have not failed. I've just found 10,000 ways that won't work.</q>
+          <p class="author">- Thomas A. Edison</p>
+        </div>
+        
+        <a class="prev" onclick="plusSlides(-1)">❮</a>
+        <a class="next" onclick="plusSlides(1)">❯</a>
+        
+        </div>
+        
+        <!-- <div class="dot-container">
+          <span class="dot" onclick="currentSlide(1)"></span> 
+          <span class="dot" onclick="currentSlide(2)"></span> 
+          <span class="dot" onclick="currentSlide(3)"></span> 
+        </div> -->
       <!--ADD IN A SLIDESHOW kind of thing here with the speech on slides-->
       <p>Of course, the reality was that my KARAOK.AI software (which you will see below) was just a fixed-media video put together in a video editing programme. But it would have been impossible to prove that in the concert hall, had anybody called me out!</p>
 
@@ -747,6 +473,7 @@
 
     
 </body>
+<script src="s/slideshow.js" type="text/javascript"></script>
 <script>
 window.onload = choosePic;
 
@@ -770,6 +497,29 @@ window.onload = choosePic;
          setTimeout(choosePic, 5000)
     }
 </script>
+<script>
+    window.onload = chooseLogo;
+    
+        var myPixe = new Array();
+        console.log(myPixe)
+        for (let i = 1; i < 21; i++)
+        {
+            var plooper = `i/karaokai_logos/karaokai_${i}.png`
+            // console.log(plooper)
+            myPixe.push(plooper)
+            console.log(myPixe)
+        }
+        console.log(myPixe)
+        
+        function chooseLogo() {
+             var randomNum1 = Math.floor(Math.random() * myPixe.length);
+             var image = myPixe[randomNum1]
+             console.log(image)
+             document.getElementById('karaokai-logo').style.backgroundImage = "url(" + image + ")"
+            // document.getElementById("karaokai-logo").src = myPixe[randomNum1];
+             setTimeout(chooseLogo, 1500)
+        }
+    </script>
 <script> // canvas sizer
     var canvas = document.getElementById('glcanvas');
 fitToContainer(canvas);
