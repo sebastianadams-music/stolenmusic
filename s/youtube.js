@@ -121,6 +121,9 @@ function playYT3AtKazoo() {
 
  function revealVideo2() {
    document.getElementById("player2container").style.display = "block"
+   document.getElementById("spoiler-button").style.display = "none"
+
+   
        document.exitFullscreen()
        document.getElementById('player2').scrollIntoView();
        setTimeout(playYT2, 500);
