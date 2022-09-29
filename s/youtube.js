@@ -43,7 +43,9 @@ playerThree = new YT.Player('player3', {
      width: '640',
      videoId: 'P6My5ug-EOg',
      playerVars: {
-       'playsinline': 1
+       'playsinline': 1,
+      
+
      },
      events: {
        //'onReady': onPlayerReady,
@@ -65,6 +67,17 @@ playerThree = new YT.Player('player3', {
    playerTwo.playVideo()
 
 }
+
+function playYT3() {
+    playerThree.playVideo()
+}
+
+function playYT3AtKazoo() {
+    playerThree.loadVideoById({'videoId': 'P6My5ug-EOg', 'startSeconds': 103})
+    playerThree.playVideo()
+
+ 
+ }
 
 //   // 4. The API will call this function when the video player is ready.
 //   function onPlayerReady(event) {

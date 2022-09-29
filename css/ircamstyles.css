@@ -95,7 +95,10 @@ max-width:600px;
     }
 
     .imgcontainer {
-        max-width: 90%;
+        max-width: 70%;
+        max-height: 35%;
+        width: auto;
+        height: auto;
 -webkit-column-count: 2; /* Chrome, Safari, Opera */
 -moz-column-count: 2; /* Firefox */
 column-count: 2;
@@ -336,8 +339,14 @@ box-shadow: -40vmin 0 5.979767097489772vmin currentColor;
 
 #jobsimage
 {
-width: 15%;
+max-width: 15%;
+max-height: 300px;
+width: auto;
 height: auto;
+display: block;
+
+
+padding-right: 6px;
 }
 
 .button-style {
@@ -355,3 +364,47 @@ background-color: #724caf; /* Green */
 color: white;
 }
 
+#website {
+    width: auto;
+    display: inline-block;
+    animation-name: websitex;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+
+}
+
+@keyframes websitex {
+    0% {
+        background-color: #d52a2a;
+    }
+    10% {
+        background-color: #412ad5;
+    }
+    20% {
+        background-color: #2ad5cc;
+    }
+    30% {
+        background-color: #ccd52a;
+    }
+    40% {
+        background-color: #d52a2a;
+    }
+    50% {
+        background-color: #ca2ad5;
+    }
+    60% {
+        background-color: #2a6ed5;
+    }
+    70% {
+        background-color: #2ad52d;
+    }
+    80% {
+        background-color: #d59f2a;
+    }
+    9% {
+        background-color: #d52a2a;
+    }
+    100% {
+        background-color: #2ad530;
+    }
+}
