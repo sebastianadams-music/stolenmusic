@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stolen Music @ IRCAM</title>
+    <link rel="stylesheet" href="css/ircamstyles.css">
+    <link rel="stylesheet" href="css/slideshow.css">
+    <link rel="stylesheet" href="./webgl.css" type="text/css" />
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"
+  integrity="sha512-zhHQR0/H5SEBL3Wn6yYSaTTZej12z0hVZKOv3TwCUXT1z5qeqGcXJLLrbERYRScEDDpYIJhPC1fk31gqR783iQ=="
+  crossorigin="anonymous"
+  defer
+></script>
+<script src="gl/webgl-demo.js" defer></script>
+<script> // free sound pictures
+   window.onload = choosePic;
+  choosePic()
+  
+      var myPix = new Array();
+      console.log(myPix)
+      for (let i = 1; i < 21; i++)
+      {
+          i = ("0" + i).slice(-2);
+          var ploop = `i/freesoundevents/${i}.png`
+          console.log(ploop)
+          myPix.push(ploop)
+          console.log(myPix)
+      }
+      console.log(myPix)
+      
+      function choosePic() {
+  
+           var randomNum = Math.floor(Math.random() * myPix.length);
+           document.getElementById("fs2").src = myPix[randomNum];
+           var randomNum = Math.floor(Math.random() * myPix.length);
+           document.getElementById("fs1").src = myPix[randomNum];
+           setTimeout(choosePic, 5000)
+      }
+  </script>
+</head>
+<body>
+    <div class="container"><h1>STOLEN MUSIC at IRCAM</h1>
+    <!-- <h2>The first presentation of Stolen Music, at <a href="https://3537.org/" target="_blank">3537</a>, Paris</h2> -->
+    <p>Stolen Music was originally conceived for my final project as part of the  <a href="https://www.ircam.fr/transmission/formations-superieures/cursus#la-promotion-202122" target="_blank">IRCAM Cursus</a>, and presented in <a href="https://3537.org/" target="_blank">3537</a> in Paris on 16th September 2022, but my interest in stealing material (often in morally dubious ways) goes back to at least 2012, with my pieces Tweet Piece #2 and CrowdScoreSing.</p><p>There is virtually no original material in Stolen Music.</p>
+    <details>
+        <summary>[aims]</summary>
+    
+        
+    <p>The basic aim of the project is to explore two main ideas that matter to me:
+        <ul>Examining the boundaries of a "piece" of music: questioning the idea of the sole author and finding ways to subvert the linear, sectional timeline of a typical musical performance (for example by creating transitions that merge multiple pieces by different composers in a way that introduces doubt about the start/end points and both foreshadows future material and references past events.</ul>
+        <ul>Presenting an argument that all musical material should be fair game for all people to work with, regardless of who owns it under current copyright law.</ul>
+    </p>
+    </details>
+    <details><p>This project owes a huge debt to <a href="https://www.ircam.fr/person/claudia-jane-scroccaro" target="_blank">Claudia Jane Scroccaro</a>, who was my main supervisor, as well as the whole pedagogy department at IRCAM, particularly Pierre Jodlowski, Sebastién Naves and Jean Lochard - who all directly contributed to this project in important ways.</p><p>My contribution to this concert unfolded in and around the other pieces in the concert, which were by Julie Zhu, Aida Shirazi (in close collaboration with the dance artist Stefanie Inhelder), Qingqing Teng, and Filippos Sakagian. In this case, their material was taken and used with their blessing and they were consulted about my plans for it - however, this was done mainly because we are all friends and it wouldn't have been right to misuse their material in a concert which was of such importance to all of us. They are also all due a big thank you for their generosity in agreeing to let me work with their music in this context! In general, I have no qualms about going against the wishes of other composers (and I expect others to feel free to treat me in the same way). </p><summary>[thanks]</summary></details>
+    
+    
+
+    <h3>PRE-CONCERT: FREED SOUNDS INSTRUMENT</h3>
+    <p>As the audience entered the concert space, they were given an envelope with mysterious contents...</p>
+    <img src="i/kazooenvelope.jpeg" alt="Kazoo in envelope">
+
+    <p>
+        They were also given a small card inserted into the programme notes which contained a QR code linking to <a href="freesounds.html"  target="_blank">a webpage</a> containing an instrument for playing random sounds from freesound.org, alongside one or two event pieces from a <a href="s/EVENTS_FOR_FREED_SOUND_A6.pdf"  target="_blank">set of 32</a>. The instrument is also embedded in this page (click the red text to expand it).</p><p>The audience were given the option of using this webpage while they waited, and it was silenced remotely right before the concert began.</p>
+
+    <details id="fs-details" style="font-family: Helvetica, Arial, sans-serif;"><summary style="color:red">[PLAY THE INSTRUMENT]</summary>    <script type="text/javascript" src="/s/freesound.js"></script> 
+        <div class="content">
+        <h1 style="color:red">FREED<br>SOUND<br>INSTRUMENT</h1>
+        <h2>TO PLAY THIS INSTRUMENT:</h2>
+    <h3>Use the buttons to add or remove sounds </h3>
+    <button class="create-stack button-style" role="switch" aria-checked="false" data-power="on">
+            <span>click to add a random sound</span>
+        </button><p></p>
+        <button class="button-style" id="killAudio" role="switch" aria-checked="false" data-power="on">
+            <span>stop last sound</span>
+        </button><p></p>
+        <button class="button-style" id="stopButton" role="switch" aria-checked="false" data-power="on">
+            <span>stop ALL sounds</span>
+        </button>
+        <br>
+        
+        <br>
+        <div id="activationDiv"></div>
+        <div id="errorDiv"></div>
+        <strong><div id="userSays"></div></strong>
+        <em><div id="descriptionOfSound"></div></em>
+    <br>
+    <div style="font-weight: bold">Currently playing:</div>
+        <div id="printSounds"></div>
+    <details><summary style="color:rgb(73, 80, 87)">[What to do / How it works]</summary>
+        <p>    If you wish to reproduce the effect of this part of the concert, I would play this soundfile: <a href="https://freesound.org/people/BugInTheSYS/sounds/108605/"  target="_blank">event sounds</a> in the background.</p>
+        <ul style="color:rgb(73, 80, 87)" class="narrow-text">
+            <li>use your internet-connected device to play sounds</li>
+            <li>you are now an improvising performer taking part in a distributed loudspeaker performance</li>
+            <li>the events on the page handed to you are from a set of 32.</li>
+            <li>they may be used to inform your improvisations (or you can ignore them) </li>
+            <li>this website will be deactivated before the concert begins</li>
+            <li>all the sounds are streamed live from <a href="https://www.freesound.org/" target="_blank">freesound.org</a>, where they were uploaded by people from all over the world</li>
+            <li>the sounds are chosen at random and have not been curated (the script picks a random sound ID between 1 and 100000 each time)</li>
+            <li>Special thanks to the team behind the Freesound API for allowing and facilitating this kind of use.</li>
+            <li>You can find the full set of Events for Freed Sound <a href="s/EVENTS_FOR_FREED_SOUND_A6.pdf" target="_blank">here</a></li>
+        
+        </ul> </details>   
+    
+    </div>
+    <br>
+    
+        <script type="text/javascript">
+                    
+                    
+                    console.log("want to happen second")
+            var index = 0
+            var soundList = []
+            var descList = []
+            var attributionList = []
+    
+    
+            // FreeSound
+            freesound.setToken("hLLHZHTBJqgj8AYPUC8QcnkTgaSGichlISxMvsR0"); //my client key
+            
+            
+    
+            
+    
+            // window.onload = function(){ main()
+    
+                
+            
+                
+                
+            // };
+    
+            
+            
+    
+            function createListener() {
+                
+                            //add an event listener (because audio can't autoplay!)   
+                const createButton = document.querySelector('.create-stack');
+                createButton.addEventListener('click', function(){
+                            
+                            
+                            
+                        
+                            //index += 1 // keeps tracks of number of sounds created (note: does not currently track sounds that finished playing)
+                            
+                            
+                            var fields = 'id,name,url,analysis,username';
+                            // Example 1
+                            // Example of geeting the info of a sound, queying for similar sounds (content-based) and showing some analysis
+                            // features. Both similar sounds and analysis features are obtained with additional requests to the api.
+                            activated = window.localStorage.getItem('activeStatus')
+                            console.log("activated", activated)
+                            if (activated == "true") {
+                            document.getElementById("errorDiv").textContent = ""
+                            freesound.getSound(getRandomInt(1, 100000),
+                                    function(sound){
+                                        
+                                        
+                                        
+    
+                                        var msg = "";
+                                        document.getElementById("descriptionOfSound").textContent = "" 
+                                        console.log(sound)
+                                        name = sound.name
+                                        user = sound.username
+                                        userSays = user + " says: "
+                                        desc = sound.description
+                                        attribution = name + " by " + user
+                                        console.log(attribution)                                      
+                                        snd = new Audio(sound.previews['preview-hq-mp3']);
+                                        document.body.appendChild(snd)
+                                        soundList.push(snd);
+                                        attributionList.push(attribution)
+                                        // descList.push(desc);
+                                        console.log(soundList)
+                                        document.getElementById("userSays").textContent = userSays
+                                        document.getElementById("printSounds").textContent = attributionList.join(' // ')
+                                        
+                                        document.getElementById("descriptionOfSound").textContent = desc 
+                                        snd.loop = true
+                                        snd.play();
+                                        return soundList, index
+                                        
+                                    //    displayMessage(msg,'resp1');                    
+                                    }, errorMsg );
+    
+                                }
+                            //return index
+                           
+                            
+            
+                        })
+                
+                document.getElementById("killAudio").addEventListener("click", killAudio);
+                document.getElementById("stopButton").addEventListener("click", killAllAudio);
+                
+            }
+            
+           
+    
+            
+            function killAudio() {
+                
+                index = soundList.length - 1
+                    console.log("index: ", index)
+                    soundList[index].pause()
+                    soundList.pop()
+                    attributionList.pop()
+                    document.getElementById("printSounds").textContent = attributionList.join(' // ')
+                    document.getElementById("userSays").textContent = ""
+                    document.getElementById("descriptionOfSound").textContent = ""
+    
+                    return soundList, index
+            }
+    
+            // function killAllListener() {
+            //     const killButton = document.querySelector('.stopButton');
+    
+            // }
+    
+            function killAllAudio() {
+                var audioList = document.getElementsByTagName('audio');
+                console.log("audios: ", audioList.length)
+                for (let i = 0; i < audioList.length; i++)
+                {killAudio()}
+            }
+    
+    
+    
+    
+    
+            function errorMsg() {
+            document.getElementById("descriptionOfSound").textContent = "" 
+            document.getElementById("errorDiv").textContent = "The sound you're looking for has been removed from the internet. Try again, please."
+                console.log("The sound you're looking for has been removed from the internet. Try again, please.")
+            }
+    
+            function getRandomInt(min, max) {
+                        return Math.floor(Math.random() * (max - min + 1)) + min;
+                }
+            
+            //    function displayError(text){
+              //      document.getElementById('error').innerHTML=text;
+              //  }
+            
+                function displayMessage(text,place){
+                    document.getElementById(place).innerHTML=text;
+                }
+            
+            </script></details>
+
+    
+    <br>
+         <div class="imgcontainer">
+            <div><a href="s/EVENTS_FOR_FREED_SOUND_A6.pdf" target="_blank"><img src="i/freesoundevents/01.png" alt="freesoundimage1" id="fs1"></a> </div>
+            <div><a href="s/EVENTS_FOR_FREED_SOUND_A6.pdf" target="_blank"><img src="i/freesoundevents/02.png" alt="freesoundimage2" id="fs2"></a> </div>
+         </div>
+        
+    <br>
+    <details><summary class="technology">Technology used in this section:</summary><p class="technology">JavaScript, <a href="https://freesound.org/docs/api/">FreeSound API</a>, printed materials</p></details>
+    
+
+    <h3>FIRST PIECE: BOX, by Julie Zhu</h3>
+    <details><summary>[A percussionist hidden in a box...]</summary><p> This piece involved a percussionist (Olivia Martin) hidden inside a large wooden box, painted black and placed in the centre of the room. The percussionist made sounds using some percussion instruments (esp. bass drum, thundersheet) that were with her inside this claustrophic space, as well as drawing on the inside surfaces of the box. The contents of the box, as well as its surfaces, were amplified and spatialised across 12 loudspeakers (and two transducers attached to the thundersheet) in the room. The effect was to place the audience partly imagining being inside the box, and partly distorting the reality of the space inside and outside the box.</p><p>        Julie and the team decided to have the percussionist begin making sounds before the concert, while the Freed Sounds Improvisations were still going on, meaning that we had already weakened the clear boundaries around each piece by the time the concert began.</p><a href="https://brahms.ircam.fr/fr/works/work/58057/">IRCAM listing</a></details>
+    <h3>TRANSITION: Doors Into Worlds</h3>
+    <h4>part one:</h4>
+    <div class="video-container">    <canvas id="glcanvas"></canvas>
+</div>
+
+      <div class="video-container">
+        <div class="video-frame">
+            <div class="video">
+            <!-- replace embed src with video embed URL -->
+                <embed
+            src="https://www.youtube-nocookie.com/embed/z038Tz6JZKo" 
+            wmode="transparent"
+            type="video/mp4"
+            width="100%" height="100%"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowfullscreen
+            ></div>
+        </div>
+        </div>
+    
+    <p>This video was projected on all four sides of the box used in Julie's piece. During the video, the percussionist opened the (previously invisible) door of the box and left it.</p> <details><summary>[about the material]</summary><p>The sonic material used is an array of YouTube videos of ASMR pen scratching (as I couldn't use material that was *really* from Julie's piece because all her material was processed live). The video part (obviously) is a bunch of clips of doors, mainly from famous films and TV shows. An additional element in the video is a Coke can, which was originally going to be a larger part of the project overall but even with its reduced role it makes sense to use such an iconic trademark. It also foreshadows a red colour palette for later on the concert.</p></details>
+    <p>Because the box needed to move out of the centre of the room to allow space for the remaining pieces in the concert, I prepared a second video, which was projected onto the wall. This change happened seamlessly and once the audience's gaze had shifted, the production team began the process of safely moving this large box (which was on a platform with wheels) to the side of the hall, parting the audience as they went.</p> 
+    <h4>part two:</h4>
+    <div class="video-container">
+      <div class="video-frame">
+        <div class="video">                           
+          <!-- replace embed src with video embed URL -->
+          <embed
+          src="https://www.youtube-nocookie.com/embed/hincEDrOO7o"
+          wmode="transparent"
+          type="video/mp4"
+          width="100%" height="100%"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen
+          ></div>
+        </div>
+      </div>
+      <br>
+      <details><summary>[about the material]</summary><p>This clip was designed to hold space, and it uses a looped clip of a scene from the film <a href="https://www.imdb.com/title/tt0201538/" target="_blank">Les convoyeurs attendent</a>, with the contents behind a door chroma-keyed out and with all kinds of footage washily displayed behind it. When the production team had moved the box, the video fades down regardless of where in the video it is. </p></details>
+      
+      
+
+    
+    <br><details><summary class="technology">Technology used in this section:</summary><p class="technology">MUBU library for Max (for automated audio segmentation w/ onset-detection; and for real-time concatenative synthesis), Reaper DAW with various reverb settings: the audio part was made from loading in files, auto-segmenting them and then improvising with them laid out on a graph according to audio descriptors. The resulting tracks were then layered in Reaper and processed through different reverbs, aiming to achieve different spaces every time a door opened. The video is entirely fixed media and made in DaVinci Resolve, using the Fusion part of the software for chroma-keying some of the doors.</p></details>
+    
+    
+
+    <h3>SECOND PIECE: Né entre corps, by Aida Shirazi <br> with choreography by Stefanie Inhelder</h3>
+    
+    <details><summary>[shadows between body] [click for more...]</summary><p>The beautiful central visual idea of this piece was to place the choreographer behind a canvas screen and throwing her silhouette on the screen with lighting from behind. The simple idea became way more than the sum of its parts by combining the shadows thrown from multiple light sources to abstract the body of the dancer (who was otherwise augmented only by some hair extensions). Inhelder was often a purely geometric shape, but always hinting at her human body before eventually collapsing into a much more realistic silhouette towards the en of the piece.</p>
+        <p>Shirazi's sound emerged from an exploration of a bilingual text (Persian/French, the poem of the title) which is only ever heard in fragments or cast through heavy processing. </p>
+        <p>The combined movement and sound is very abstracted (especially to somebody who has limited French and no Persian), but the effect carries the weight of the text across and there's a heavy intensity to the piece</p>
+        <p>At the end of this piece, the silent opening of the next transition appeared immediately on the closest projection screen to this piece's position in the room.</p><a href="https://brahms.ircam.fr/fr/works/work/58058/">IRCAM listing</a></details>
+
+    <h3>TRANSITION: Shadow Puppets</h3>
+    <p>Looking for a visual link that could lighten the atmosphere without parodying or attacking Aida and Stefanie's work, I hit on the idea of using shadow puppets. I found a set of whimsical videos online and realised I could build a weird interspecies love story out of them.</p>
+    <details><summary>[more on the material]</summary><p>A big preoccupation for me while working on these sections was that the tone of the pieces around my transitions was mostly dark, serious and intense. I wanted to try and find a way to freshen the audience up so that they were ready for another intense piece, without seeming to make fun of any of the pieces. It's a fun challenge to try and make short, playful work that still has a kind of weight or beauty of its own (whether I succeeded or not is up to others to say!) </p>
+      <p> The dark/light contrast in the colour content of the material allowed me to play some more tricks with transparency (e.g. hiding different images in the light and shadow portions of a rabbit).</p>
+        <p>So the video here is predominantly shadow puppets, with some more "random" material creeping in which mostly foreshadows later sections. The audio is entirely derived from Aida's piece: she sent me the full audio stems (each of her sounds separately) of her piece and I was able to batch process them and use them in a kind of rudimentary musical instrument to create some improvisations. I created the video first and tried to create long tumbling  whispers tied to the gestures in the video.</p></details>
+    <p>The piece was projected on the wall, and at the end of the transition, a separate projection of red fog came up on another screen and revealed the position of the performer for the next piece, which starts immediately. The red fog is designed to loop and then fade down when ready.</p>
+
+    <div class="video-container">
+        <div class="video-frame">
+            <div class="video">                           
+            <!-- replace embed src with video embed URL -->
+            <embed
+            src="https://www.youtube-nocookie.com/embed/JHTQGRaZyTM"
+            wmode="transparent"
+            type="video/mp4"
+            width="100%" height="100%"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowfullscreen
+            ></div>
+        </div>
+        </div>
+        <br>
+    <details><summary class="technology">Technology used in this section:</summary><p class="technology">Similar to the Doors transition, MUBU library for Max (for automated audio segmentation w/ onset-detection; and for real-time concatenative synthesis), Reaper DAW with various reverb settings: the audio part was made from loading in files, auto-segmenting them and then improvising with them laid out on a graph according to audio descriptors. I chopped parts out of the resulting files, layering them into tumbling  whispers tied to the gestures in the video.</p><p> The video is entirely fixed media and made in DaVinci Resolve, using the Fusion part of the software for the fancy chroma-key effects, as well as for the particle fog at end.</p>
+    </details>
+    
+    <div class="red-background">
+      <h3>THIRD PIECE: Ghost shouting, Ghost screaming, by Qingqing Teng</h3>
+      <details><summary>Gui han, Gui jiao</summary><p>This piece is for singer with a really crazy constrictive costume, sort of reminiscent of a snake. Qingqing has an amazing way of making super intense, loud, aggressive and bracing sounds - she says herself that she tries to create music with an energy that seems to flow naturally from within, and in this case it's definitely true, with the energy being ferocious and uncapped.</p>
+        <p>There's a video part which uses red bands of colour as an alternative to stage lighting, but which also turns into a large number of different abstract geometric motifs, as well as more connoted material that reflects the material explored in the piece.</p>
+        <p>The title is a literal translation of "Gui han, Gui jiao", which is an expression from Qingqing's hometown, which means something like a cry of indifference to a strange phenomenon (although I'm not sure I've done a good job of paraphrasing Qingqing's French text here). The singer represents Qingqing, a person swimming along in the ocean, unable to escape: it's one of those pieces that tumbles around in a complicated inner life.</p><a href="https://brahms.ircam.fr/fr/works/work/58059/">IRCAM listing</a></details>
+
+    <p>The final sound of Qingqing's piece is this amazing jackhammerish pulse, and I used that as the start of my next transition. </p>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+   </div>
+
+   <h3>TRANSITION: 3D-WORLD</h3>
+   <p>The next part of the concert strings together a few short sections of my work. Each section is short and the transitions between them are abrupt and jarring. The first one takes the viewer inside a post-human 3D-world, into total immersion in my digital life, through my YouTube history:</p>
+   <details><summary>[Read more...]</summary> <p>This next section is where I took over the concert for a while and stopped making small transitions between other people's work. I knew that it made sense for Filippos' piece to go last, which meant there were really only three spots for me in the programme. While it might have been more radical or cohesive for me to deal ONLY in the interstitial moments of the concert, there weren't really enough of them to allow me to make a full statement. So I began to think about other material I could steal, and my mind went back to YouTube (I had some previous unfinished work which made use of masses of YouTube clips). As prep for the project, I downloaded my entire YouTube history and extracted a bunch of 5-second clips from all the videos, which served as part of my new material. Needless to say, none of this stuff has been taken with permission.</p>
+    <p>The effect is supposed to be an overwhelming media-saturation, with content flowing by too quickly to grasp even a significant amount of the meaning, and our brains flit between picking up on patterns of colour, movement or sound, and grabbing on to salient moments in the mess. Of course there's an obvious parallel with the way we all live our digital lives (is this really THAT much more intense than Instagram??), but by placing thousands of different copyrighted videos in this context the relevance of the specific content becomes virtually nil (a point previously made in related work <a href="https://ablinger.mur.at/ww22.html">Peter Ablinger</a>, among many others; although the most direct point of comparison I can think is the TV series <a href="https://youtu.be/mgze5Pa0_iM?t=56">Chuck</a>.</p><p>Technically, the video for this section was extremely demanding and took most of the summer to work out - described below for nerds... It's the work I am proudest of from that perspective.</p>
+    <p>The audio here is derived exclusively from the video clips used, which means there is a great degree of chance in the initial sound, and a very slow (quite sculptural) mixing process to try and coax the interesting sound out of the texture.</p></details><br>
+    <div class="video-container">
+      <div class="video-frame">
+        <div id="player3" class="video">test</div>
+      </div><br>
+      <details class="technology"><summary class="technology">Technology used in this section:</summary><p>Max, Jitter, Python, JavaScript, OSC, Orchidea, Reaper, DaVinci Resolve</p><p>The audio in most of this section is simply the audio of the underlying videos, with a lot of post-processing in Reaper.</p><p>When you hear orchestral sounds, these have been derived by sending the main sound (from videos) through <a href="http://www.orch-idea.org/">Orchidea</a> orchestration assistant, essentially creating an approximation of this soundfile using a database of orchestral sounds. I created custom Python patches to run batch processes so that I could work more quickly with Orchidea. I found the results much better in the command line version than using the Max patch.</p><p>The videos are created through (a) a set of procedural generative video programs I designed and (b) layering in DaVinci Resolve.</p><p>The moving 3-D clouds of videos were created in Max MSP, combining elements from the new jit.gl.polymovie that comes with Max 8.2+ with a 3-D image world patch released by <a href="https://www.federicofoderaro.com/videoTutorials.html">Federico Foderaro</a>. Foderaro's patch only works with still images, but combining it with the polymovie patch was easy enough, although it took significant modification to get it to work. Finally, this patch was augmented with a complex file-loading system that allowed me to load in tagged videos from my library (e.g. by searching for "cat". This portion of the patch worked in combination with a separate Python file.</p><p>The 2-D video collages were created using a Python script I developed that relies on the PyMovie library. Various parameters (size of videos, position in screen, duration of clips) are controlled over time with a separate Max patch. The great disadvantage of using Python here is it precludes "improvisation" as there is no real-time element. This makes it slow and costly to experiment with. However, even with my limited programming skills, there is almost no practical limit to the number of videos I can use with this script, whereas the limits when working with live video can be hit very easily within of few minutes of beginning to play (NB: there may be some memory management tricks I am missing in Jitter, but they seem to be pretty advanced if so). </p>
+    <br>
+  </details>
+  
+  
+    <h3>TRANSITION: TIK-TOK KAZOO LESSONS</h3>
+    <p> (See the previous video c. <a onclick="playYT3AtKazoo()" href="javascript:void(0)">1:43</a> for this section.)</p>
+    
+    <p>For reasons that will become clear later, the real point of my piece was to get the whole audience playing kazoos along with me, so naturally I needed to teach everybody how to play this.</p><details><summary>[read more...]</summary><p>Subverting the formality of a new music context is always fun, but there's an interesting serious point in using videos generated with TikTok in the context of IRCAM. The building is a kind of mecca for people interested in making music with technology. In the early days, one of the important things about IRCAM was that it had a supercomputer: the relevance of that to most computer musicians has eroded, and centres all over the world are technologically equal or superior by now. And in fact, the laptops most normal people work on have been capable enough to create innovative computer music for a decade or two. But still it has remained the domain of the expert who can afford to spend time (and often money) learning to use arcane software. Apps like TikTok, which offer sophisticated audio effects and video filters like movement tracking driven by deep-learning, for free and with an interface designed to be intuitive and immediate enough for children to use in a spare moment.</p><p>It's still probably unwieldy to make complex multimedia art exclusively in apps like TikTok (although I want to try this...), but the reality is that we are getting close to the point where this will be practical.</p></details>
+    <p>Anyway, that last clip is a one-minute crash course in kazoo playing told through TikTok videos (which are also available individually on my TikTok account <a href="https://www.tiktok.com/@kazooteacher69?lang=en" target="_blank">@kazooteacher69</a></p>
+
+    <details class="technology"><summary class="technology">Technology used in this section:</summary><p>TikTok, DaVinci Resolve, Reaper</p><p>This is one section in the piece where original recordings were used - however, they are used in the context of viral TikTok memes, using readily available combinations of audio tracks and video filters, as well as making use of the notorious text-to-speech operation available in the app. Some of these filters are very sophisticated.</p><p>The videos were layered on top of one another in DaVinci Resolve, with some minimal additions using the same video patches mentioned in the 3D-World section.</p>
+    </div>
+  </details>
+
+    <h3>PRESENTATION: HOW TO PLAY IRISH FOLK MUSIC</h3>
+    <p class="flexpar">
+        <img src="i/stevejobs.jpeg" id="jobsimage">
+        <span class="text">Immediately after the TikTok videos ended, a light came up in front of the projection position, and I walked out channeling the spirit of Steve Jobs (although it might be more accurate to say I was Elizabeth Holmes 2.0). <br> My mission was to sell the audience the idea that, firstly, the kazoo was an Irish folk instrument, secondly, that the music we were about to play was an ancient Irish folk tune, and thirdly that we were going to play it using a revolutionary, AI-driven karaoke machine I had created during my studies at IRCAM. <br></span><details><summary>[RANT ON AI LOGOS]<span>  </span><span id="karaokai-logo-mini" style="background-image: url('i/karaokai_logos/karaokai_10.png'); background-repeat: no-repeat; background-blend-mode:darken; background-size: contain;
+          background-position: center; 
+          position: relative; color:transparent">.......</span></summary><div id="karaokai-logo" style="background-image: url('i/karaokai_logos/karaokai_10.png'); background-repeat: no-repeat; background-blend-mode:darken; 
+            background-position: center; 
+            position: relative;"><span style="text-shadow: 2px 2px  rgb(255, 255, 255)">Although it's a little unfair on IRCAM to associate them with Silicon Valley snake oil, given that they make serious research and don't draw unnecessary attention the deep learning components of much of the software they are working on, it's an interesting thing right now that AI has become such a buzzword. <br> During the course of making this presentation, I made use of an online "AI Logo Generator", which I heavily suspect was just combining different elements from a library at random (i.e. NOT AI). Because software sold or described as "artifical intelligence" is already doing incredible, scary things all the time, and because it is hard to understand how any of it works, the general public is unable to (a) tell where the limits of this kind of software are or will be and (b) unable to tell when they are being tricked into buying something useless. I can't find the reference, but I heard an interesting remark recently which was that to find out whether you are being sold an AI scam, you can replace the word "AI" with the word "magic"...and back away if the description still makes sense. For sure, my IRCAM presentation did not pass that test!</span>></div></details>
+      </p>
+      <div class="slideshow-container">
+        <div class="mySlides">
+            <h3>MY AMAZING SLIDESHOW</h3>
+            <p>A mockup of my IRCAM presentation.</p>
+          </div>
+
+        <div class="mySlides">
+          <q>Good evening. 
+            Thanks so much for coming out tonight to the one and only, revolutionary Cursus concert 2022. 
+            <span style="display:none">Pause.</span>
+            I think I speak for everybody when I say, 
+            it’s truly great to be here.
+            </q>
+            <div id="thanksforcoming"><img src="i/avatar.png" alt="" srcset=""></div>
+        </div>
+
+        <div class="mySlides">
+            <q>I hope you’ve all enjoyed and understood our little infomercial. 
+                By now, you all know how to play the kazoo – but I'm really here to teach everybody how to play a little Irish folk music.
+              </q>
+              <img src="i/redkazoo.png" style="width: 25%">
+          </div>
+
+          <div class="mySlides">
+            <q>Not a lot of people know that an early version of the Kazoo was first brought to the USA by Irish immigrants during the Great Hunger, <span style="display:none">Pause,  hit play on video... </span>  and in fact, the instrument originated by combining and miniaturising the Irish bodhran and the traditional Irish humming-flute 
+              </q>
+              <div class="video-container">
+                <div class="video-frame">
+                    <div class="video">                           
+                    <!-- replace embed src with video embed URL -->
+                    <embed
+                    src="https://www.youtube-nocookie.com/embed/Gu98ZOdneDA"
+                    wmode="transparent"
+                    type="video/mp4"
+                    width="100%" height="100%"
+                    allow="autoplay; encrypted-media; picture-in-picture"
+                    allowfullscreen
+                    ></div>
+                </div>
+                </div>
+          </div>
+        <div class="mySlides">
+        
+        <q>So, as an Irish musician in Paris, it makes a lot of sense to showcase my own culture at this once-in-a-lifetime IRCAM event</q>
+        </div>
+
+        <div class="mySlides">
+        
+            <p><q>So, with your gracious help, we're going to play a well-known Irish folk song together using some groundbreaking technology I've developed here during my Cursus – and of course, using our kazoos. <span style="display:none">Pause,  pick up kazoo, hold it aloft and point at slide... </span> </q></p>
+            <img src="i/equation_1.png" class="equation" style="width: 85%">
+        </div>
+
+        <div class="mySlides">
+            
+            <q>But first, I want to make totally sure you've all understood how to play the kazoo, and, more importantly, teach you how this AI-driven performance is going to work.<br><br>
+
+                Are you all ready?
+                </q>
+
+            <h2>IF YOU HAVE A KAZOO IN YOUR HOUSE, YOU SHOULD RETRIEVE IT NOW!</h2>
+            
+          </div>
+
+          <div class="mySlides">
+            
+            <q>So, first, please let me demonstrate – and then we’ll all hum along together afterwards.</q>
+          </div>
+
+          <div class="mySlides">
+            
+            <q>Click the button below for an interactive kazoo learning experience.</q><br>
+
+                    <input type="button" value="( ͡° ͜ʖ ͡°)" onclick="clicc()">
+
+                    <div id="kazoodemo1" style="width:100%"></div>
+
+                    <script>
+                    function clicc(){
+                    document.getElementById("kazoodemo1").innerHTML = "<div><video id='kazoodemovideo' source src='i/KazooDemo1.mp4' type='video/mp4' width='80%'></video></div>";
+                    window.speechSynthesis.cancel()
+                    var video = document.getElementById("kazoodemovideo")
+                    video.play()
+                    setTimeout(callBackVideo(video), 1000)
+
+
+                    
+
+                    }
+
+                    function callBackVideo(video){
+                        if (video.paused) {
+                        console.log("video is stopped");
+                        document.getElementById("kazoodemo1").innerHTML = `<div><p>QUESTION: Were you satisfied with your performance?</p></div><input type="button" value="YES!" onclick="ifUnsatisfied()"><input type="button" value="NO!" onclick="clicc()">`
+                    } else {
+                        // console.log("video is playing");
+                        setTimeout(callBackVideo, 1000, video)
+                    }
+                    }
+
+                    function ifUnsatisfied(){
+                        document.getElementById("kazoodemo1").innerHTML = ""
+                        plusSlides(1)
+                    }
+
+                    </script>
+                    </div>
+
+
+
+            
+                      <div class="mySlides">
+                        
+                        <q>Now we'll make it a little bit more complicated and play a famous tune together.</q><br>
+                        <p>Click the button again when you're ready.</p>
+            
+                                <input type="button" value="( ͡° ͜ʖ ͡°)" onclick="clicc2()">
+            
+                                <div id="kazoodemo2" style="width:100%"></div>
+            
+                                <script>
+                                function clicc2(){
+                                document.getElementById("kazoodemo2").innerHTML = "<div><video id='kazoodemovideo2' source src='i/KazooDemo2.mp4' type='video/mp4' width='80%'></video></div>";
+                                window.speechSynthesis.cancel()
+                                var video = document.getElementById("kazoodemovideo2")
+                                video.play()
+                                setTimeout(callBackVideo2(video), 1000, video)
+            
+            
+                                
+            
+                                }
+            
+                                function callBackVideo2(video){
+                                    if (video.paused) {
+                                    console.log("video is stopped");
+                                    document.getElementById("kazoodemo2").innerHTML = `<div><p>QUESTION: Were you satisfied with your performance?</p></div><input type="button" value="YES!" onclick="ifUnsatisfied2()"><input type="button" value="NO!" onclick="clicc2()">`
+                                } else {
+                                    // console.log("video is playing");
+                                    setTimeout(callBackVideo2, 1000, video)
+                                }
+                                }
+            
+                                function ifUnsatisfied2(){
+                                    document.getElementById("kazoodemo2").innerHTML = ""
+                                    plusSlides(1)
+                                }
+            
+                                </script>
+                                </div>
+
+            <div class="mySlides">
+
+                <q>
+                    God, that's gorgeous! Sounds like we have some musicians in the house!
+                    </q>
+                    <img src="i/audience.png" alt="audience"><br>
+                    
+                </div>
+                
+
+          <div class="mySlides">
+            
+            <q>OK now, together with the world class research teams at IRCAM, I have developed a game-changing system for real-time sing-along folk sessions, and this is the first ever public demonstration.</q>
+          </div>
+          
+          <div class="mySlides">
+            
+            <q>Our neural-net-driven system is called KARAOK.AI <br>
+
+                it’s the only one of its kind in the world, <br>
+                
+                and together, we are about to MAKE HISTORY! <br><span style="display:none">immediately move to next slide and play video without taking a beat.</span>
+                </q>
+                <img src="i/equation_2.png" class="equation" style="width: 85%">
+
+                
+          </div>
+
+          <div class="mySlides">
+            
+            <q>This is KARAOK.AI. <span style="display:none">Pause.</span><div><video id='karaokai-animation' source src='i/animatednotationdemo.mp4' type='video/mp4' width='80%' autoplay="true" loop="true"></video></div> Watch how the red kazoo bounces intuitively across the screen to keep your singing in time with the music.<br> Click to the next slide and we'll play along with it.</q>
+            
+
+          </div>
+
+          <div class="mySlides">
+            
+            <q>Play along using your kazoo or the handy kazoo keyboard below. <span style="display:none">Pause.</span></q><div><video id='karaokai-animation' source src='i/animatednotationdemo.mp4' type='video/mp4' width='80%' autoplay="true" loop="true"></video></div>
+            <div class="kazoo-keyboard">
+                <img class="kazoo-play" style="" src="i/redkazoo.png" onclick="playKazoo(0)">
+                <img class="kazoo-play" src="i/redkazoo.png" onclick="playKazoo(1)">
+                <img class="kazoo-play" src="i/redkazoo.png"  onclick="playKazoo(2)">
+                <img class="kazoo-play" src="i/redkazoo.png"  onclick="playKazoo(3)">
+                <img class="kazoo-play" src="i/redkazoo.png"  onclick="playKazoo(4)">
+                <img class="kazoo-play" src="i/redkazoo.png"  onclick="playKazoo(5)">
+                <img class="kazoo-play" src="i/redkazoo.png"  onclick="playKazoo(6)">
+                <img class="kazoo-play" src="i/redkazoo.png"  onclick="playKazoo(7)">
+                <img class="kazoo-play" src="i/redkazoo.png"  onclick="playKazoo(8)">
+                <img class="kazoo-play" src="i/redkazoo.png"  onclick="playKazoo(9)">
+                <img class="kazoo-play" src="i/redkazoo.png"  onclick="playKazoo(10)">
+                <img class="kazoo-play" src="i/redkazoo.png"  onclick="playKazoo(11)">
+                <img class="kazoo-play" src="i/redkazoo.png"  onclick="playKazoo(12)">
+            <script type="text/javascript"> // scripts for kazoo keyboard
+                function playKazoo(pitch)
+                {
+                    const file = chooseKazooRepo()
+                    console.log(file)
+                    const audio = new Audio(file);
+                    console.log(audio)
+                    audio.type = "audio/mpeg"
+                    const speed = 1 * Math.pow(2, pitch/12)
+                    console.log(speed)
+                    audio.preservesPitch = false
+                    audio.playbackRate = speed
+                    audio.play();
+
+
+
+                }
+
+                function chooseKazoo() {
+                        var i = getRandomInt(1, 4)
+
+                        var audio = `a/kazoo_${i}.mp3?raw=true`
+                        return audio
+
+                        
+                    }
+                
+                function chooseKazooRepo() {
+                var kazooLinks = ["https://media.githubusercontent.com/media/sebastianadams-music/stolenmusic/main/a/kazoo_1.mp3", "https://media.githubusercontent.com/media/sebastianadams-music/stolenmusic/main/a/kazoo_2.mp3", "https://media.githubusercontent.com/media/sebastianadams-music/stolenmusic/main/a/kazoo_3.mp3", "https://media.githubusercontent.com/media/sebastianadams-music/stolenmusic/main/a/kazoo_4.mp3"]
+                    var i = getRandomInt(0, 3)
+
+                    var audio = kazooLinks[i]
+                    return audio
+
+                }
+
+            </script>
+            </div>
+          </div>
+          
+         
+          <div class="mySlides">
+            
+            <q>OK, now that you know how our intuitive new system works, we can get to grips with some Irish folk music. </q>
+          </div>
+        <div class="mySlides">
+            
+          <q>This is one of my country's most treasured and ancient folk songs, <img src="i/karaokai_still.png" class="equation" style="width: 85%"><br> "Níor aimsigh mé a bhfuil á lorg agam go fóill".</q>
+          
+
+        </div>
+        
+        <div class="mySlides">
+          <q>One more thing... Please enjoy the Karaok.AI.</q>
+          <input type="button" value="( ͡° ͜ʖ ͡°) PLAY KARAOK.AI" onclick="playYT1()">
+          
+        </div>
+        
+        
+        <a class="prev" onclick="plusSlides(-1)">❮</a>
+        <a class="next" onclick="plusSlides(1)">❯</a>
+        
+        </div>
+
+        <div class="dot-container">
+          <span class="dot" onclick="currentSlide(1)"></span> 
+          <span class="dot" onclick="currentSlide(2)"></span> 
+          <span class="dot" onclick="currentSlide(3)"></span> 
+          <span class="dot" onclick="currentSlide(4)"></span> 
+          <span class="dot" onclick="currentSlide(5)"></span> 
+          <span class="dot" onclick="currentSlide(6)"></span> 
+          <span class="dot" onclick="currentSlide(7)"></span> 
+          <span class="dot" onclick="currentSlide(8)"></span> 
+          <span class="dot" onclick="currentSlide(9)"></span> 
+          <span class="dot" onclick="currentSlide(10)"></span>
+          <span class="dot" onclick="currentSlide(11)"></span>
+          <span class="dot" onclick="currentSlide(12)"></span>
+          <span class="dot" onclick="currentSlide(13)"></span>
+          <span class="dot" onclick="currentSlide(14)"></span>
+          <span class="dot" onclick="currentSlide(15)"></span>
+          <span class="dot" onclick="currentSlide(16)"></span>
+          <span class="dot" onclick="currentSlide(17)"></span>
+          <span class="dot" onclick="currentSlide(18)"></span>
+
+
+        </div>
+      <!--ADD IN A SLIDESHOW kind of thing here with the speech on slides-->
+      
+
+      <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+<br>
+    <div class="video-container">
+      <div class="video-frame">
+        <div id="player1" class="video"></div>
+      </div>
+    </div>
+
+    <p>Of course, the reality was that my KARAOK.AI software (which you saw above) was just a fixed-media video put together in a video editing programme. But it would have been impossible to prove that in the concert hall, had anybody called me out!</p>
+    <p>As seen, the very end of the show directs the audience's attention to a website. This is a real site. At the time of this concert, it was a relatively minimal site containing a notice that the entire project was dedicated to the public domain as well as some further information about the band Negativland. The site will be added to on an ongoing basis over the next year or two, and the aim is that it will be a hub linking to information about public domain music and for discourse about copyright in the arts, but that it will also contain a repository of interactive generative music software relying on a corpus of copyrighted material.</p>
+    <div href="index.html" id="website"><a href="index.html">The website can be found  here</a>.</div>
+    <br><br>
+    
+    <input type="button" id="spoiler-button" value="spoiler" onclick="revealVideo2()">
+
+    <div class="video-container" id ="player2container" style="display:none">
+      <div class="video-frame">
+        <div id="player2" class="video"></div>
+      </div>
+      <p id="headroom-text">In the live performance, the karaoke mass-participation event unexpectedly cuts into this Max Headroom clip (and I sidled out of the room, expecting the crowd to turn on me any second) which explains all the lies the audience have been fed - although at way too fast a speed for anybody to process.</p><p>The context of this clip is extremely important. It's footage taken from the <a href="https://en.wikipedia.org/wiki/Max_Headroom_signal_hijacking">Max Headroom Signal Intrusion Incident</a>, which is probably the most famous TV hi-jacking of all time. The visual language of this intrusion was a heavy influence on V for Vendetta which in turn inspired the Anonymous movement, and so this intrusion is indirectly inspiring <a href="https://en.wikipedia.org/wiki/Anonymous_(hacker_group)">legion</a> hackers, activists and troublemakers 30 years later. The identity of the hacker behind the signal intrusion was never uncovered.</p><details><summary>[more...]</summary><p>I was also seduced by the style of the intrusion, but there were many other compelling reasons to draw on Max Headroom for Stolen Music. Like my KARAOK.AI, Headroom was also a fake step forwards into the future, advertised as being the first CGI TV presenter: in reality, he was an actor wearing prosthetics in front of a green screen. CGI compositing in the background was genuinely groundbreaking for the time, and so (as in my project) the real technology is hidden behind layers of marketing spin.</p><p>The character was also milked hard for advertising campaigns, particularly as the face of the famously doommed <a href="https://en.wikipedia.org/wiki/New_Coke">New Coke</a>. As Coke was originally intended to be a major thread in my project, I thought this was another beautiful match: the hacker even throws a Coke can at the camera during the signal intrusion, although it's very hard to make this out!</p><p>A major difference between this section and the rest of the elements in this performance is that there is very little messing around with the original footage. The sound and video are all as in <a href="https://www.youtube.com/watch?v=oqgeM6rWSkw&t=52s">the original (ripped from YouTube)</a>, although I have cut it down for snappier pacing. The only additions I made was by adding subtitles. These have very little to do with what is being said in the audio, but I tried to keep the rhythm of the speech similar and in some cases aped it in order to achieve the illusion that the subtitles are real. It seems to fool most people, which is interesting...</p></details>
+
+    </div>
+    
+    <h3>FINAL PIECE: Dionysian Skin by Filippos Sakagian</h3>
+    <details><summary>[electricity & intensity]</summary>"Skin" refers to sound, and "Dionysian" refers to intensity. The piece is about energy and intensity. I have the feeling here of setting chaos in motion. I'm not trying to turn it into non-chaos, or give it form. I'm not trying to make sound something it isn't. So it will not be music but electricity. <a href="https://brahms.ircam.fr/fr/works/work/58060/">IRCAM listing</a></details>
+
+
+
+    
+
+
+
+
+
+
+
+</div> <!-- end of container-->
+   
+
+    
+
+
+    
+</body>
+<script src="s/slideshow.js" type="text/javascript"></script>
+
+<script> // karaokai logos
+    window.onload = chooseLogo;
+    
+        var myPixe = new Array();
+        console.log(myPixe)
+        for (let i = 1; i < 21; i++)
+        {
+            var plooper = `i/karaokai_logos/karaokai_${i}.png`
+            // console.log(plooper)
+            myPixe.push(plooper)
+            console.log(myPixe)
+        }
+        console.log(myPixe)
+        
+        function chooseLogo() {
+             var randomNum1 = Math.floor(Math.random() * myPixe.length);
+             var image = myPixe[randomNum1]
+             console.log(image)
+             document.getElementById('karaokai-logo').style.backgroundImage = "url(" + image + ")"
+             document.getElementById('karaokai-logo-mini').style.backgroundImage = "url(" + image + ")"
+            // document.getElementById("karaokai-logo").src = myPixe[randomNum1];
+             setTimeout(chooseLogo, 1500)
+        }
+    </script>
+<script> // canvas sizer
+    var canvas = document.getElementById('glcanvas');
+fitToContainer(canvas);
+
+function fitToContainer(canvas){
+  // Make it visually fill the positioned parent
+  canvas.style.width ='100%';
+  canvas.style.height='400px';
+  // ...then set the internal size to match
+  canvas.width  = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+
+</script>
+<script> // this script creates the Firebase script when called; unfortunately I can't relocate it to a separate file so maybe I need to figure something out there...
+var details = document.getElementById("fs-details") 
+    details.addEventListener("toggle", function() {
+
+    var testData = document.getElementById("firebasecode");
+        
+    if (testData) {
+        console.log("already exists")
+    }
+    else  
+        {
+            console.log("trigged")
+    var s = document.createElement('script');
+    s.type = 'module';
+    s.src = "s/freesound-firebase.js";
+    s.id = "firebasecode"
+    try {
+      document.body.appendChild(s);
+    } catch (e) {
+      s.text = code;
+      document.body.appendChild(s);
+    }}
+  }
+)
+</script>
+<script id="script_1" src="s/youtube.js"></script>
+</html>
