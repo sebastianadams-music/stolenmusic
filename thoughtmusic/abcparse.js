@@ -7,7 +7,7 @@
       var minSpacing = 1.8 
       var maxSpacing = 2.8
       var preferredMeasuresPerLine = 2
-      var staffwidth = 900
+      var staffwidth = .95 * window.innerWidth
       
       //////SEB'S PARSING FUNCTIONS
 
