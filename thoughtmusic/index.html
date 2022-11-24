@@ -46,7 +46,7 @@
     <h3 class="no-print" style="text-align:center; z-index:1;">a mass-participation stream-of-consciousness music composition project</h3>
     <h4 id="name-populated" class="print" style="text-align:center; z-index:1;"></h4>
   </header>
-  <label class="no-print" >Input your thoughts: <input id="thoughts" name="thoughts" type="text" value="Your thoughts here..."></label>
+  <label class="no-print" >Input your thoughts: <input id="thoughts" name="thoughts" type="text" placeholder="Your thoughts here..."></label>
     <!-- <form id="parameters">
       <label>Total width: <input id="width" name="width" type="number" min="300" max="2000" step="10" value="900"></label>
       <label>Preferred measures per line: <input id="measures" name="measures" type="number" min="0" max="32" step="1" value="4"></label>
@@ -66,8 +66,9 @@
       <option value="defaultAlgo">Generate from summed ASCII values</option>
     </select></label>
   </div><br>
-  <div style="display: flex; justify-content: center;">
-    <button style="text-align: center;" class="no-print" value="true" id="kill-synth" onclick="killSynth()">Kill the Kazynth (I don't kazlike it)</button> 
+  <div class="no-print" style="display: flex; justify-content: center;">
+    <button class="activate-audio" id="activate-audio">Play ▶️</button>
+    <button style="text-align: center;" value="true" id="kill-synth" onclick="killSynth()">Kill the Kazynth (I don't kazlike it)</button> 
   </div><br><br>
   <label class="no-print" >Give your composition a name (or use your name/nick): <input id="piece-title" name="piece-title" type="text"></label><br><br>
   <div class="no-print"><label>Save my score in Sebastian's database: <button style="text-align: center;" class="no-print" value="true" id="save-to-firebase" onclick="save2FB()">IMMORTALISE</button> </label></div>
@@ -80,14 +81,14 @@
       <option value="none">None</option>
     </select></label>
   </div>
-  <div class="row">
+  <!-- <div class="row">
     <div>
       <button class="activate-audio" id="activate-audio">Activate Audio Context And Play</button>
       <button class="stop-audio" style="display:none;">Stop Audio</button>
       <div class='audio-error' style="display:none;">Audio is not supported in this browser.</div>
     </div>
     <div class="status"></div>
-  </div>
+  </div> -->
   <script src="textToNotation.js" type="text/javascript"></script>
   <script src="userTextToScore.js" type="text/javascript"></script>
   <!-- <script src="tone-synth.js" type="text/javascript"></script> # not using this file-->
