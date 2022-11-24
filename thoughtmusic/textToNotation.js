@@ -5,14 +5,17 @@ function textToMusic(t2m) // t2m is an object with lists of note parameters
 {   
     console.log("t2m is", t2m)
     pitchList = addPitch(t2m.pitches, 60)
+    let midiList = pitchList
         pitchList = midi2abcArray(pitchList)
         let scoreAdj = []
+        let synthScore = []
         let barLength = 0
         for (let i = 0; i < pitchList.length; i++)
         {
             
             pitchAdj = pitchList[i]
             noteAdj = '"' + t2m.words[i] + '"' + pitchAdj + t2m.rhythms[i]
+            
             //console.log("BeaM", t2m.beaming[i])
             rhythmForCheck = t2m.rhythms[i] 
             if (t2m.beaming[i]){
@@ -27,6 +30,7 @@ function textToMusic(t2m) // t2m is an object with lists of note parameters
             }
             barLength = barLength + rhythmForCheck
             console.log("barLength", barLength)
+            synthScore.push(midiList[i] + " " + rhythmForCheck)
             if (barLength > 8)
             {
                 barLength = 0
@@ -43,7 +47,11 @@ function textToMusic(t2m) // t2m is an object with lists of note parameters
         + "V:1\n" 
         + "[V:1]" + scoreAdj + finalbar;
         console.log("formattedScore", formattedScore)
-        return formattedScore
+        console.log("synthScore", synthScore)
+        return {
+            'formattedScore': formattedScore,
+            'synthScore': synthScore    
+        }
 }
 
 // NOTATION ALGORITHMS

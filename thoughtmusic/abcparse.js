@@ -14,14 +14,16 @@
 // FROM EXAMPLE
 
 function redraw(finalScore) {
-    ABCJS.renderAbc("paper", finalScore, {
+  var visualObj = ABCJS.renderAbc("paper", finalScore, {
+      responsive: "resize",
       wrap: {
         minSpacing: minSpacing,
         maxSpacing: maxSpacing,
-        preferredMeasuresPerLine: preferredMeasuresPerLine
+        preferredMeasuresPerLine: 2
       },
       staffwidth: staffwidth
     });
+    loadSynth(finalScore)
   }
 
   function load() {

@@ -1,12 +1,6 @@
-
-
 // event listeners
 document.getElementById("thoughts").addEventListener('keyup', function() { main()})
-
 document.getElementById("piece-title").addEventListener('keyup', function() { pieceNamePopulate()})
-
-
-
 
 // main
 
@@ -25,8 +19,10 @@ function main() {
         t2m = defaultAlgo(userInput)
     }   
     // console.log("words: ", t2m.words); console.log("pitches: ", t2m.pitches); console.log("rhythms: ", t2m.rhythms)
-
-    var formattedScore = textToMusic(t2m)
+    var score = textToMusic(t2m)
+    var formattedScore = score.formattedScore
+    var synthScore = score.synthScore
+    window.synthScore = synthScore
     lastPitch = t2m.pitches.slice(-1)[0]
     console.log("last pitch", lastPitch)
     let synthActive = document.getElementById("kill-synth").value
