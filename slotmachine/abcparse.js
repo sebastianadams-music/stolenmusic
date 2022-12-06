@@ -1,27 +1,35 @@
-var makeNotes = []
+      var makeNotes = []
       var barline = ["|"]
       var doublebar = ["||"]
       var finalbar = ["|]"]
       var beam = [" "]
-      var blankline = [" \n"] //doesn't work   //////SEB'S PARSING FUNCTIONS
+      var blankline = [" \n"] //doesn't work
+      var minSpacing = 1.8 
+      var maxSpacing = 2.8
+      var preferredMeasuresPerLine = 2
+      var staffwidth = .95 * window.innerWidth
+      
+      //////SEB'S PARSING FUNCTIONS
 
 // FROM EXAMPLE
 
 function redraw(finalScore) {
-    ABCJS.renderAbc("paper", finalScore, {
-      // wrap: {
-      //   minSpacing: minSpacing,
-      //   maxSpacing: maxSpacing,
-      //   preferredMeasuresPerLine: preferredMeasuresPerLine
-      // },
-      // staffwidth: staffwidth
+  var visualObj = ABCJS.renderAbc("paper", finalScore, {
+      responsive: "resize",
+      wrap: {
+        minSpacing: minSpacing,
+        maxSpacing: maxSpacing,
+        preferredMeasuresPerLine: preferredMeasuresPerLine
+      },
+      staffwidth: staffwidth
     });
+    // loadSynth(finalScore) // this is a difference
   }
 
   function load() {
     var el = document.querySelector("#parameters");
     el.addEventListener("submit", changeParameters);
-    redraw();
+    redraw(); /// does this mean I have two load functons?
   }
 
   function changeParameters(ev) {
@@ -205,3 +213,6 @@ if (ABCJS.synth.supportsAudio()) {
     console.log("result: " + result)
     return result
   }
+
+
+  
