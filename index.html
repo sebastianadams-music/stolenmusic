@@ -1,74 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="favicon.ico" type="image/x-icon"/>
-  <link rel="stylesheet" href="examples-styles.css"/>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="s/randomQuote.js"></script>
+    <script src="s/unlicense_splashing.js"></script>
+    <style>
+        .title-color {
+            background-color: var(--title-color);
+        }
+        .title-color2 {
+            background-color: var(--title-color2);
+        }
+        
+        .write-unlicense {
+            content: "testCSS"
+        }
 
-  <title>SEBabcjs: Basic Demo</title>
-  <script src="abcjs-basic.js" type="text/javascript">// this is the script for the API</script> 
-  <script src="abcparse.js" type="text/javascript"></script>
-  <script src="mathsHelpers.js" type="text/javascript"></script>
-  <script src="notationGenerators.js" type="text/javascript"></script>
-  
-  
-  <style>
-    #paper {
-      display: flex;
-      justify-content: center;
-      width: auto;
+        .STOLEN {
+  animation: color-change 1s infinite;
+}
+
+@keyframes color-change {
+  0% { color: red;}
+  50% { color: blue;}
+  100% { color: green;}
+}
+
+        .growtext{
+            animation: grow-change .7s infinite;
+        }
+
+@keyframes grow-change {
+  0% { font-size: 16px;}
+  50% { font-size: 18px;}
+  100% { font-size: 16px;}
+        }
+
+        .shrinktext{
+            animation: shrink-change .7s infinite;
+        }
+
+@keyframes shrink-change {
+  0% { font-size: 18px;}
+  50% { font-size: 16px;}
+  100% { font-size: 18px;}
+        }
+
+    </style>
+    <script>
+        
+        var counter = 0
+
+        function randomiseColor1() {
+
+        
+        const randomColor = "#"+((1<<24)*Math.random()|0).toString(16); 
+       // const randomColor2 = "#"+((1<<24)*Math.random()|0).toString(16); 
+        
+        
+        document.documentElement.style.setProperty('--title-color', randomColor)
+        setTimeout(randomiseColor1,600);
+        // document.documentElement.style.setProperty('--title-color2', randomColor2)
+        // setTimeout(randomiseColor,340);
+
+        
     }
-    form {
-      margin: 0 auto 30px auto;
-      max-width: 800px;
-		display: flex;
-    }
-    label {
-      margin: 0 3px;
-    }
-  </style>
+
+    function randomiseColor2() {
+
+        
+const randomColor2 = "#"+((1<<24)*Math.random()|0).toString(16); 
+
+
+
+document.documentElement.style.setProperty('--title-color2', randomColor2)
+setTimeout(randomiseColor2,234);
+
+
+}
+        </script>
+    <title>STOLEN MUSIC</title>
 </head>
-<body onload="load()">
-  
-  <header>
-    <!-- <img src="i/headgremlin_edited.png" width="200px"> -->
-    <h1>MUSICAL SLOT MACHINE (with randomised auto-spin)</h1>
-  </header>
-    <!-- <form id="parameters">
-      <label>Total width: <input id="width" name="width" type="number" min="300" max="2000" step="10" value="900"></label>
-      <label>Preferred measures per line: <input id="measures" name="measures" type="number" min="0" max="32" step="1" value="4"></label>
-      <label>Minimum spacing: <input id="min" name="min" type="number" min="0" max="5" step=".1" value="1.8"></label>
-      <label>Maximum spacing: <input id="max" name="max" type="number" min="0" max="5" step=".1" value="2.8"></label>
-      <button type="submit">Redraw</button>
-    </form>  -->
-    <!-- <p>Click SPIN to go! If using on mobile, put device in landscape mode or enable "Desktop Mode" for better results.</p> -->
-    <button id="stop">STOP</button>
-    <button id="spin" value="0">SPIN</button>
-    <label>Speed (ms): <input id="timeToWait" name="timeToWait" type="number" min="1" max="1500" step="1" value="40"></label>
-    <br>
-    <label>Min/max time to spin (ms): 
-      <input id="minSpin" name="minSpin" type="number" min="1000" max="60000" step="1" value="500">
-      <input id="maxSpin" name="maxSpin" type="number" min="2000" max="60000" step="1" value="5000">
-    </label>
-    <label>Min/max time to pause (ms): 
-      <input id="minPause" name="minPause" type="number" min="1000" max="60000" step="1" value="500">
-      <input id="maxPause" name="maxPause" type="number" min="2000" max="60000" step="1" value="5000">
-    </label>
-    <br><br>
-    <div  style="display: flex; justify-content: center;">
-      <label class="no-print">Select an algorithm: <select name="algorithm" id="algorithm">
-        <option value="risingFaster">Words, mostly rising</option>
-        <option value="defaultLetters">Convert letters</option>
-        <option value="defaultAlgo">Generate from summed ASCII values</option>
-      </select></label>
-    </div><br>
-  <div id="paper" class="visible-background"></div>
-  <audio></audio>
-  <script src="textToNotation.js" type="text/javascript"></script>
-  <script src="slotMachineScore.js" type="text/javascript"></script>
-  <script src="synths.js" type="text/javascript"></script>
- 
+<body>
+    <h1 class="title-color">STOLEN MUSIC PRESENTS: THE CAMPAIGN FOR FREE MUSIC</h1>
+    <h3>This music is considered <span class="STOLEN">STOLEN</span> only because of unjust laws which do not reflect the reality of how music is created, interpreted and listened to in the world, and which serve to enrich only a very few while preventing many from making or listening to music.
+    </h3>
+    <h3 class="title-color2"><span class="growtext">Stolen Music is a front for</span>  <br> <span class="shrinktext">THE CAMPAIGN FOR FREE MUSIC! </span></h3>
+
+    <h2> The work involved in this project (Stolen Music) is hereby dedicated to the public domain under the terms of the <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.en" target="_blank">CC0 license</a>.<br> Anybody is entitled to use <a href="https://www.dropbox.com/sh/peudual9uiwwuix/AAAXiHbDcqs_iZ8I8fbrNhdga?dl=0" target="_blank">this work</a> in any way they wish. </h2>
+
+    <div id="links">
+        <a href="freesounds.html" target="_blank"><button>FREE SOUNDS</button></a>
+        <a href="music_i_stole.html"><button>MUSIC I STOLE</button></a>
+        <a href="copyrightnightmares.html"><button>SHARE YOUR COPYRIGHT NIGHTMARES</button></a>
+        <a href="negativland.html"><button>NEGATIVLAND!</button></a>
+    </div>
+   
+
+    <h4> The CAMPAIGN FOR FREE MUSIC believes that there is no justification for claiming ownership over art. We have created this website as a means to educate artists and the public about how they can dedicate their work to the public domain, and why this could be better for everyone.</h4>
+    <p>Currently, the site is a work in progress.... but we hope that we are already helping you to reconsider the perceived primacy of material, and re-evaluate their notions of ownership and even authorship when it comes to music (and intellectual property generally).</p>
+
+
+        
+
+
+    <div id="wrap">
+        <h3><a href="https://quoteinvestigator.com/2013/03/06/artists-steal/" target="_blank"><span id="random-quote"></span></a></h3>
+        
+        </div>
+
+                
+                <div id="copy-this-book">
+                    <a href="https://elephant.art/what-artists-need-to-know-about-copyright/" target="_blank">WHAT ARTISTS NEED TO KNOW ABOUT COPYRIGHT!</a>
+                </div><br>
+                
+                    <div id="unlicense-line"></div>
+
+                    <p>        The software elements of this project are unlicensed (dedicated to the public domain) using the Unlicense, and the non-software elements are dedicated to the public using CC0. The software elements have not been published yet but WILL be published here in due course. You can enquire about obtaining these by contacting Sebastian Adams directly.
+        
+                        <!-- You are free to do whatever you like with this work.
+                        Separately, if you are a creator of music, I ask: what do you gain from restrictive licensing of your music (which is the default by law), and what do you and society stand to lose from it?
+                        </p> -->
+                
+                        <P>
+
+                    <div><iframe width="140" height="85" src="https://www.youtube-nocookie.com/embed/J3QtMMFoYy8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+
+                    <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+                        EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+                        MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+                        IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+                        OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+                        ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+                        OTHER DEALINGS IN THE SOFTWARE.
+                         
+                        For more information, please refer to <a href="http://unlicense.org/">unlicense.org</a>.
+                        </p>
+        
+
+    
 </body>
+<script type="module" defer>
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-app.js";
+    import { getFirestore, getDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-firestore.js"
+
+    // import { getFirestore, collection, getDocs, orderBy, query, where, addDoc, getDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-firestore.js"
+
+
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyAlNZyxwAjPtFjNiq_E4PjqRw9efpv7Xmw",
+  authDomain: "copyrightnightmarescomments.firebaseapp.com",
+  projectId: "copyrightnightmarescomments",
+  storageBucket: "copyrightnightmarescomments.appspot.com",
+  messagingSenderId: "434761434052",
+  appId: "1:434761434052:web:add1aba3d4c899d2a79a91",
+  measurementId: "G-6TBFET51PM"     
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore()
+    console.log("want to happen first")
+    checkFireBase(getDoc)
+    
+
+
+    function checkFireBase(getDoc){
+    // do whatever you like here
+    console.log("checking...")
+
+    getDoc(doc(db, "activation", "activate")).then(docSnap => {
+        if (docSnap.exists()) {
+            const activeStatus = docSnap.data()["activated"]
+            console.log("Document data:", activeStatus);
+            if (! activeStatus){
+             document.write("This website will work after the concert. You'll need to refresh in order to see it")
+        }
+        } else {
+            console.log("No such document!");
+        }
+        })
+    // kill all on false //
+    
+
+
+
+}
+
+
+
+</script>
+
+<script>    randomiseColor1()
+randomiseColor2()
+</script>
 </html>
