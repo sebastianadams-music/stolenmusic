@@ -1,87 +1,60 @@
-var spinning = false
-document.getElementById("spin").addEventListener('click', function() { startSpinning()})
-document.getElementById("stop").addEventListener('click', function() { stopSpinning()})
-const timer = ms => new Promise(res => setTimeout(res, ms))
+// MUSIC TO ABC FORMAT
 
+function textToMusic(t2m) // t2m is an object with lists of note parameters
+// this function needs to be generic
+{   
+    console.log("t2m is", t2m)
+    pitchList = addPitch(t2m.pitches, 60)
+    let midiList = pitchList
+        pitchList = midi2abcArray(pitchList)
+        let scoreAdj = []
+        let synthScore = []
+        let barLength = 0
+        for (let i = 0; i < pitchList.length; i++)
+        {
+            
+            pitchAdj = pitchList[i]
+            noteAdj = '"' + t2m.words[i] + '"' + pitchAdj + t2m.rhythms[i]
+            
+            //console.log("BeaM", t2m.beaming[i])
+            rhythmForCheck = t2m.rhythms[i] 
+            if (t2m.beaming[i]){
+                scoreAdj.push(" ")
+                console.log("BEAM!!!!!")
+            }
+            if (isNaN(rhythmForCheck)) 
+            {
+                console.log("NOT NUMBER", rhythmForCheck)
+                rhythmForCheck = fractionToDecimal(rhythmForCheck)
+                console.log("NOW A NUMBER", rhythmForCheck)
+            }
+            barLength = barLength + rhythmForCheck
+            console.log("barLength", barLength)
+            synthScore.push(midiList[i] + " " + rhythmForCheck)
+            if (barLength > 8)
+            {
+                barLength = 0
+                scoreAdj.push("|")
+            }
 
-const logFileText = async file => {
-    const response = await fetch(file)
-    const text = await response.text()
-    let arr = []
-    arr = text.split('\n')
-    load(arr)
+            scoreAdj.push(noteAdj)
 
-    
+        }
+
+        //score formatting
+        scoreAdj = scoreAdj.join("")
+        var formattedScore = "K: C" + "L: 1/32\n"
+        + "V:1\n" 
+        + "[V:1]" + scoreAdj + finalbar;
+        console.log("formattedScore", formattedScore)
+        console.log("synthScore", synthScore)
+        return {
+            'formattedScore': formattedScore,
+            'synthScore': synthScore    
+        }
 }
 
-logFileText('./txt/ulysses_1_no_empty_lines.txt')
-
-
-
-async function load (array) {
-    let i = 0
-    while (spinning)
-    {
-        i++
-        i = i % array.length
-        console.log("spinning: ", spinning)
-        lineFromText = array[i]
-    let t2m = risingFaster(lineFromText)
-    console.log("words: ", t2m.words)
-    console.log("pitches: ", t2m.pitches)
-    console.log("rhythms: ", t2m.rhythms)
-    pitchList = t2m.pitches
-    pitchList = addPitch(pitchList, 60)
-    pitchList = midi2abcArray(pitchList)
-    // var scorePitches = midi2abc(addPitch(pitchList, 60)).split(" ")
-    var scoreRhythms = t2m.rhythms
-    let scoreAdj = []
-    for (let i = 0; i < pitchList.length; i++)
-    {
-        
-        pitchAdj = pitchList[i]
-        console.log("PITCH", pitchAdj)
-        noteAdj = ' "' + t2m.words[i] + '"' + pitchAdj + scoreRhythms[i]  
-        console.log("NOTE", noteAdj)
-        scoreAdj.push(noteAdj)
-
-    }
-    let lyrics = t2m.words
-    console.log("lyrics: ", lyrics.length)
-    let lyricsFormatted = "";
-    for (let i = 0; i < lyrics.length; i++)
-    {   
-        console.log("lyric_ind", lyrics[i])
-        lyricSpaced = lyrics[i] + " "
-        lyricsFormatted = lyricsFormatted.concat(lyricSpaced)
-        
-    }
-    console.log(scoreAdj)
-    console.log("LyricsForm:", lyricsFormatted)
-    var finalScore = "K: C" + "L: 1/16\n"
-    + "V:1 name=Voice\n" 
-+ "[V:1]" + scoreAdj + finalbar +'w: "'+ lyricsFormatted + '"';
- var minSpacing = 1.8;
- var maxSpacing = 2.8;
- var preferredMeasuresPerLine = 4;
- var staffwidth = 900;
- redraw(finalScore)  
- let timerWait = document.getElementById("timeToWait").value
-  await timer(timerWait)
-    }
-      }
-
-function startSpinning()
-{
-
-     spinning = true
-     logFileText('./txt/ulysses_1_no_empty_lines.txt')
-}
-function stopSpinning()
-{
-    spinning = false
-}
-
+// NOTATION ALGORITHMS
 
 function risingFaster(array) {
 
@@ -89,6 +62,7 @@ function risingFaster(array) {
     const words = message.split(" ");
     let pitches = []
     let rhythms = []
+    let beaming = []
     let pitch = 0
     for (let i = 0; i < words.length; i++)  {
         let possiblePitches = 4 // maximumleap
@@ -102,21 +76,99 @@ function risingFaster(array) {
             pitch = pitch - pitch_difference 
         }
         pitches.push(pitch)
-        rhythm = (1 + Math.floor((words[i].length / 4)))
+        rhythm = (1 + Math.floor((words[i].length / 2)))
         rhythms.push(rhythm) 
+        beaming.push(false)
+        
     
     }
     return {
         'pitches': pitches,
         'rhythms': rhythms,
-        'words': words
-      };
+        'words': words,
+        'beaming': beaming
+        
+      }; 
     
     
 }
 
+////// defaultLetters 
+function defaultLetters(array) {
+
+    const message = array;
+    const words = message.split(" ");
+    console.log("words", words)
+    let pitches = []
+    let rhythms = []
+    let letters = []
+    let beaming = []
+    for (let i = 0; i < words.length; i++)  {
+        let possiblePitches = 14
+        let possibleRhythms = 4
+        let word = words[i]
+        console.log("word", word)
+        let wordLength = word.length
+        for (let i = 0; i < wordLength; i++) {
+            let summedLetter = ASCIISum(word[i])
+            pitch = summedLetter % possiblePitches
+            pitches.push(pitch)
+            rhythm = "2/" + (wordLength) // one word should add up to one beat
+            console.log("rhyth", rhythm)
+            rhythms.push(rhythm)
+            letters.push(word[i])
+            
+        if (i == 0) {
+            beaming.push(true)
+        } else {beaming.push(false)}
+    
+        }
+    }
+    
+    return {
+        'pitches': pitches,
+        'rhythms': rhythms,
+        'words': letters,
+        'beaming': beaming
+      }
+
+    
+    }
 
 
+    ////// default 
+    function defaultAlgo(array) {
+
+
+    const message = array;
+    const words = message.split(" ");
+    let pitches = []
+    let rhythms = []
+    let beaming = []
+    for (let i = 0; i < words.length; i++)  {
+        let possiblePitches = 14
+        let possibleRhythms = 8
+        let summedWords = ASCIISum(words[i])
+        pitch = summedWords % possiblePitches
+        pitches.push(pitch)
+        rhythm = (1 + (summedWords % (possibleRhythms))) + "/4"
+        rhythms.push(rhythm) 
+        beaming.push(false)
+
+    }
+  
+    return {
+        'pitches': pitches,
+        'rhythms': rhythms,
+        'words': words,
+        'beaming': beaming
+      }
+}
+
+
+////
+
+// HELPER FUNCTIONS
 
 function ASCIISum(array) {
     let sum = 0;
@@ -126,31 +178,3 @@ function ASCIISum(array) {
     }
     return sum;
 } 
-
-// function readFile(filepath) {
-//     let file = filepath; 
-//     let fileReader = new FileReader(); 
-//     fileReader.readAsText(file); 
-//     fileReader.onload = function() {
-//       alert(fileReader.result);
-//     }; 
-//     fileReader.onerror = function() {
-//       alert(fileReader.error);
-//     }; 
-//     console.log(fileReader)
-//   }
-// import {readFileSync, promises as fsPromises} from 'fs';
-
-
-
-// console.log("Example to read line by line text");
-// const f = require('fs');
-// const readline = require('readline');
-// let file = "./txt/ulysses_1_no_empty_lines.txt";
-// var r = readline.createInterface({
-//     input : f.createReadStream(user_file)
-// });
-// r.on('line', function (text) {
-// console.log(text);
-// });
-
