@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
-import { getFirestore, collection, doc, setDoc, addDoc, onSnapshot, Timestamp} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js"
+import { getFirestore, collection, doc, setDoc, addDoc, onSnapshot, Timestamp, query, orderBy, limit, serverTimestamp} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js"
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -53,33 +53,58 @@ function postComment() {
       addDoc(colRef, {
         name: name,
         comment: comment,
-        time: time
+        time: time,
+        timestamp: serverTimestamp()
         },)
         
       }
 
   //document.getElementById("name").value = '';
-  document.getElementById("comment").value = '';
-  var comments = document.getElementById("comments");
-  comments.innerHTML = ""
+  // document.getElementById("comment").value = '';
+  // var comments = document.getElementById("comments");
+  // comments.innerHTML = ""
 }
 
-const q = collection(db, "chat");
+const collComments = collection(db, "chat")
+const q = query(collComments, orderBy("timestamp"));
+// const q = collection(db, "chat")
+
 
 const unsubscribe = onSnapshot(q, (querySnapshot) => {
   querySnapshot.docChanges().forEach((change) => {
-    addComment(change.doc.data().name, change.doc.data().comment, change.doc.data().time)
-    if (typeof textToMusic == 'function') { 
-      document.getElementById("thoughts").value = change.doc.data().comment
-      main()
-      // setTimeout(playScore, 500)
-    }
 
-  });
+    if (! querySnapshot.metadata.hasPendingWrites){
+      addComment(change.doc.data().name, change.doc.data().comment, change.doc.data().time)
+      document.getElementById("thoughts").value = change.doc.data().comment
+      callMain()
+    }
+    
+
+})
+
+    
+
 });
+
 setInterval(playScore, 2500)
 
 
+async function callMain() {
+  
+    if (typeof textToMusic == 'function') { 
+      
+    const result = await resolveMain()
+    result()
+
+}
+
+function resolveMain() {
+  return new Promise(resolve => {
+    main()
+  });
+}
+    
+  }
 // const unsubscribe = onSnapshot(q, (querySnapshot) => { 
 //   querySnapshot.forEach((doc) => {
 //     addComment(doc.data().name, doc.data().comment, doc.data().time)
@@ -95,7 +120,7 @@ setInterval(playScore, 2500)
 function addComment(name, comment, timeStamp) {
   var comments = document.getElementById("comments");
   let newcomment = "<hr><h4>" + name + " says <span>" + timeStamp + "</span></h4><p>" + comment + "</p>"
-  comments.insertAdjacentHTML("afterend", newcomment);
+  comments.insertAdjacentHTML("afterbegin", newcomment);
 }
 
 function playScore() {
