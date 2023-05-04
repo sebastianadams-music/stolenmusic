@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>copy this book</title>
+    <script>
+        
+        
+            var myPix = new Array();
+            console.log(myPix)
+            for (let i = 1; i < 192; i++)
+            {
+                i = ("00" + i).slice(-3);
+                console.log(i)
+                var ploop = `i/copythisbook/copy-this-ebook-${i}.png`
+                console.log(ploop)
+                myPix.push(ploop)
+                console.log(myPix)
+            }
+            console.log(myPix)
+            
+            let currentPage = 1
+
+
+
+
+            function next() {
+                currentPage += 1
+                console.log(currentPage)
+                document.getElementById("ctb").src = myPix[currentPage - 1];
+
+
+            }
+
+            function prev() {
+                currentPage -= 1
+                console.log(currentPage)
+                document.getElementById("ctb").src = myPix[currentPage - 1];
+
+
+            }
+
+            function choosePic() {
+
+                 var randomNum = Math.floor(Math.random() * myPix.length);
+                 document.getElementById("ctb").src = myPix[randomNum];
+            }</script>
+            <style>
+                                #ctb {
+                                    height: 90vh;
+                                }
+
+            </style>
+</head>
+<body>
+    <h1>Copy this book: an artist's guide to copyright</h1>
+    <h3>used without permission but in line with the generous license printed in the book (see p. 6)
+    </h3>
+    <button onclick="prev()">PREV</button><button onclick="next()">NEXT</button>
+    <div class="imgcontainer">
+        <div><a href="https://elephant.art/what-artists-need-to-know-about-copyright/" target="_blank"><img src="i/copythisbook/copy-this-ebook-001.png" alt="copythisbookimage" id="ctb"></a> </div>
+     </div>
+</body>
+</html>
