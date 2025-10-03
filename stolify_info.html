@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sebastian's Spectacular Stolify Music Streaming System</title>
+    <style>
+        /* Mimicking a simple, text-based, no-nonsense look */
+        body {
+            background-color: #000000;
+            color: #00FF00; /* Classic "hacker green" text */
+            /* font-family: 'Courier New', monospace; Fixed-width font */
+            margin: 40px;
+            line-height: 1.4;
+        }
+
+        h1 {
+            color: #FFFF00; /* Yellow for the main title */
+            font-size: 2.2em;
+            text-decoration: underline;
+            margin-bottom: 0.5em;
+            word-spacing: 0.5em;
+        }
+
+        h2 {
+            color: #FF00FF; /* Magenta for section headings */
+            font-size: 1.6em;
+            border-bottom: 1px dashed #FF00FF;
+            padding-bottom: 5px;
+            margin-top: 2em;
+        }
+
+        h3 {
+            color: #ffd9009a; /* Magenta for section headings */
+            font-size: 1.6em;
+            border-bottom: 1px dashed #FF00FF;
+            padding-bottom: 5px;
+            margin-top: 2em;
+            font-family: 'Courier New', monospace; 
+        }
+
+        a {
+            color: #00FFFF; /* Cyan for links */
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: #FFFFFF;
+            background-color: #000000;
+        }
+
+        .section-box {
+            border: 1px solid #00FF00;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .link-list {
+            list-style: none;
+            padding: 0;
+            font-size: 1.1em;
+        }
+        .link-list li {
+            margin-bottom: 5px;
+        }
+
+        .monospace-block {
+            background-color: #111111;
+            padding: 10px;
+            border: 1px dotted #888888;
+            margin-top: 10px;
+            white-space: pre-wrap; /* Keeps formatting but wraps long lines */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>SEBASTIAN'S SPECTACULAR STOLIFY MUSIC STREAMING SYSTEM</h1>
+    <h3>NOTHING TO SEE HERE COPS</h3>
+
+    <div class="section-box">
+        <p>This is a replacement for Spotify hosted on a computer in my house. All the music files are ones downloaded locally onto my NAS (small server in m house) and the music is served via two apps called Navidrome and Feishin. New music can be downloaded using an app called SLSKD.</p>
+        <p>The only "cloud" provider involved is Cloudflare, which opens tunnels (essentially a form of VPN) so that the music services can be accessed anywhere from simple web addresses, without exposing my network to the internet directly.</p>
+    </div>
+
+    <h2><span class="prompt-arrow"> > </span> ESSENTIAL LINKS</h2>
+    <ul class="link-list">
+        <li>LISTEN: <a href="http://webplay.stolenmusic.org">webplay.stolenmusic.org</a></li>
+        <li>DOWNLOAD: <a href="http://seeker.stolenmusic.org">seeker.stolenmusic.org</a></li>
+        <li>BACKEND: <a href="http://stolify.stolenmusic.org">stolify.stolenmusic.org</a></li>
+    </ul>
+
+    <h2><span class="prompt-arrow"> > </span> LISTENING TO MUSIC (WEB BROWSER)</h2>
+    <div class="section-box">
+        <p>The best listening experience in a web browser can be found by going to this web address:</p>
+        <p class="monospace-block">
+            <a href="http://webplay.stolenmusic.org">webplay.stolenmusic.org</a>
+        </p>
+        <p>Then log in using your **personal user details** (first name in lower case + password sent to you privately)</p>
+        <p>The interface you see here is provided as the app Feishin, hosted via my computer. It is very similar to apps like Spotify.</p>
+    </div>
+
+    <h2><span class="prompt-arrow"> > </span> OTHER WAYS TO LISTEN</h2>
+    <div class="section-box">
+        <p>On Android phones there is a fantastic app called Symfonium, which is a front-end for the underlying music library software. It costs 6 euro (one-off), after a free trial.</p><p> To log in:</p>
+        <p>
+            click settings; then "Manage Media Providers", then "Add media provider", then "(Open) Subsonic", then for primary connection enter <span style="color: #FFFF00;">"stolify.stolenmusic.org"</span> for hostname and <span style="color: #FFFF00;">"443"</span> for port. Below this, enter your personal login details.
+        </p>
+        <p>If you think new files haven't been added correctly, you can click the three dots menu beside "Subsonic" and click "Sync".</p>
+        <p>There are also many other client/front end apps you could use here, if you want to find one, you need to look out for "Open Subsonic" support.</p>
+    </div>
+
+    <h2><span class="prompt-arrow"> > </span> ADDING MUSIC (SLSKD)</h2>
+    <div class="section-box">
+        <p>To download music to the server, you need to log in to **SLSKD** by going to the web address:</p>
+        <p class="monospace-block">
+            <a href="http://seeker.stolenmusic.org">seeker.stolenmusic.org</a>
+        </p>
+        <p>And putting in these log-in details:</p>
+        <p class="monospace-block">
+            USERNAME: admin<br>
+            PASSWORD: PASSWORD SENT SEPARATELY
+        </p>
+
+        <p>From there, the interface is a little confusing at first, but you can download music from thousands of other people around the world. This uses a peer-to-peer network called **Soulseek**, which is similar to downloading Torrents except that instead of downloading a file from many people at the same time, you browse search terms and download from individual users' personal collections of files. Many people who use Soulseek are **music buffs** who collect rare recordings and a lot of them are committed to storing them in very good quality.</p>
+
+        <p>As a rule of thumb: **MP3 320kbps** is the best MP3 format, and **FLAC** is a "lossless" compression (which means the audio files are as small as possible without losing any information whatsoever; MP3 is much smaller and at high bit rates it attempts to lose as much information as possible without affecting the listening experience noticeably)</p>
+
+        <p>When you click to download (check the files you want, then scroll down and find the download button) they will be put in a download queue and downloaded onto my server. The music library software will **automatically scan** the new files every so often.</p>
+    </div>
+
+    <h2><span class="prompt-arrow"> > </span> ABOUT STOLEN MUSIC</h2>
+    <div class="section-box">
+        <p><a href="http://stolenmusic.org" style="color: #FF00FF;">stolenmusic.org</a> is a web domain I own and use for many music-related projects; when I had the idea to self-host a music streaming service, I decided to use this address because I thought it was **funny!**</p>
+        <p>Whether the music contained in this music library is stolen or not is a matter for the courts to decide.</p>
+    </div>
+
+    <br><br>
+    <p>END OF FILE</p>
+
+</body>
+</html>
