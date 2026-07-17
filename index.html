@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <script src="s/randomQuote.js"></script>
     <script src="s/unlicense_splashing.js"></script>
     <style>
@@ -13,193 +13,581 @@
         .title-color2 {
             background-color: var(--title-color2);
         }
-        
         .write-unlicense {
             content: "testCSS"
         }
-
-        .STOLEN {
-  animation: color-change 1s infinite;
-}
-
-@keyframes color-change {
-  0% { color: red;}
-  50% { color: blue;}
-  100% { color: green;}
-}
-
-        .growtext{
-            animation: grow-change .7s infinite;
+        .STOLEN {  
+            animation: color-change 1s infinite;
+        }
+        @keyframes color-change {  
+            0% { color: red;}  
+            50% { color: blue;}  
+            100% { color: green;}
+        }
+        .growtext{            
+            animation: grow-change .7s infinite;        
+        }
+        @keyframes grow-change {  
+            0% { font-size: 16px;}  
+            50% { font-size: 18px;}  
+            100% { font-size: 16px;}        
+        }
+        .shrinktext{            
+            animation: shrink-change .7s infinite;        
+        }
+        @keyframes shrink-change {  
+            0% { font-size: 18px;}  
+            50% { font-size: 16px;}  
+            100% { font-size: 18px;}        
         }
 
-@keyframes grow-change {
-  0% { font-size: 16px;}
-  50% { font-size: 18px;}
-  100% { font-size: 16px;}
+        /* ==========================================================================
+           RESPONSIVE SHAPE BOUNDARY CHAOS CSS (CROP FIX APPLIED)
+           ========================================================================== */
+        /* FIX: Forces container context to expand to full screen depth, removing the crop line */
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            min-height: 100vh; 
+            overflow-x: hidden;
+            margin: 0;
+            padding: 8px; 
         }
 
-        .shrinktext{
-            animation: shrink-change .7s infinite;
+        body {
+            perspective: 1200px; 
+            perspective-origin: 50% 50%;
+            background: #eee; 
         }
 
-@keyframes shrink-change {
-  0% { font-size: 18px;}
-  50% { font-size: 16px;}
-  100% { font-size: 18px;}
+        /* Macro-drifting containers */
+        h1, h2, h3, h4, p, #links, #wrap, #copy-this-book {
+            transform-style: preserve-3d;
+            will-change: transform;
+            transition: transform 25s ease-in-out; 
         }
 
+        /* The flying chunks (words, phrases, intact links) */
+        .chaos-chunk {
+            display: inline-block;
+            white-space: pre-wrap; 
+            will-change: transform, opacity;
+            pointer-events: auto; 
+            transform-style: preserve-3d;
+            vertical-align: baseline; 
+            
+            transition: transform var(--dur, 20s) cubic-bezier(0.22, 1, 0.36, 1), 
+                        opacity var(--dur, 20s) ease-in-out;
+            transition-delay: var(--delay, 0s); 
+        }
+
+        /* STAGE 2: Individual structural letters inside the flying chunks */
+        .chaos-atom {
+            display: inline-block;
+            white-space: pre;
+            will-change: transform, opacity;
+            transition: transform var(--atom-dur, 16s) cubic-bezier(0.25, 1, 0.5, 1),
+                        opacity var(--atom-dur, 16s) ease-in-out;
+            transition-delay: var(--atom-delay, 0s);
+        }
+
+        a.chaos-chunk {
+            color: -webkit-link;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* Full Viewport Debris Field canvas layer */
+        #chaos-debris-field {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none; 
+            z-index: 2000; 
+            transform-style: preserve-3d;
+            
+            display: none; 
+            opacity: 0; 
+            transition: opacity 1.5s ease-in;
+        }
+
+        #chaos-debris-field.active {
+            opacity: 1;
+        }
+
+        #chaos-debris-field .chaos-chunk {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: 0;
+            transform-origin: center center;
+        }
+
+        /* Clamped to a max of 30% of the screen width/height respectively */
+        #chaos-debris-field img {
+            max-width: 30vw;
+            max-height: 30vh;
+            border: 2px solid #555;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        figure {
+            margin: 0;
+            padding: 5px;
+            text-align: center;
+        }
+
+        /* Highlight target focus on hover to make frozen elements feel tactile */
+        a.chaos-chunk:hover, button.chaos-chunk:hover, img.chaos-chunk:hover, video.chaos-chunk:hover, audio.chaos-chunk:hover, figure.chaos-chunk:hover {
+            outline: 2px solid rgba(255, 0, 0, 0.5);
+            z-index: 99999; 
+        }
     </style>
     <script>
-        
         var counter = 0
-
         function randomiseColor1() {
-
-        
-        const randomColor = "#"+((1<<24)*Math.random()|0).toString(16); 
-       // const randomColor2 = "#"+((1<<24)*Math.random()|0).toString(16); 
-        
-        
-        document.documentElement.style.setProperty('--title-color', randomColor)
-        setTimeout(randomiseColor1,600);
-        // document.documentElement.style.setProperty('--title-color2', randomColor2)
-        // setTimeout(randomiseColor,340);
-
-        
-    }
-
-    function randomiseColor2() {
-
-        
-const randomColor2 = "#"+((1<<24)*Math.random()|0).toString(16); 
-
-
-
-document.documentElement.style.setProperty('--title-color2', randomColor2)
-setTimeout(randomiseColor2,234);
-
-
-}
-        </script>
+            const randomColor = "#"+((1<<24)*Math.random()|0).toString(16);
+            document.documentElement.style.setProperty('--title-color', randomColor)
+            setTimeout(randomiseColor1,600);
+        }
+        function randomiseColor2() {
+            const randomColor2 = "#"+((1<<24)*Math.random()|0).toString(16); 
+            document.documentElement.style.setProperty('--title-color2', randomColor2)
+            setTimeout(randomiseColor2,234);
+        }
+    </script>
     <title>STOLEN MUSIC</title>
 </head>
 <body>
     <h1 class="title-color">STOLEN MUSIC PRESENTS: THE CAMPAIGN FOR FREE MUSIC</h1>
-    <h3>This music is considered <span class="STOLEN">STOLEN</span> only because of unjust laws which do not reflect the reality of how music is created, interpreted and listened to in the world, and which serve to enrich only a very few while preventing many from making or listening to music.
+    <h3>This music is considered <span class="STOLEN">STOLEN</span> only because of unjust laws which do not reflect the reality of how music is created, interpreted and listened to in the world, and which serve to enrich only a very few while preventing many from making or listening to music.</h3>
+    <h3 class="title-color2">
+        <span class="growtext">Stolen Music is a front for</span>  <br> 
+        <span class="shrinktext">THE CAMPAIGN FOR FREE MUSIC! </span>
     </h3>
-    <h3 class="title-color2"><span class="growtext">Stolen Music is a front for</span>  <br> <span class="shrinktext">THE CAMPAIGN FOR FREE MUSIC! </span></h3>
-
     <h2> The work involved in this project (Stolen Music) is hereby dedicated to the public domain under the terms of the <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.en" target="_blank">CC0 license</a>.<br> Anybody is entitled to use <a href="https://www.dropbox.com/sh/peudual9uiwwuix/AAAXiHbDcqs_iZ8I8fbrNhdga?dl=0" target="_blank">this work</a> in any way they wish. </h2>
-
+    
     <div id="links">
         <a href="freesounds.html" target="_blank"><button>FREE SOUNDS</button></a>
         <a href="music_i_stole.html"><button>MUSIC I STOLE</button></a>
         <a href="copyrightnightmares.html"><button>SHARE YOUR COPYRIGHT NIGHTMARES</button></a>
         <a href="negativland.html"><button>NEGATIVLAND!</button></a>
         <a href="ircam.html"><button>IRCAM version!</button></a>
-
-    </div>
-   
-
+    </div>   
+    
     <h4> The CAMPAIGN FOR FREE MUSIC believes that there is no justification for claiming ownership over art. We have created this website as a means to educate artists and the public about how they can dedicate their work to the public domain, and why this could be better for everyone.</h4>
     <p>Currently, the site is a work in progress.... but we hope that we are already helping you to reconsider the perceived primacy of material, and re-evaluate their notions of ownership and even authorship when it comes to music (and intellectual property generally).</p>
 
-
-        
-
-
     <div id="wrap">
         <h3><a href="https://quoteinvestigator.com/2013/03/06/artists-steal/" target="_blank"><span id="random-quote"></span></a></h3>
+    </div>
+    
+    <div id="copy-this-book">
+        <a href="https://elephant.art/what-artists-need-to-know-about-copyright/" target="_blank">WHAT ARTISTS NEED TO KNOW ABOUT COPYRIGHT!</a>
+    </div><br>
+    
+    <div id="unlicense-line"></div>
+    
+    <p>The software elements of this project are unlicensed (dedicated to the public domain) using the Unlicense, and the non-software elements created for this website are dedicated to the public using CC0. The software elements have not been published yet but WILL be published here in due course. You can enquire about obtaining these by contacting Sebastian Adams directly. Any pre-existing material on this website created by other artists (which may not be directly attributed here) has been used without permission and in breach of copyright law: you re-use this material at your own risk and in violation of the moral rights of the authors.</p>
+    
+    <div>
+        <iframe width="140" height="85" src="https://www.youtube-nocookie.com/embed/J3QtMMFoYy8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    
+    <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. For more information, please refer to <a href="http://unlicense.org/">unlicense.org</a>.</p>        
+
+    <!-- ==========================================================================
+       ELEMENTS ADDED LATER ONCE ANIMATION STARTS 
+       ========================================================================== -->
+    <div id="chaos-debris-field">
+        <a href="https://sebastianadams.net/?q=thaas" target="_blank" class="chaos-link"><button>THaasX</button></a>
+        <a href="https://sebastianadams-music.github.io/ghost-box/" target="_blank" class="chaos-link"><button>GHOST BOX</button></a>
+        <a href="https://sebastianadams-music.github.io/ghost-box/" target="_blank" class="chaos-link"><button>GHOST BOX</button></a>
+        <a href="https://sebastianadams-music.github.io/radio-time-travel/" target="_blank" class="chaos-link"><button>RADIO TIME TRAVEL</button></a>
         
-        </div>
+        <figure>
+            <figcaption>dancing_at_lughnasa_draft2_070725_153</figcaption>
+            <audio controls src="a/dancing_at_lughnasa_draft2_070725_1537.mp3"></audio>
+        </figure>
 
-                
-                <div id="copy-this-book">
-                    <a href="https://elephant.art/what-artists-need-to-know-about-copyright/" target="_blank">WHAT ARTISTS NEED TO KNOW ABOUT COPYRIGHT!</a>
-                </div><br>
-                
-                    <div id="unlicense-line"></div>
+        <a target="_blank" href="https://www.youtube.com/watch?v=3Jw-SXKfJVM"><img src="i/excerptsfromreality.png" alt="excerptsfromreality"></a>        
+        <a href="https://sebastianadams-music.github.io/youtube-cues/" target="_blank" class="chaos-link"><button>YouChoose</button></a>
+        <a href="https://sebastianadams-music.github.io/ghost-box/" target="_blank" class="chaos-link"><button>GHOST BOX</button></a>    
+        
+        <!-- LINK START -->
+        <a href="https://sebastianadams.net/radio-music/" target="_blank" class="chaos-link"><button>[Web] Radio Music</button></a>  
+        <!-- LINK END -->
 
-                    <p>        The software elements of this project are unlicensed (dedicated to the public domain) using the Unlicense, and the non-software elements created for this website are dedicated to the public using CC0. The software elements have not been published yet but WILL be published here in due course. You can enquire about obtaining these by contacting Sebastian Adams directly. Any pre-existing material on this website created by other artists (which may not be directly attributed here) has been used without permission and in breach of copyright law: you re-use this material at your own risk and in violation of the moral rights of the authors.   
+        <!-- IMAGE LINK START -->
+        <a target="_blank" href="https://www.youtube.com/watch?v=uq44yX7RbEw"><img src="i/soave.png" alt="soave"></a>
+        <!-- IMAGE LINK END -->
+        
+        <!-- LINK START -->
+        <a href="https://sebastianadams.net/?q=i+still" target="_blank" class="chaos-link"><button>I STILL Haven't Found What I'm Looking For</button></a>  
+        <!-- LINK END -->
+        
+        <!-- LINK START -->
+        <a href="https://sebastianadams.net/?q=crowdscoresing" target="_blank" class="chaos-link"><button>CrowdScoreSing</button></a>  
+        <!-- LINK END -->
+        
+        <!-- IMAGE LINK START -->
+        <a target="_blank" href="https://sebastianadams.net/?q=breath+play"><img src="i/breath.png" alt="breath"></a>
+        <!-- IMAGE LINK END -->
+        
+        <!-- IMAGE LINK START -->
+        <a target="_blank" href="https://sebastianadams.net/?q=tweet"><img src="i/tweet.png" alt="tweet"></a>
+        <!-- IMAGE LINK END -->
+
+        <!-- LINK START -->
+        <a href="https://www.tomcomitta.com/the-nature-book" target="_blank" class="chaos-link"><button>The Nature Book: A 300-Novel Literary Supercut</button></a>  
+        <!-- LINK END -->
+
+        <!-- LINK START -->
+        <a href="https://milker.org/text-score-dataset" target="_blank" class="chaos-link"><button>Text Score Dataset</button></a>  
+        <!-- LINK END -->
+
+        <!-- LINK START -->
+        <a href="https://milker.org/a-late-anthology" target="_blank" class="chaos-link"><button>A Late Anthology of Early Music</button></a>  
+        <!-- LINK END -->
+
+        <!-- LINK START -->
+        <a href="https://www.plunderphonics.com/xhtml/xplunder.html" target="_blank" class="chaos-link"><button>Plunderphonics: Audio Piracy as a Compositional Prerogative</button></a>  
+        <!-- LINK END -->
+
+        <!-- LINK START -->
+        <a href="https://illegalart.net/girltalk/" target="_blank" class="chaos-link"><button>Illegal Art: Girl Talk</button></a>  
+        <!-- LINK END -->
+
+        <!-- LINK START -->
+        <a href="https://www.reddit.com/r/todayilearned/comments/7vp451/til_of_steal_this_book_an_instruction_manual_by/" target="_blank" class="chaos-link"><button>Steal This Book!</button></a>  
+        <!-- LINK END -->
+
+        <!-- LINK START -->
+        <a href="https://www.theransomnote.com/music/news/antipiracy-advert-music-was-stolen/" target="_blank" class="chaos-link"><button>ANTI PIRACY AD STOLE ITS MUSIC?</button></a>  
+        <!-- LINK END -->
+
+        <!-- LINK START -->
+        <a href="http://npr.org/2019/05/23/726227555/not-bitter-just-sweet-the-rolling-stones-give-royalties-to-the-verve" target="_blank" class="chaos-link"><button>Not so bitter symphony</button></a>  
+        <!-- LINK END -->
+
+        <!-- LINK START -->
+        <a href="https://www.maynoothuniversity.ie/research/spotlight-research/why-you-may-well-have-heard-song" target="_blank" class="chaos-link"><button>Why You May Well Have Heard This Song</button></a>  
+        <!-- LINK END -->
+
+        <!-- LINK START -->
+        <a href="https://triumphofthenow.com/2014/02/06/review-reality-hunger-by-david-shields/" target="_blank" class="chaos-link"><button>Reality Hunger: A Manifesto</button></a>  
+        <!-- LINK END -->        
+        
+        <!-- LINK START -->
+        <a href="https://sebastianadams.net/?q=failing" target="_blank" class="chaos-link"><button>Viola Transcription of 'Failing: a Very Difficult Piece for Solo String Bass' by Tom Johnson</button></a>  
+        <!-- LINK END -->
+
+        <p class="chaos-text-phrase">drifting_thought_01</p>
+        <p class="chaos-text-phrase">the perceived primacy of material</p>
+    </div>
+
+    <!-- Firebase Script Configuration -->
+    <script type="module" defer>
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-app.js";
+        import { getFirestore, getDoc, doc } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-firestore.js"
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAlNZyxwAjPtFjNiq_E4PjqRw9efpv7Xmw",
+            authDomain: "copyrightnightmarescomments.firebaseapp.com",
+            projectId: "copyrightnightmarescomments",
+            storageBucket: "copyrightnightmarescomments.appspot.com",
+            messagingSenderId: "434761434052",
+            appId: "1:434761434052:web:add1aba3d4c899d2a79a91",
+            measurementId: "G-6TBFET51PM"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore()
+        checkFireBase(getDoc)    
+
+        function checkFireBase(getDoc){
+            getDoc(doc(db, "activation", "activate")).then(docSnap => {
+                if (docSnap.exists()) {
+                    const activeStatus = docSnap.data()["activated"]
+                    if (!activeStatus){ 
+                        document.write("This website will work after the concert. You'll need to refresh in order to see it")
+                    }
+                }
+            })
+        }
+    </script>
+    
+    <script>
+        randomiseColor1()
+        randomiseColor2()
+    </script>
+
+    <!-- ==========================================================================
+       RESPONSIVE TWO-STAGE GLITCH-FREE CHAOS ENGINE
+       ========================================================================== -->
+    <script>
+        (function() {
+            const DISINTEGRATION_DELAY = 30000; 
+
+            function getRandom(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            function getRandomInt(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            function createSpan(text) {
+                const span = document.createElement('span');
+                span.classList.add('chaos-chunk');
+                
+                for (let char of text) {
+                    const atom = document.createElement('span');
+                    atom.textContent = char;
+                    atom.classList.add('chaos-atom');
+                    span.appendChild(atom);
+                }
+                return span;
+            }
+
+            function chaoticize(element) {
+                const kids = Array.from(element.childNodes);
+                kids.forEach(node => {
+                    if (node.nodeType === Node.TEXT_NODE) {
+                        const text = node.nodeValue;
+                        if (text.trim() === '') return;
+                        
+                        const tokens = text.split(/(\s+)/);
+                        const fragment = document.createDocumentFragment();
+                        
+                        let i = 0;
+                        while (i < tokens.length) {
+                            const token = tokens[i];
+                            
+                            if (/^\s+$/.test(token)) {
+                                fragment.appendChild(document.createTextNode(token));
+                                i++;
+                                continue;
+                            }
+                            
+                            const rand = Math.random();
+                            
+                            if (rand < 0.10) {
+                                let phraseWords = [];
+                                let j = i;
+                                while (j < tokens.length && phraseWords.length < getRandomInt(3, 5)) {
+                                    if (!/^\s+$/.test(tokens[j])) {
+                                        phraseWords.push(tokens[j]);
+                                    }
+                                    j++;
+                                }
+                                if (phraseWords.length > 0) {
+                                    fragment.appendChild(createSpan(phraseWords.join(' ')));
+                                    fragment.appendChild(document.createTextNode(' '));
+                                    i = j;
+                                    continue;
+                                }
+                            } 
+                            else if (rand < 0.30) {
+                                let pairWords = [];
+                                let j = i;
+                                while (j < tokens.length && pairWords.length < 2) {
+                                    if (!/^\s+$/.test(tokens[j])) {
+                                        pairWords.push(tokens[j]);
+                                    }
+                                    j++;
+                                }
+                                if (pairWords.length > 0) {
+                                    fragment.appendChild(createSpan(pairWords.join(' ')));
+                                    fragment.appendChild(document.createTextNode(' '));
+                                    i = j;
+                                    continue;
+                                }
+                            } 
+                            else if (rand < 0.75) {
+                                fragment.appendChild(createSpan(token));
+                                i++;
+                            } 
+                            else if (rand < 0.90) {
+                                const subFrag = document.createDocumentFragment();
+                                for (let c = 0; c < token.length; c += 2) {
+                                    subFrag.appendChild(createSpan(token.slice(c, c + 2)));
+                                }
+                                fragment.appendChild(subFrag);
+                                i++;
+                            } 
+                            else {
+                                const subFrag = document.createDocumentFragment();
+                                for (let char of token) {
+                                    subFrag.appendChild(createSpan(char));
+                                }
+                                fragment.appendChild(subFrag);
+                                i++;
+                            }
+                        }
+                        node.parentNode.replaceChild(fragment, node);
+                    } else if (node.nodeType === Node.ELEMENT_NODE) {
+                        const tag = node.tagName.toLowerCase();
+                        
+                        if (tag === 'a' || tag === 'button' || tag === 'img' || tag === 'video' || tag === 'audio' || tag === 'figure') {
+                            node.classList.add('chaos-chunk');
+                        } else if (tag !== 'script' && tag !== 'style' && tag !== 'iframe') {
+                            chaoticize(node);
+                        }
+                    }
+                }); 
+            }
+
+            function applyChaos() {
+                const chunks = document.querySelectorAll('.chaos-chunk');
+                
+                const maxX = window.innerWidth * 0.45;
+                const maxY = window.innerHeight * 0.45;
+                const maxZ = 150; 
+
+                chunks.forEach(chunk => {
+                    const duration = getRandom(7, 25);  
+                    const delay = getRandom(0, 4); 
                     
-                        <!-- You are free to do whatever you like with this work.
-                        Separately, if you are a creator of music, I ask: what do you gain from restrictive licensing of your music (which is the default by law), and what do you and society stand to lose from it?
-                        </p> -->
+                    const tx = getRandom(-maxX, maxX);   
+                    const ty = getRandom(-maxY, maxY);   
+                    const tz = getRandom(-maxZ, maxZ); 
+                    
+                    const rx = getRandom(-180, 180);   
+                    const ry = getRandom(-180, 180);   
+                    const rz = getRandom(-90, 90);     
+                    
+                    const scale = getRandom(0.65, 1.6); 
+                    const opacity = getRandom(0.8, 1.0); 
+                    
+                    const targetTransform = `translate3d(${tx}px, ${ty}px, ${tz}px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg) scale(${scale})`;
+                    
+                    chunk.dataset.targetTransform = targetTransform;
+                    chunk.dataset.targetOpacity = opacity;
+                    chunk.dataset.dur = `${duration}s`;
+                    chunk.dataset.delay = `${delay}s`;
+
+                    if (!chunk.classList.contains('frozen')) {
+                        chunk.style.transition = `transform ${duration}s cubic-bezier(0.22, 1, 0.36, 1), opacity ${duration}s ease-in-out`;
+                        chunk.style.transitionDelay = `${delay}s`;
+                        chunk.style.transform = targetTransform;
+                        chunk.style.opacity = opacity;
+                    }
+                });
+            }
+
+            function applyDisintegration() {
+                const atoms = document.querySelectorAll('.chaos-atom');
+                const maxScatterX = window.innerWidth * 0.15;
+                const maxScatterY = window.innerHeight * 0.15;
+
+                atoms.forEach(atom => {
+                    if (atom.parentElement && atom.parentElement.classList.contains('frozen')) return;
+
+                    const duration = getRandom(14, 22);
+                    const delay = getRandom(0, 6);
+
+                    const ax = getRandom(-maxScatterX, maxScatterX);
+                    const ay = getRandom(-maxScatterY, maxScatterY);
+                    const az = getRandom(-40, 40);
+                    const rz = getRandom(-60, 60);
+                    const opacity = getRandom(0.5, 1.0);
+
+                    atom.style.setProperty('--atom-dur', `${duration}s`);
+                    atom.style.setProperty('--atom-delay', `${delay}s`);
+                    atom.style.transform = `translate3d(${ax}px, ${ay}px, ${az}px) rotateZ(${rz}deg)`;
+                    atom.style.opacity = opacity;
+                });
+            }
+
+            function initInteractiveFreezing() {
+                const targets = document.querySelectorAll('a.chaos-chunk, button.chaos-chunk, img.chaos-chunk, video.chaos-chunk, audio.chaos-chunk, figure.chaos-chunk');
                 
-                        <P>
+                targets.forEach(el => {
+                    el.addEventListener('mouseenter', (e) => {
+                        const chunk = e.currentTarget;
+                        chunk.classList.add('frozen');
 
-                    <div><iframe width="140" height="85" src="https://www.youtube-nocookie.com/embed/J3QtMMFoYy8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+                        const computedStyle = window.getComputedStyle(chunk);
+                        const currentTransform = computedStyle.transform;
+                        const currentOpacity = computedStyle.opacity;
 
-                    <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-                        EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-                        MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-                        IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-                        OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-                        ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-                        OTHER DEALINGS IN THE SOFTWARE.
-                         
-                        For more information, please refer to <a href="http://unlicense.org/">unlicense.org</a>.
-                        </p>
-        
+                        chunk.style.transition = 'none';
+                        chunk.style.transitionDelay = '0s';
+                        chunk.style.transform = currentTransform;
+                        chunk.style.opacity = currentOpacity;
+                    });
 
-    
+                    el.addEventListener('mouseleave', (e) => {
+                        const chunk = e.currentTarget;
+                        chunk.classList.remove('frozen');
+
+                        const dur = chunk.dataset.dur || '20s';
+                        chunk.style.transition = `transform ${dur} cubic-bezier(0.22, 1, 0.36, 1), opacity ${dur} ease-in-out`;
+                        chunk.style.transitionDelay = '0s'; 
+                        chunk.style.transform = chunk.dataset.targetTransform;
+                        chunk.style.opacity = chunk.dataset.targetOpacity;
+                    });
+                });
+            }
+
+            function applyParentChaos() {
+                const parents = document.querySelectorAll('h1, h2, h3, h4, p, #links, #wrap, #copy-this-book');
+                const maxParentDrift = Math.min(60, window.innerWidth * 0.1);
+
+                parents.forEach(parent => {
+                    const ptx = getRandom(-maxParentDrift, maxParentDrift);
+                    const pty = getRandom(-maxParentDrift, maxParentDrift);
+                    const ptz = getRandom(-60, 20);
+                    const prot = getRandom(-5, 5);
+                    
+                    parent.style.transform = `translate3d(${ptx}px, ${pty}px, ${ptz}px) rotate(${prot}deg)`;
+                });
+            }
+
+            window.addEventListener('DOMContentLoaded', () => {
+                chaoticize(document.body);
+                initInteractiveFreezing(); 
+                
+                const debrisField = document.getElementById('chaos-debris-field');
+                const debrisChunks = debrisField.querySelectorAll('.chaos-chunk');
+                
+                debrisChunks.forEach(chunk => {
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = Math.max(window.innerWidth, window.innerHeight) * 1.2; 
+                    const startX = Math.cos(angle) * distance;
+                    const startY = Math.sin(angle) * distance;
+                    const startZ = getRandom(-300, -100); 
+                    
+                    chunk.style.transition = 'none'; 
+                    chunk.style.transform = `translate3d(${startX}px, ${startY}px, ${startZ}px) rotateX(${getRandom(-180, 180)}deg) rotateY(${getRandom(-180, 180)}deg) rotateZ(${getRandom(-180, 180)}deg)`;
+                    chunk.style.opacity = '0';
+                });
+
+                debrisField.style.display = 'block';
+
+                setTimeout(() => {
+                    debrisField.classList.add('active');
+
+                    applyChaos();
+                    applyParentChaos();
+                    
+                    setInterval(() => {
+                        applyChaos();
+                        applyParentChaos();
+                    }, 12000); 
+
+                    setTimeout(() => {
+                        applyDisintegration();
+                        setInterval(applyDisintegration, 15000);
+                    }, DISINTEGRATION_DELAY);
+
+                }, 2500);
+            });
+        })();
+    </script>
 </body>
-<script type="module" defer>
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-app.js";
-    import { getFirestore, getDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-firestore.js"
-
-    // import { getFirestore, collection, getDocs, orderBy, query, where, addDoc, getDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-firestore.js"
-
-
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-  
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyAlNZyxwAjPtFjNiq_E4PjqRw9efpv7Xmw",
-  authDomain: "copyrightnightmarescomments.firebaseapp.com",
-  projectId: "copyrightnightmarescomments",
-  storageBucket: "copyrightnightmarescomments.appspot.com",
-  messagingSenderId: "434761434052",
-  appId: "1:434761434052:web:add1aba3d4c899d2a79a91",
-  measurementId: "G-6TBFET51PM"     
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore()
-    console.log("want to happen first")
-    checkFireBase(getDoc)
-    
-
-
-    function checkFireBase(getDoc){
-    // do whatever you like here
-    console.log("checking...")
-
-    getDoc(doc(db, "activation", "activate")).then(docSnap => {
-        if (docSnap.exists()) {
-            const activeStatus = docSnap.data()["activated"]
-            console.log("Document data:", activeStatus);
-            if (! activeStatus){
-             document.write("This website will work after the concert. You'll need to refresh in order to see it")
-        }
-        } else {
-            console.log("No such document!");
-        }
-        })
-    // kill all on false //
-    
-
-
-
-}
-
-
-
-</script>
-
-<script>    randomiseColor1()
-randomiseColor2()
-</script>
 </html>
