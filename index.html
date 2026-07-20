@@ -606,13 +606,16 @@
     
     
 <!-- ==========================================================================
-       RESPONSIVE TWO-STAGE GLITCH-FREE CHAOS ENGINE (MOBILE OPTIMIZED, NO TOUCH)
+       RESPONSIVE TWO-STAGE GLITCH-FREE CHAOS ENGINE (ULTIMATE PERFORMANCE EDITION)
        ========================================================================== -->
     <script>
         (function() {
-            const CYCLE_DURATION = 18000; // Time spent in each state (18 seconds)
+            const CYCLE_DURATION = 18000; 
             const DISINTEGRATION_DELAY = 30000; 
             const ENABLE_STAGE_2 = false; 
+
+            // Detect mobile once at startup
+            const isMobile = window.innerWidth < 768;
 
             function getRandom(min, max) {
                 return Math.random() * (max - min) + min;
@@ -622,7 +625,6 @@
                 return Math.floor(Math.random() * (max - min + 1)) + min;
             }
 
-            // Helper to find an element's true un-transformed document position
             function getDocumentOffset(el) {
                 let top = 0, left = 0;
                 while (el) {
@@ -637,7 +639,8 @@
                 const span = document.createElement('span');
                 span.classList.add('chaos-chunk');
                 
-                if (ENABLE_STAGE_2) {
+                // Hard-block Stage 2 on mobile to protect the CPU
+                if (ENABLE_STAGE_2 && !isMobile) {
                     for (let char of text) {
                         const atom = document.createElement('span');
                         atom.textContent = char;
@@ -672,57 +675,76 @@
                             
                             const rand = Math.random();
                             
-                            if (rand < 0.10) {
-                                let phraseWords = [];
-                                let j = i;
-                                while (j < tokens.length && phraseWords.length < getRandomInt(3, 5)) {
-                                    if (!/^\s+$/.test(tokens[j])) {
-                                        phraseWords.push(tokens[j]);
+                            // MOBILE OPTIMIZATION: Cluster text into larger chunks (3-8 words) to reduce DOM nodes
+                            if (isMobile) {
+                                if (rand < 0.60) {
+                                    let phraseWords = [];
+                                    let j = i;
+                                    while (j < tokens.length && phraseWords.length < getRandomInt(3, 8)) {
+                                        if (!/^\s+$/.test(tokens[j])) phraseWords.push(tokens[j]);
+                                        j++;
                                     }
-                                    j++;
-                                }
-                                if (phraseWords.length > 0) {
-                                    fragment.appendChild(createSpan(phraseWords.join(' ')));
-                                    fragment.appendChild(document.createTextNode(' '));
-                                    i = j;
-                                    continue;
-                                }
-                            } 
-                            else if (rand < 0.30) {
-                                let pairWords = [];
-                                let j = i;
-                                while (j < tokens.length && pairWords.length < 2) {
-                                    if (!/^\s+$/.test(tokens[j])) {
-                                        pairWords.push(tokens[j]);
+                                    if (phraseWords.length > 0) {
+                                        fragment.appendChild(createSpan(phraseWords.join(' ')));
+                                        fragment.appendChild(document.createTextNode(' '));
+                                        i = j;
+                                        continue;
                                     }
-                                    j++;
-                                }
-                                if (pairWords.length > 0) {
-                                    fragment.appendChild(createSpan(pairWords.join(' ')));
-                                    fragment.appendChild(document.createTextNode(' '));
-                                    i = j;
-                                    continue;
+                                } else {
+                                    fragment.appendChild(createSpan(token));
+                                    i++;
                                 }
                             } 
-                            else if (rand < 0.75) {
-                                fragment.appendChild(createSpan(token));
-                                i++;
-                            } 
-                            else if (rand < 0.90) {
-                                const subFrag = document.createDocumentFragment();
-                                for (let c = 0; c < token.length; c += 2) {
-                                    subFrag.appendChild(createSpan(token.slice(c, c + 2)));
-                                }
-                                fragment.appendChild(subFrag);
-                                i++;
-                            } 
+                            // DESKTOP: Original highly-fragmented logic
                             else {
-                                const subFrag = document.createDocumentFragment();
-                                for (let char of token) {
-                                    subFrag.appendChild(createSpan(char));
+                                if (rand < 0.10) {
+                                    let phraseWords = [];
+                                    let j = i;
+                                    while (j < tokens.length && phraseWords.length < getRandomInt(3, 5)) {
+                                        if (!/^\s+$/.test(tokens[j])) phraseWords.push(tokens[j]);
+                                        j++;
+                                    }
+                                    if (phraseWords.length > 0) {
+                                        fragment.appendChild(createSpan(phraseWords.join(' ')));
+                                        fragment.appendChild(document.createTextNode(' '));
+                                        i = j;
+                                        continue;
+                                    }
+                                } 
+                                else if (rand < 0.30) {
+                                    let pairWords = [];
+                                    let j = i;
+                                    while (j < tokens.length && pairWords.length < 2) {
+                                        if (!/^\s+$/.test(tokens[j])) pairWords.push(tokens[j]);
+                                        j++;
+                                    }
+                                    if (pairWords.length > 0) {
+                                        fragment.appendChild(createSpan(pairWords.join(' ')));
+                                        fragment.appendChild(document.createTextNode(' '));
+                                        i = j;
+                                        continue;
+                                    }
+                                } 
+                                else if (rand < 0.75) {
+                                    fragment.appendChild(createSpan(token));
+                                    i++;
+                                } 
+                                else if (rand < 0.90) {
+                                    const subFrag = document.createDocumentFragment();
+                                    for (let c = 0; c < token.length; c += 2) {
+                                        subFrag.appendChild(createSpan(token.slice(c, c + 2)));
+                                    }
+                                    fragment.appendChild(subFrag);
+                                    i++;
+                                } 
+                                else {
+                                    const subFrag = document.createDocumentFragment();
+                                    for (let char of token) {
+                                        subFrag.appendChild(createSpan(char));
+                                    }
+                                    fragment.appendChild(subFrag);
+                                    i++;
                                 }
-                                fragment.appendChild(subFrag);
-                                i++;
                             }
                         }
                         node.parentNode.replaceChild(fragment, node);
@@ -739,34 +761,34 @@
             }
 
             function applyChaos() {
-                const chunks = document.querySelectorAll('.chaos-chunk');
-                
+                const chunks = Array.from(document.querySelectorAll('.chaos-chunk'));
                 const scrollX = window.scrollX || window.pageXOffset;
                 const scrollY = window.scrollY || window.pageYOffset;
                 const viewportW = window.innerWidth;
                 const viewportH = window.innerHeight;
                 
-                const isMobile = viewportW < 768;
                 const docHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+                const maxZ = isMobile ? 50 : 150; 
 
-                // Cap the Z-axis depth so elements don't get "massive" on small screens
-                const maxZ = isMobile ? 3 : 150; 
+                // PERFORMANCE: Batch all DOM Reads first
+                const chunkData = chunks.map(chunk => ({
+                    chunk,
+                    offset: getDocumentOffset(chunk)
+                }));
 
-                chunks.forEach(chunk => {
+                // PERFORMANCE: Batch all DOM Writes second
+                chunkData.forEach(data => {
+                    const { chunk, offset } = data;
                     const duration = getRandom(7, 25);  
                     const delay = getRandom(0, 4); 
-                    const offset = getDocumentOffset(chunk);
                     
                     const targetX = scrollX + getRandom(50, viewportW - 50);
                     let targetY;
 
                     if (isMobile) {
-                        // Spread across ~3x viewport height centered roughly on current scroll
                         const rawTargetY = scrollY + getRandom(-viewportH, viewportH * 2);
-                        // Clamp it so it doesn't fly into unreachable negative space or below the footer
                         targetY = Math.max(50, Math.min(docHeight - 50, rawTargetY));
                     } else {
-                        // Desktop: Confine tightly to the currently visible screen
                         targetY = scrollY + getRandom(50, viewportH - 50);
                     }
                     
@@ -777,7 +799,6 @@
                     const ry = getRandom(-180, 180);   
                     const rz = getRandom(-90, 90);     
                     
-                    // Constrain scale so elements aren't overwhelming on mobile
                     const scale = isMobile ? getRandom(0.5, 1.1) : getRandom(0.65, 1.6); 
                     const opacity = getRandom(0.8, 1.0); 
                     
@@ -815,6 +836,8 @@
             }
 
             function applyDisintegration() {
+                if (isMobile) return; // Save CPU on mobile
+
                 const atoms = document.querySelectorAll('.chaos-atom');
                 const maxScatterX = window.innerWidth * 0.15;
                 const maxScatterY = window.innerHeight * 0.15;
@@ -839,9 +862,9 @@
             }
 
             function resetChaos() {
-                const allChunks = document.querySelectorAll('.chaos-chunk');
+                const allChunks = Array.from(document.querySelectorAll('.chaos-chunk'));
                 const debrisChunks = Array.from(document.querySelectorAll('#chaos-debris-field .chaos-chunk'));
-                const textChunks = Array.from(allChunks).filter(c => !debrisChunks.includes(c));
+                const textChunks = allChunks.filter(c => !debrisChunks.includes(c));
                 
                 // 1. TEXT CHUNKS
                 textChunks.forEach(chunk => {
@@ -861,6 +884,7 @@
 
                 // 2. DEBRIS CHUNKS (FLIP SHUFFLE)
                 if (debrisChunks.length > 0) {
+                    // READ PASS
                     const slots = debrisChunks.map(chunk => getDocumentOffset(chunk));
                     
                     for (let i = slots.length - 1; i > 0; i--) {
@@ -868,48 +892,54 @@
                         [slots[i], slots[j]] = [slots[j], slots[i]];
                     }
 
+                    // WRITE PASS
                     debrisChunks.forEach(chunk => {
                         chunk.style.order = Math.floor(Math.random() * 1000);
                     });
 
-                    debrisChunks.forEach((chunk, index) => {
-                        const duration = getRandom(6, 12); 
-                        const myBase = getDocumentOffset(chunk);
-                        const targetSlot = slots[index];
+                    // We must let the browser apply the order change, so we batch the FLIP calcs
+                    requestAnimationFrame(() => {
+                        const newBases = debrisChunks.map(chunk => getDocumentOffset(chunk));
                         
-                        const oldTx = parseFloat(chunk.dataset.tx || 0);
-                        const oldTy = parseFloat(chunk.dataset.ty || 0);
-                        const oldTz = parseFloat(chunk.dataset.tz || 0);
-                        const oldRx = parseFloat(chunk.dataset.rx || 0);
-                        const oldRy = parseFloat(chunk.dataset.ry || 0);
-                        const oldRz = parseFloat(chunk.dataset.rz || 0);
-                        const oldScale = parseFloat(chunk.dataset.scale || 1);
+                        debrisChunks.forEach((chunk, index) => {
+                            const duration = getRandom(6, 12); 
+                            const myBase = newBases[index];
+                            const targetSlot = slots[index];
+                            
+                            const oldTx = parseFloat(chunk.dataset.tx || 0);
+                            const oldTy = parseFloat(chunk.dataset.ty || 0);
+                            const oldTz = parseFloat(chunk.dataset.tz || 0);
+                            const oldRx = parseFloat(chunk.dataset.rx || 0);
+                            const oldRy = parseFloat(chunk.dataset.ry || 0);
+                            const oldRz = parseFloat(chunk.dataset.rz || 0);
+                            const oldScale = parseFloat(chunk.dataset.scale || 1);
 
-                        const compTx = targetSlot.left + oldTx - myBase.left;
-                        const compTy = targetSlot.top + oldTy - myBase.top;
+                            const compTx = targetSlot.left + oldTx - myBase.left;
+                            const compTy = targetSlot.top + oldTy - myBase.top;
 
-                        chunk.style.transition = 'none';
-                        chunk.style.transform = `translate3d(${compTx}px, ${compTy}px, ${oldTz}px) rotateX(${oldRx}deg) rotateY(${oldRy}deg) rotateZ(${oldRz}deg) scale(${oldScale})`;
-                        
-                        void chunk.offsetWidth; 
-                        
-                        const targetTransform = `translate3d(0px, 0px, 0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1)`;
-                        
-                        chunk.dataset.targetTransform = targetTransform;
-                        chunk.dataset.targetOpacity = 1;
-                        
-                        chunk.dataset.tx = 0; chunk.dataset.ty = 0; chunk.dataset.tz = 0;
-                        chunk.dataset.rx = 0; chunk.dataset.ry = 0; chunk.dataset.rz = 0;
-                        chunk.dataset.scale = 1;
-
-                        if (!chunk.classList.contains('frozen')) {
-                            chunk.style.transition = `transform ${duration}s cubic-bezier(0.42, 0, 0.58, 1), opacity ${duration}s ease-in-out`;
-                            chunk.style.transitionDelay = '0s';
-                            chunk.style.transform = targetTransform;
-                            chunk.style.opacity = 1;
-                        } else {
+                            chunk.style.transition = 'none';
                             chunk.style.transform = `translate3d(${compTx}px, ${compTy}px, ${oldTz}px) rotateX(${oldRx}deg) rotateY(${oldRy}deg) rotateZ(${oldRz}deg) scale(${oldScale})`;
-                        }
+                            
+                            void chunk.offsetWidth; 
+                            
+                            const targetTransform = `translate3d(0px, 0px, 0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1)`;
+                            
+                            chunk.dataset.targetTransform = targetTransform;
+                            chunk.dataset.targetOpacity = 1;
+                            
+                            chunk.dataset.tx = 0; chunk.dataset.ty = 0; chunk.dataset.tz = 0;
+                            chunk.dataset.rx = 0; chunk.dataset.ry = 0; chunk.dataset.rz = 0;
+                            chunk.dataset.scale = 1;
+
+                            if (!chunk.classList.contains('frozen')) {
+                                chunk.style.transition = `transform ${duration}s cubic-bezier(0.42, 0, 0.58, 1), opacity ${duration}s ease-in-out`;
+                                chunk.style.transitionDelay = '0s';
+                                chunk.style.transform = targetTransform;
+                                chunk.style.opacity = 1;
+                            } else {
+                                chunk.style.transform = `translate3d(${compTx}px, ${compTy}px, ${oldTz}px) rotateX(${oldRx}deg) rotateY(${oldRy}deg) rotateZ(${oldRz}deg) scale(${oldScale})`;
+                            }
+                        });
                     });
                 }
 
@@ -920,7 +950,7 @@
                     parent.style.transform = 'translate3d(0px, 0px, 0px) rotate(0deg)';
                 });
 
-                if (ENABLE_STAGE_2) {
+                if (ENABLE_STAGE_2 && !isMobile) {
                     const atoms = document.querySelectorAll('.chaos-atom');
                     atoms.forEach(atom => {
                         if (atom.parentElement && !atom.parentElement.classList.contains('frozen')) {
@@ -940,13 +970,10 @@
                         chunk.classList.add('frozen');
 
                         const computedStyle = window.getComputedStyle(chunk);
-                        const currentTransform = computedStyle.transform;
-                        const currentOpacity = computedStyle.opacity;
-
                         chunk.style.transition = 'none';
                         chunk.style.transitionDelay = '0s';
-                        chunk.style.transform = currentTransform;
-                        chunk.style.opacity = currentOpacity;
+                        chunk.style.transform = computedStyle.transform;
+                        chunk.style.opacity = computedStyle.opacity;
                     });
 
                     el.addEventListener('mouseleave', (e) => {
@@ -967,9 +994,13 @@
                 initInteractiveFreezing(); 
                 
                 const debrisField = document.getElementById('chaos-debris-field');
-                const debrisChunks = debrisField.querySelectorAll('.chaos-chunk');
+                const debrisChunks = Array.from(debrisField.querySelectorAll('.chaos-chunk'));
                 
-                debrisChunks.forEach(chunk => {
+                // READ offset
+                const initialOffsets = debrisChunks.map(chunk => getDocumentOffset(chunk));
+
+                // WRITE start transforms
+                debrisChunks.forEach((chunk, index) => {
                     const angle = Math.random() * Math.PI * 2;
                     const distance = Math.max(window.innerWidth, window.innerHeight) * 1.5; 
                     
@@ -979,7 +1010,7 @@
                     const targetX = scrollX + (window.innerWidth / 2) + Math.cos(angle) * distance;
                     const targetY = scrollY + (window.innerHeight / 2) + Math.sin(angle) * distance;
                     
-                    const offset = getDocumentOffset(chunk);
+                    const offset = initialOffsets[index];
                     
                     const startX = targetX - offset.left;
                     const startY = targetY - offset.top;
@@ -1003,19 +1034,22 @@
                     let isChaotic = true;
                     
                     setInterval(() => {
+                        // BATTERY SAVER: Don't run math if the user is in another tab
+                        if (document.hidden) return;
+
                         isChaotic = !isChaotic;
                         
                         if (isChaotic) {
                             applyChaos();
-                            if (ENABLE_STAGE_2) applyDisintegration();
+                            if (ENABLE_STAGE_2 && !isMobile) applyDisintegration();
                         } else {
                             resetChaos(); 
                         }
                     }, CYCLE_DURATION); 
 
-                    if (ENABLE_STAGE_2) {
+                    if (ENABLE_STAGE_2 && !isMobile) {
                         setTimeout(() => {
-                            if (isChaotic) applyDisintegration();
+                            if (isChaotic && !document.hidden) applyDisintegration();
                         }, DISINTEGRATION_DELAY);
                     }
 
