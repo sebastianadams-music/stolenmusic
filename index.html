@@ -768,7 +768,7 @@
                 const viewportH = window.innerHeight;
                 
                 const docHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
-                const maxZ = isMobile ? 50 : 150; 
+                const maxZ = isMobile ? 3 : 150; 
 
                 // PERFORMANCE: Batch all DOM Reads first
                 const chunkData = chunks.map(chunk => ({
@@ -786,7 +786,7 @@
                     let targetY;
 
                     if (isMobile) {
-                        const rawTargetY = scrollY + getRandom(-viewportH, viewportH * 2);
+                        const rawTargetY = scrollY + getRandom(-viewportH * .1, viewportH * 1.5);
                         targetY = Math.max(50, Math.min(docHeight - 50, rawTargetY));
                     } else {
                         targetY = scrollY + getRandom(50, viewportH - 50);
@@ -799,7 +799,7 @@
                     const ry = getRandom(-180, 180);   
                     const rz = getRandom(-90, 90);     
                     
-                    const scale = isMobile ? getRandom(0.5, 1.1) : getRandom(0.65, 1.6); 
+                    const scale = isMobile ? getRandom(0.5, 1.05) : getRandom(0.65, 1.6); 
                     const opacity = getRandom(0.8, 1.0); 
                     
                     chunk.dataset.tx = tx; chunk.dataset.ty = ty; chunk.dataset.tz = tz;
