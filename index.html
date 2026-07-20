@@ -606,7 +606,7 @@
     
     
 <!-- ==========================================================================
-       RESPONSIVE TWO-STAGE GLITCH-FREE CHAOS ENGINE (MOBILE SCALE/DEPTH CAPPED)
+       RESPONSIVE TWO-STAGE GLITCH-FREE CHAOS ENGINE (MOBILE OPTIMIZED, NO TOUCH)
        ========================================================================== -->
     <script>
         (function() {
@@ -934,34 +934,31 @@
             function initInteractiveFreezing() {
                 const targets = document.querySelectorAll('a.chaos-chunk, button.chaos-chunk, img.chaos-chunk, video.chaos-chunk, audio.chaos-chunk, figure.chaos-chunk');
                 
-                const freezeItem = (e) => {
-                    const chunk = e.currentTarget;
-                    chunk.classList.add('frozen');
-                    const computedStyle = window.getComputedStyle(chunk);
-                    chunk.style.transition = 'none';
-                    chunk.style.transitionDelay = '0s';
-                    chunk.style.transform = computedStyle.transform;
-                    chunk.style.opacity = computedStyle.opacity;
-                };
-
-                const unfreezeItem = (e) => {
-                    const chunk = e.currentTarget;
-                    chunk.classList.remove('frozen');
-                    const dur = chunk.dataset.dur || '20s';
-                    chunk.style.transition = `transform ${dur} cubic-bezier(0.22, 1, 0.36, 1), opacity ${dur} ease-in-out`;
-                    chunk.style.transitionDelay = '0s'; 
-                    chunk.style.transform = chunk.dataset.targetTransform || 'translate3d(0,0,0)';
-                    chunk.style.opacity = chunk.dataset.targetOpacity || '1';
-                };
-
                 targets.forEach(el => {
-                    // Desktop Mouse
-                    el.addEventListener('mouseenter', freezeItem);
-                    el.addEventListener('mouseleave', unfreezeItem);
-                    // Mobile Touch
-                    el.addEventListener('touchstart', freezeItem, {passive: true});
-                    el.addEventListener('touchend', unfreezeItem, {passive: true});
-                    el.addEventListener('touchcancel', unfreezeItem, {passive: true});
+                    el.addEventListener('mouseenter', (e) => {
+                        const chunk = e.currentTarget;
+                        chunk.classList.add('frozen');
+
+                        const computedStyle = window.getComputedStyle(chunk);
+                        const currentTransform = computedStyle.transform;
+                        const currentOpacity = computedStyle.opacity;
+
+                        chunk.style.transition = 'none';
+                        chunk.style.transitionDelay = '0s';
+                        chunk.style.transform = currentTransform;
+                        chunk.style.opacity = currentOpacity;
+                    });
+
+                    el.addEventListener('mouseleave', (e) => {
+                        const chunk = e.currentTarget;
+                        chunk.classList.remove('frozen');
+
+                        const dur = chunk.dataset.dur || '20s';
+                        chunk.style.transition = `transform ${dur} cubic-bezier(0.22, 1, 0.36, 1), opacity ${dur} ease-in-out`;
+                        chunk.style.transitionDelay = '0s'; 
+                        chunk.style.transform = chunk.dataset.targetTransform || 'translate3d(0,0,0)';
+                        chunk.style.opacity = chunk.dataset.targetOpacity || '1';
+                    });
                 });
             }
 
