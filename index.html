@@ -606,7 +606,7 @@
     
     
 <!-- ==========================================================================
-       RESPONSIVE TWO-STAGE GLITCH-FREE CHAOS ENGINE (MOBILE OPTIMIZED + FLIP)
+       RESPONSIVE TWO-STAGE GLITCH-FREE CHAOS ENGINE (MOBILE SCALE/DEPTH CAPPED)
        ========================================================================== -->
     <script>
         (function() {
@@ -745,10 +745,12 @@
                 const scrollY = window.scrollY || window.pageYOffset;
                 const viewportW = window.innerWidth;
                 const viewportH = window.innerHeight;
-                const maxZ = 150; 
                 
                 const isMobile = viewportW < 768;
                 const docHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+
+                // Cap the Z-axis depth so elements don't get "massive" on small screens
+                const maxZ = isMobile ? 50 : 150; 
 
                 chunks.forEach(chunk => {
                     const duration = getRandom(7, 25);  
@@ -774,7 +776,9 @@
                     const rx = getRandom(-180, 180);   
                     const ry = getRandom(-180, 180);   
                     const rz = getRandom(-90, 90);     
-                    const scale = getRandom(0.65, 1.6); 
+                    
+                    // Constrain scale so elements aren't overwhelming on mobile
+                    const scale = isMobile ? getRandom(0.5, 1.1) : getRandom(0.65, 1.6); 
                     const opacity = getRandom(0.8, 1.0); 
                     
                     chunk.dataset.tx = tx; chunk.dataset.ty = ty; chunk.dataset.tz = tz;
