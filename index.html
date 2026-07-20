@@ -750,7 +750,7 @@
                 const docHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
 
                 // Cap the Z-axis depth so elements don't get "massive" on small screens
-                const maxZ = isMobile ? 50 : 150; 
+                const maxZ = isMobile ? 3 : 150; 
 
                 chunks.forEach(chunk => {
                     const duration = getRandom(7, 25);  
