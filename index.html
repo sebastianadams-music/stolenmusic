@@ -576,7 +576,7 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore()
-        checkFireBase(getDoc)    
+        checkFireBase(getDoc)   
 
         function checkFireBase(getDoc){
             getDoc(doc(db, "activation", "activate")).then(docSnap => {
@@ -601,6 +601,7 @@
     <script>
         (function() {
             const DISINTEGRATION_DELAY = 30000; 
+            const ENABLE_STAGE_2 = false; // Set to true to enable individual letter disintegration, false for performance
 
             function getRandom(min, max) {
                 return Math.random() * (max - min) + min;
@@ -614,11 +615,15 @@
                 const span = document.createElement('span');
                 span.classList.add('chaos-chunk');
                 
-                for (let char of text) {
-                    const atom = document.createElement('span');
-                    atom.textContent = char;
-                    atom.classList.add('chaos-atom');
-                    span.appendChild(atom);
+                if (ENABLE_STAGE_2) {
+                    for (let char of text) {
+                        const atom = document.createElement('span');
+                        atom.textContent = char;
+                        atom.classList.add('chaos-atom');
+                        span.appendChild(atom);
+                    }
+                } else {
+                    span.textContent = text;
                 }
                 return span;
             }
@@ -850,10 +855,12 @@
                         applyParentChaos();
                     }, 12000); 
 
-                    setTimeout(() => {
-                        applyDisintegration();
-                        setInterval(applyDisintegration, 15000);
-                    }, DISINTEGRATION_DELAY);
+                    if (ENABLE_STAGE_2) {
+                        setTimeout(() => {
+                            applyDisintegration();
+                            setInterval(applyDisintegration, 15000);
+                        }, DISINTEGRATION_DELAY);
+                    }
 
                 }, 2500);
             });
