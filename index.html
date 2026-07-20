@@ -97,18 +97,24 @@
             text-decoration: underline;
         }
 
-        /* Full Viewport Debris Field canvas layer */
+/* ==========================================================================
+           DEBRIS FIELD - NORMALIZED LAYOUT
+           ========================================================================== */
         #chaos-debris-field {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none; 
+            position: relative;
+            width: 100%;
             z-index: 2000; 
             transform-style: preserve-3d;
             
-            display: none; 
+            /* Linear arrangement at the bottom */
+            display: flex; 
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 40px 10px;
+            margin-top: 100px; /* Pushes it down below the text */
+            
             opacity: 0; 
             transition: opacity 1.5s ease-in;
         }
@@ -118,9 +124,7 @@
         }
 
         #chaos-debris-field .chaos-chunk {
-            position: absolute;
-            top: 50%;
-            left: 50%;
+            position: relative; /* Replaced absolute centering */
             margin: 0;
             transform-origin: center center;
         }
@@ -594,14 +598,21 @@
         randomiseColor1()
         randomiseColor2()
     </script>
-
-    <!-- ==========================================================================
-       RESPONSIVE TWO-STAGE GLITCH-FREE CHAOS ENGINE
+    
+    
+    
+    
+    
+    
+    
+<!-- ==========================================================================
+       RESPONSIVE TWO-STAGE GLITCH-FREE CHAOS ENGINE (WITH TRUE FLIP SHUFFLE)
        ========================================================================== -->
     <script>
         (function() {
+            const CYCLE_DURATION = 18000; // Time spent in each state (18 seconds)
             const DISINTEGRATION_DELAY = 30000; 
-            const ENABLE_STAGE_2 = false; // Set to true to enable individual letter disintegration, false for performance
+            const ENABLE_STAGE_2 = false; 
 
             function getRandom(min, max) {
                 return Math.random() * (max - min) + min;
@@ -609,6 +620,17 @@
 
             function getRandomInt(min, max) {
                 return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            // Helper to find an element's true un-transformed document position
+            function getDocumentOffset(el) {
+                let top = 0, left = 0;
+                while (el) {
+                    top += el.offsetTop;
+                    left += el.offsetLeft;
+                    el = el.offsetParent;
+                }
+                return { top, left };
             }
 
             function createSpan(text) {
@@ -719,25 +741,35 @@
             function applyChaos() {
                 const chunks = document.querySelectorAll('.chaos-chunk');
                 
-                const maxX = window.innerWidth * 0.45;
-                const maxY = window.innerHeight * 0.45;
+                const scrollX = window.scrollX || window.pageXOffset;
+                const scrollY = window.scrollY || window.pageYOffset;
+                const viewportW = window.innerWidth;
+                const viewportH = window.innerHeight;
                 const maxZ = 150; 
 
                 chunks.forEach(chunk => {
                     const duration = getRandom(7, 25);  
                     const delay = getRandom(0, 4); 
                     
-                    const tx = getRandom(-maxX, maxX);   
-                    const ty = getRandom(-maxY, maxY);   
-                    const tz = getRandom(-maxZ, maxZ); 
+                    const offset = getDocumentOffset(chunk);
                     
+                    const targetX = scrollX + getRandom(50, viewportW - 50);
+                    const targetY = scrollY + getRandom(50, viewportH - 50);
+                    
+                    const tx = targetX - offset.left;
+                    const ty = targetY - offset.top;
+                    const tz = getRandom(-maxZ, maxZ); 
                     const rx = getRandom(-180, 180);   
                     const ry = getRandom(-180, 180);   
                     const rz = getRandom(-90, 90);     
-                    
                     const scale = getRandom(0.65, 1.6); 
                     const opacity = getRandom(0.8, 1.0); 
                     
+                    // Store the raw values so we can calculate the FLIP layout math later
+                    chunk.dataset.tx = tx; chunk.dataset.ty = ty; chunk.dataset.tz = tz;
+                    chunk.dataset.rx = rx; chunk.dataset.ry = ry; chunk.dataset.rz = rz;
+                    chunk.dataset.scale = scale;
+
                     const targetTransform = `translate3d(${tx}px, ${ty}px, ${tz}px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg) scale(${scale})`;
                     
                     chunk.dataset.targetTransform = targetTransform;
@@ -751,6 +783,19 @@
                         chunk.style.transform = targetTransform;
                         chunk.style.opacity = opacity;
                     }
+                });
+
+                const parents = document.querySelectorAll('h1, h2, h3, h4, p, #links, #wrap, #copy-this-book');
+                const maxParentDrift = Math.min(60, viewportW * 0.1);
+
+                parents.forEach(parent => {
+                    const ptx = getRandom(-maxParentDrift, maxParentDrift);
+                    const pty = getRandom(-maxParentDrift, maxParentDrift);
+                    const ptz = getRandom(-60, 20);
+                    const prot = getRandom(-5, 5);
+                    
+                    parent.style.transition = 'transform 25s ease-in-out';
+                    parent.style.transform = `translate3d(${ptx}px, ${pty}px, ${ptz}px) rotate(${prot}deg)`;
                 });
             }
 
@@ -778,6 +823,110 @@
                 });
             }
 
+            function resetChaos() {
+                const allChunks = document.querySelectorAll('.chaos-chunk');
+                const debrisChunks = Array.from(document.querySelectorAll('#chaos-debris-field .chaos-chunk'));
+                
+                // --- PHASE 1: MEASURE AND SHUFFLE DEBRIS ---
+                
+                // Store the exact chaotic location and layout of every debris element
+                const debrisState = debrisChunks.map(chunk => {
+                    return {
+                        chunk: chunk,
+                        oldOffset: getDocumentOffset(chunk),
+                        oldTx: parseFloat(chunk.dataset.tx || 0),
+                        oldTy: parseFloat(chunk.dataset.ty || 0),
+                        oldTz: parseFloat(chunk.dataset.tz || 0),
+                        oldRx: parseFloat(chunk.dataset.rx || 0),
+                        oldRy: parseFloat(chunk.dataset.ry || 0),
+                        oldRz: parseFloat(chunk.dataset.rz || 0),
+                        oldScale: parseFloat(chunk.dataset.scale || 1)
+                    };
+                });
+
+                // Randomize flexbox order (solves gaps/overlaps naturally!)
+                debrisChunks.forEach(chunk => {
+                    chunk.style.order = Math.floor(Math.random() * 1000);
+                });
+
+                // Apply FLIP math to compensate for the layout shift
+                debrisState.forEach(state => {
+                    const chunk = state.chunk;
+                    const newOffset = getDocumentOffset(chunk); // Where it lives in the grid now
+                    
+                    // Math magic: visually keep it exactly where it was mid-flight
+                    const compTx = state.oldOffset.left + state.oldTx - newOffset.left;
+                    const compTy = state.oldOffset.top + state.oldTy - newOffset.top;
+                    
+                    // Instantly apply compensated transform (no transition)
+                    chunk.style.transition = 'none';
+                    chunk.style.transform = `translate3d(${compTx}px, ${compTy}px, ${state.oldTz}px) rotateX(${state.oldRx}deg) rotateY(${state.oldRy}deg) rotateZ(${state.oldRz}deg) scale(${state.oldScale})`;
+                    
+                    // Force the browser to calculate the jump so it doesn't animate it
+                    void chunk.offsetWidth; 
+                    
+                    // Set up the smooth flight home
+                    const duration = getRandom(6, 12); 
+                    const targetTransform = 'translate3d(0px, 0px, 0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1)';
+                    
+                    chunk.dataset.targetTransform = targetTransform;
+                    chunk.dataset.targetOpacity = 1;
+                    
+                    // Clear tracking
+                    chunk.dataset.tx = 0; chunk.dataset.ty = 0; chunk.dataset.tz = 0;
+                    chunk.dataset.rx = 0; chunk.dataset.ry = 0; chunk.dataset.rz = 0;
+                    chunk.dataset.scale = 1;
+
+                    if (!chunk.classList.contains('frozen')) {
+                        chunk.style.transition = `transform ${duration}s cubic-bezier(0.42, 0, 0.58, 1), opacity ${duration}s ease-in-out`;
+                        chunk.style.transitionDelay = '0s';
+                        chunk.style.transform = targetTransform;
+                        chunk.style.opacity = 1;
+                    } else {
+                        // If it's frozen (hovered), we must keep the compensated transform so it doesn't jump
+                        chunk.style.transform = `translate3d(${compTx}px, ${compTy}px, ${state.oldTz}px) rotateX(${state.oldRx}deg) rotateY(${state.oldRy}deg) rotateZ(${state.oldRz}deg) scale(${state.oldScale})`;
+                    }
+                });
+
+                // --- PHASE 2: NORMAL TEXT CHUNKS ---
+                allChunks.forEach(chunk => {
+                    if (debrisChunks.includes(chunk)) return; // Skipped, already handled
+                    
+                    const duration = getRandom(6, 12); 
+                    const targetTransform = 'translate3d(0px, 0px, 0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1)';
+                    
+                    chunk.dataset.targetTransform = targetTransform;
+                    chunk.dataset.targetOpacity = 1;
+                    chunk.dataset.tx = 0; chunk.dataset.ty = 0; chunk.dataset.tz = 0;
+                    chunk.dataset.rx = 0; chunk.dataset.ry = 0; chunk.dataset.rz = 0;
+                    chunk.dataset.scale = 1;
+
+                    if (!chunk.classList.contains('frozen')) {
+                        chunk.style.transition = `transform ${duration}s cubic-bezier(0.42, 0, 0.58, 1), opacity ${duration}s ease-in-out`;
+                        chunk.style.transitionDelay = '0s';
+                        chunk.style.transform = targetTransform;
+                        chunk.style.opacity = 1;
+                    }
+                });
+
+                // Reset wandering containers
+                const parents = document.querySelectorAll('h1, h2, h3, h4, p, #links, #wrap, #copy-this-book');
+                parents.forEach(parent => {
+                    parent.style.transition = 'transform 8s ease-in-out';
+                    parent.style.transform = 'translate3d(0px, 0px, 0px) rotate(0deg)';
+                });
+
+                if (ENABLE_STAGE_2) {
+                    const atoms = document.querySelectorAll('.chaos-atom');
+                    atoms.forEach(atom => {
+                        if (atom.parentElement && !atom.parentElement.classList.contains('frozen')) {
+                            atom.style.transform = 'translate3d(0px, 0px, 0px) rotateZ(0deg)';
+                            atom.style.opacity = 1;
+                        }
+                    });
+                }
+            }
+
             function initInteractiveFreezing() {
                 const targets = document.querySelectorAll('a.chaos-chunk, button.chaos-chunk, img.chaos-chunk, video.chaos-chunk, audio.chaos-chunk, figure.chaos-chunk');
                 
@@ -803,23 +952,9 @@
                         const dur = chunk.dataset.dur || '20s';
                         chunk.style.transition = `transform ${dur} cubic-bezier(0.22, 1, 0.36, 1), opacity ${dur} ease-in-out`;
                         chunk.style.transitionDelay = '0s'; 
-                        chunk.style.transform = chunk.dataset.targetTransform;
-                        chunk.style.opacity = chunk.dataset.targetOpacity;
+                        chunk.style.transform = chunk.dataset.targetTransform || 'translate3d(0,0,0)';
+                        chunk.style.opacity = chunk.dataset.targetOpacity || '1';
                     });
-                });
-            }
-
-            function applyParentChaos() {
-                const parents = document.querySelectorAll('h1, h2, h3, h4, p, #links, #wrap, #copy-this-book');
-                const maxParentDrift = Math.min(60, window.innerWidth * 0.1);
-
-                parents.forEach(parent => {
-                    const ptx = getRandom(-maxParentDrift, maxParentDrift);
-                    const pty = getRandom(-maxParentDrift, maxParentDrift);
-                    const ptz = getRandom(-60, 20);
-                    const prot = getRandom(-5, 5);
-                    
-                    parent.style.transform = `translate3d(${ptx}px, ${pty}px, ${ptz}px) rotate(${prot}deg)`;
                 });
             }
 
@@ -830,35 +965,55 @@
                 const debrisField = document.getElementById('chaos-debris-field');
                 const debrisChunks = debrisField.querySelectorAll('.chaos-chunk');
                 
+                // Initialize debris slightly outside the viewport for the initial dramatic fly-in
                 debrisChunks.forEach(chunk => {
                     const angle = Math.random() * Math.PI * 2;
-                    const distance = Math.max(window.innerWidth, window.innerHeight) * 1.2; 
-                    const startX = Math.cos(angle) * distance;
-                    const startY = Math.sin(angle) * distance;
-                    const startZ = getRandom(-300, -100); 
+                    const distance = Math.max(window.innerWidth, window.innerHeight) * 1.5; 
                     
-                    chunk.style.transition = 'none'; 
-                    chunk.style.transform = `translate3d(${startX}px, ${startY}px, ${startZ}px) rotateX(${getRandom(-180, 180)}deg) rotateY(${getRandom(-180, 180)}deg) rotateZ(${getRandom(-180, 180)}deg)`;
-                    chunk.style.opacity = '0';
-                });
+                    const scrollX = window.scrollX || window.pageXOffset;
+                    const scrollY = window.scrollY || window.pageYOffset;
+                    
+                    const targetX = scrollX + (window.innerWidth / 2) + Math.cos(angle) * distance;
+                    const targetY = scrollY + (window.innerHeight / 2) + Math.sin(angle) * distance;
+                    
+                    const offset = getDocumentOffset(chunk);
+                    
+                    const startX = targetX - offset.left;
+                    const startY = targetY - offset.top;
+                    const startZ = getRandom(-300, -100); 
+                    const rx = getRandom(-180, 180);
+                    const ry = getRandom(-180, 180);
+                    const rz = getRandom(-180, 180);
+                    
+                    // Track for FLIP math
+                    chunk.dataset.tx = startX; chunk.dataset.ty = startY; chunk.dataset.tz = startZ;
+                    chunk.dataset.rx = rx; chunk.dataset.ry = ry; chunk.dataset.rz = rz;
+                    chunk.dataset.scale = 1;
 
-                debrisField.style.display = 'block';
+                    chunk.style.transition = 'none'; 
+                    chunk.style.transform = `translate3d(${startX}px, ${startY}px, ${startZ}px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg) scale(1)`;
+                });
 
                 setTimeout(() => {
                     debrisField.classList.add('active');
 
                     applyChaos();
-                    applyParentChaos();
+                    let isChaotic = true;
                     
                     setInterval(() => {
-                        applyChaos();
-                        applyParentChaos();
-                    }, 12000); 
+                        isChaotic = !isChaotic;
+                        
+                        if (isChaotic) {
+                            applyChaos();
+                            if (ENABLE_STAGE_2) applyDisintegration();
+                        } else {
+                            resetChaos(); 
+                        }
+                    }, CYCLE_DURATION); 
 
                     if (ENABLE_STAGE_2) {
                         setTimeout(() => {
-                            applyDisintegration();
-                            setInterval(applyDisintegration, 15000);
+                            if (isChaotic) applyDisintegration();
                         }, DISINTEGRATION_DELAY);
                     }
 
@@ -866,5 +1021,11 @@
             });
         })();
     </script>
-</body>
+    
+    
+    
+    
+    
+    
+    </body>
 </html>
